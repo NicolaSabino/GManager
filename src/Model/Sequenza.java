@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by nicola on 08/02/16.
  */
-public class Sequenza extends Model{
+public class Sequenza extends Attivita {
     //lo stato dell'attività consiste in una collezione di attività che la appartengono
 
     private ArrayList<Attivita> stato;
