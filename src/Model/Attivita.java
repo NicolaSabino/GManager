@@ -33,20 +33,18 @@ public class Attivita extends Model {
         String sql= "select * from  attività where id='"+ chiave + "'";
         ResultSet query= selectQuery(sql);
         try{
-            query.next();
-            this.setCosto(query.getDouble("costo"));
-            this.setDatafine(query.getString("datafine"));
-            this.setDatainizio(query.getString("datainizio"));
-            this.setDatafineprevista(query.getString("datafineprevista"));
-            this.setDescrizione(query.getString("descrizione"));
-            this.setId(query.getInt("id"));
-            this.setNomesequenza(query.getString("nomesequenza"));
-            this.setPrecedenza(query.getInt("precedenza"));
+            if(query.next()) {
+                this.setCosto(query.getDouble("costo"));
+                this.setDatafine(query.getString("datafine"));
+                this.setDatainizio(query.getString("datainizio"));
+                this.setDatafineprevista(query.getString("datafineprevista"));
+                this.setDescrizione(query.getString("descrizione"));
+                this.setId(query.getInt("id"));
+                this.setNomesequenza(query.getString("nomesequenza"));
+                this.setPrecedenza(query.getInt("precedenza"));
+            }
 
         }catch (SQLException se){
-            //se viene generato un errore è perchè la query restituisce un empty resultset
-            //ovvero non vi è nessuna corrispondenza nel db con la chiave fornita
-
             se.printStackTrace();
         }finally {
             closeConnection();

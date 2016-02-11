@@ -15,9 +15,9 @@ public class Sequenza extends Model{
     private ArrayList<Attivita> stato;
     private double costo;
     private String nome;
-    private Date fine;
+    private String fine;
     private String nomeprogetto;
-    private float percentComplSeq;
+    private double percentComplSeq;
 
     /**
      * Costruttore vuoto
@@ -26,10 +26,7 @@ public class Sequenza extends Model{
         return;
     }
 
-    @Override
-    public boolean updateIntoSQL(String... var) {
-        return false;
-    }
+
 
     /**
      * Costruttore con sql
@@ -40,17 +37,30 @@ public class Sequenza extends Model{
         openConnection();
         this.stato= new ArrayList<Attivita>();
 
-        String sql= " select a.id,a.nomesequenza,a.precedenza,a.datainizio,a.datafine,a.datafineprevista,a.costo, from attività a join sequenza s on a.nomesequenza=s.nome where sequenza.nome='"
-                    + chiave + "'";
 
+
+        String sql2="select * from sequenza where nome='" + chiave + "'";
+        ResultSet query2 =selectQuery(sql2);
+
+        try {
+            if(query2.next()){
+                this.setNome(chiave);
+                this.setNomeprogetto(query2.getString("nomeprogetto"));
+            }
+        }catch (SQLException se){
+            se.printStackTrace();
+        }
+
+        String sql= "select * from attività where nomesequenza='" + chiave + "'";
         ResultSet query = selectQuery(sql);
-
 
         try{
 
-            Attivita appoggio=new Attivita();
+
 
             while (query.next()){
+                Attivita appoggio=new Attivita();
+
                 appoggio.setId(query.getInt("id"));
                 appoggio.setNomesequenza(query.getString("nomesequenza"));
                 appoggio.setPrecedenza(query.getInt("precedenza"));
@@ -59,39 +69,27 @@ public class Sequenza extends Model{
                 appoggio.setDatafineprevista(query.getString("datafineprevista"));
                 appoggio.setCosto(query.getDouble("costo"));
 
-
-
                 stato.add(stato.size(), appoggio);
             }
 
         }catch (SQLException se){
-            //se trovo un errore vuol dire che la select restituisce un empty result set
-            //se.printStackTrace();
+            se.printStackTrace();
         }finally {
             closeConnection();
         }
 
-        String ris="select nomeprogetto as progetto from sequenza where nome='" + chiave + "'";
-        ResultSet qu=selectQuery(ris);
-        try {
-            qu.next();
-            this.setNomeprogetto(qu.getString("progetto"));
 
-        }catch(SQLException se){
-            se.printStackTrace();
-        }
-
-        // calcolo il costo e la fine della mia sequenza
-        this.setCosto(this.calcolacosto());
+        this.setCosto(this.calcolaCosto());
         this.setFine(this.calcolaFine());
-        return;
+        this.setPercentComplSeq(this.calcolaPercentualeSequenza());
+
     }
 
     /**
      * metodo che calcola il costo di una sequenza
      * @return
      */
-    protected double calcolacosto(){
+    protected double calcolaCosto(){
         double sum=0;
         for (Attivita appoggio:this.stato){
             sum += appoggio.getCosto();
@@ -103,14 +101,15 @@ public class Sequenza extends Model{
      * Metodo che calcola la fine di una sequenza
      * @return
      */
-    protected Date calcolaFine(){
+    protected String calcolaFine(){
         openConnection();
-        Date risultato = null;
+        String risultato = null;
         String sql="select datafineprevista as data FROM attività WHERE nomesequenza='" + this.nome + "' order by datafineprevista desc LIMIT 1";
         ResultSet ris= selectQuery(sql);
         try {
-            ris.next();
-            risultato=ris.getDate("data");
+            if(ris.next()) {
+                risultato = ris.getString("data");
+            }
         }catch (SQLException se){
             se.printStackTrace();
         }finally {
@@ -119,15 +118,46 @@ public class Sequenza extends Model{
         return risultato;
     }
 
-
     /**
-     * Metodo che inserisce l'occeggetto stesso nel DB
+     * Metodo che calcola la percentuale di completamento di una sequenza
      * @return
      */
+    protected double calcolaPercentualeSequenza(){
+        openConnection();
+        double risultato=1;
+        String sql="select percentuale_Sequenza('" + this.getNome() + "') as percentuale";
+        ResultSet query =selectQuery(sql);
+        try {
+            if(query.next()) {
+                risultato = query.getDouble("percentuale");
+            }
+        }catch (SQLException se){
+            se.printStackTrace();
+        }finally {
+            closeConnection();
+        }
+        return risultato;
+    }
+
+    @Override
+    public boolean updateIntoSQL(String... var) {
+        openConnection();
+        boolean conrollo=false;
+        String sql="update sequenza set "
+                + var[0] + "='" + var[1]
+                +"' where nome='"+ this.getNome() + "'";
+        if(updateQuery(sql)){
+            conrollo=true;
+        }
+        closeConnection();
+
+        return conrollo;
+    }
+
+    @Override
     public boolean insertIntoSQL(){
-        //todo da ultimare
+
         boolean controllo=false;
-        int c=0;
         openConnection();
         String sql;
 
@@ -135,7 +165,7 @@ public class Sequenza extends Model{
         for(Attivita appoggio:this.stato){
 
             sql="insert into attività(nomesequenza,precedenza,descrizione,datainizio,datafineprevista,datafine,costo) values('"
-                    +   appoggio.getNomesequenza()  + "','"
+                    +   this.getNome()              + "','"
                     +   appoggio.getPrecedenza()    + "','"
                     +   appoggio.getDescrizione()   + "','"
                     +   appoggio.getDatainizio()    + "','"
@@ -145,7 +175,6 @@ public class Sequenza extends Model{
 
             if(updateQuery(sql)){
                 controllo=true;
-
             }
         }
 
@@ -171,15 +200,15 @@ public class Sequenza extends Model{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Sequenza)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Sequenza sequenza = (Sequenza) o;
 
-        if (getStato() != null ? !getStato().equals(sequenza.getStato()) : sequenza.getStato() != null) return false;
-        return getNome() != null ? getNome().equals(sequenza.getNome()) : sequenza.getNome() == null;
+        if (stato != null ? !stato.equals(sequenza.stato) : sequenza.stato != null) return false;
+        if (nome != null ? !nome.equals(sequenza.nome) : sequenza.nome != null) return false;
+        return nomeprogetto != null ? nomeprogetto.equals(sequenza.nomeprogetto) : sequenza.nomeprogetto == null;
 
     }
-
 
 
     /**
@@ -194,7 +223,7 @@ public class Sequenza extends Model{
         if(updateQuery(sql)){
             controllo=true;
         }
-
+        closeConnection();
         return controllo;
 
     }
@@ -227,11 +256,11 @@ public class Sequenza extends Model{
         this.nome = nome;
     }
 
-    public Date getFine() {
+    public String getFine() {
         return fine;
     }
 
-    public void setFine(Date fine) {
+    public void setFine(String fine) {
         this.fine = fine;
     }
 
@@ -243,11 +272,11 @@ public class Sequenza extends Model{
         this.nomeprogetto = nomeprogetto;
     }
 
-    public float getPercentComplSeq() {
+    public double getPercentComplSeq() {
         return percentComplSeq;
     }
 
-    public void setPercentComplSeq(float percentComplSeq) {
+    public void setPercentComplSeq(double percentComplSeq) {
         this.percentComplSeq = percentComplSeq;
     }
 }

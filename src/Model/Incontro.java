@@ -35,12 +35,13 @@ public class Incontro extends Model {
         String sql="select data,ora,luogo,tipo,verbale from incontro where data='"+ chiave_data +"' and tipo='"+ chiave_tipo +"'";
         ResultSet query= selectQuery(sql);
         try {
-            query.next();
-            this.setData(query.getString("data"));
-            this.setOra(query.getString("ora"));
-            this.setLuogo(query.getString("luogo"));
-            this.setTipo(query.getString("tipo"));
-            this.setVerbale(query.getString("verbale"));
+            if(query.next()) {
+                this.setData(query.getString("data"));
+                this.setOra(query.getString("ora"));
+                this.setLuogo(query.getString("luogo"));
+                this.setTipo(query.getString("tipo"));
+                this.setVerbale(query.getString("verbale"));
+            }
         }catch(SQLException se){
             se.printStackTrace();
         }finally {
@@ -57,14 +58,15 @@ public class Incontro extends Model {
         boolean controllo=false;
         openConnection();
         String sql="update incontro set " + var[0] + "='" + var[1]
-                    + "' where data='" + this.getData()
-                    + "' and tipo='"+ this.getTipo()
-                    +"' and ora='" + this.getOra() + "'";
+                + "' where data='" + this.getData()
+                + "' and tipo='"+ this.getTipo()
+                +"' and ora='" + this.getOra() + "'";
 
 
         if(updateQuery(sql)){
             controllo=true;
         }
+
         closeConnection();
         return controllo;
     }
@@ -107,6 +109,7 @@ public class Incontro extends Model {
     protected ArrayList<String> generaPartecipazione(){
         ArrayList<String> appoggio= new ArrayList<String>();
         openConnection();
+
         String sql ="select matricola from partecipazione where tipo='"+ getTipo()+"' and data='"+ getData() + "' and ora='" + getOra() + "'";
         ResultSet query= selectQuery(sql);
 

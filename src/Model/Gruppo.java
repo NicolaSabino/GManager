@@ -38,7 +38,9 @@ public class Gruppo extends Model{
                     "on a.matricola=i.matricola and c.id=i.id and  s.nome=c.nomesequenza where  s.nomeprogetto='" + var[1] +"'";
 
         }else if(var[0]=="utenti"){
-            sql="select a.matricola,a.nome,a.cognome,a.telefono,a.mail from datianagrafici a";
+            sql="select a.matricola,a.nome,a.cognome,a.telefono,a.mail from datianagrafici a";}
+        else if(var[0]=="Incontro"){
+                sql="select a.matricola,a.nome,a.cognome,a.telefono,a.mail from datianagrafici a join partecipazione p where p.tipo='" + var[1] + "' and p.data='" + var[2] + "'";
         }else{
             sql="";
             controllo=false;

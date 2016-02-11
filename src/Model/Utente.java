@@ -32,14 +32,15 @@ public class Utente extends Model {
                 "on a.matricola=b.matricola where a.matricola='"+ chiave +"'";
         ResultSet query= selectQuery(sql);
         try{
-            query.next();
-            this.setNome(query.getString("nome"));
-            this.setCognome(query.getString("cognome"));
-            this.setMail(query.getString("Mail"));
-            this.setMatricola(query.getString("matricola"));
-            this.setPwd(query.getString("pwd"));
-            this.setRuolo(query.getString("Ruolo"));
-            this.setTelefono(query.getString("telefono"));
+            if(query.next()) {
+                this.setNome(query.getString("nome"));
+                this.setCognome(query.getString("cognome"));
+                this.setMail(query.getString("Mail"));
+                this.setMatricola(query.getString("matricola"));
+                this.setPwd(query.getString("pwd"));
+                this.setRuolo(query.getString("Ruolo"));
+                this.setTelefono(query.getString("telefono"));
+            }
         }catch(SQLException se){
             se.printStackTrace();
         }finally{
@@ -49,15 +50,40 @@ public class Utente extends Model {
     }
 
     /**
-     * Costruttore
+     * Costruttore vuoto
      */
     public Utente(){
         return;
     }
 
+    /**
+     * permette mi modificare gli attributi di un
+     * utente sia su datianagrafici che su datilavorativi
+     *
+     * @param var
+     * @return
+     */
+
     @Override
     public boolean updateIntoSQL(String... var) {
-        return false;
+        boolean controllo = false;
+
+        if(var[0]== "nome" || var[0]== "cognome" || var[0]== "telefono" || var[0]== "mail") {
+            openConnection();
+            String sql = "update datianagrafici set " + var[0] + " ='" + var[1]
+                    + "'where matricola = '" + this.getMatricola() + "'";
+            controllo=true;
+
+        }else if(var[0]=="ruolo"){
+            openConnection();
+            String sql = "update datilavorativi set " + var[0] + " ='" + var[1]
+                    + "'where matricola = '" + this.getMatricola() + "'";
+
+            controllo=true;
+        }else{
+            controllo=false;
+        }
+        return controllo;
     }
 
     /**
@@ -77,76 +103,6 @@ public class Utente extends Model {
     }
 
 
-    /**
-     * Metodo per modificare la pwd di un utente
-     *
-     * @param old_pwd
-     * @param new_pwd
-     * @return boolean
-     */
-    public boolean changePwd(String old_pwd, String new_pwd) {
-        boolean controllo = false;
-        if (old_pwd.equals(getPwd())) {
-            this.setPwd(new_pwd);
-            openConnection();
-            String sql = "update datilavorativi set pwd='" + new_pwd + "' where matricola='" + this.getMatricola() + "'";
-            if (updateQuery(sql)) {
-                controllo = true;
-            }
-
-            closeConnection();
-
-        }
-
-        return controllo;
-    }
-
-
-    /**
-     * Metodo che permette di aggiornare il proprio numero di telefono
-     * @param numero
-     * @return
-     */
-    public boolean cambiaTelefono(String numero) {
-
-        boolean controllo = false;
-
-        openConnection();
-
-        String sql = ("Update datianagrafici set telefono='" + numero + "' where matricola='" + this.getMatricola() + "'");
-
-        if (updateQuery(sql)) {
-            this.setTelefono(numero);
-            controllo = true;
-        }
-        closeConnection();
-
-        return controllo;
-    }
-
-
-    /**
-     * Permette di modificare la mail di un utente
-     *
-     * @param mail
-     * @return
-     */
-    public boolean cambiaMail(String mail) {
-
-        boolean controllo = false;
-
-        openConnection();
-        System.out.println(mail + " " + this.getMatricola());
-        String sql = ("Update datianagrafici set mail='" + mail + "' where matricola='" + this.getMatricola() + "'");
-
-        if (updateQuery(sql)) {
-            this.setMail(mail);
-            controllo = true;
-        }
-        closeConnection();
-
-        return controllo;
-    }
 
     /**
      * Permette di aggiungere l'oggetto stesso nel db
@@ -281,4 +237,3 @@ public class Utente extends Model {
         return utenti;
     }
 }
-

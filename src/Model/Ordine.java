@@ -11,9 +11,10 @@ public class Ordine extends Model {
     private int Id;
     private String Matricola;
     private String Pezzo;
-    private Date DataOrdine;
+    private String DataOrdine;
     private String Attivita;
     private boolean Approvazione;
+    private String Descrizione;
 
     /**
      * Costruttore vuoto
@@ -26,17 +27,20 @@ public class Ordine extends Model {
      * Costruttore da sql
      * @param id
      */
-    public Ordine (int id){
+    public Ordine (String id){
         openConnection();
         String sql="select * from Ordine where id='"+ id + "'";
         ResultSet query= selectQuery(sql);
         try{
-            query.next();
-            this.setId(query.getInt("id"));
-            this.setMatricola(query.getString("matricola"));
-            this.setDataOrdine(query.getDate("dataordine"));
-            this.setPezzo(query.getString("pezzo"));
-            this.setApprovazione(query.getBoolean("approvazione"));
+            if(query.next()){
+                this.setId(query.getInt("id"));
+                this.setMatricola(query.getString("matricola"));
+                this.setDataOrdine(query.getString("dataordine"));
+                this.setPezzo(query.getString("prezzo"));
+                this.setApprovazione(query.getBoolean("approvazione"));
+                this.setDescrizione(query.getString("descrizione"));
+            }
+
         }catch (SQLException se){
             se.printStackTrace();
         }finally {
@@ -47,20 +51,67 @@ public class Ordine extends Model {
 
     @Override
     public boolean updateIntoSQL(String... var) {
-        return false;
+        boolean controllo=false;
+        openConnection();
+        String sql="update Ordine set " + var[0] + "='" + var[1]
+                + "' where id='" + getId() + "'";
+
+        if(updateQuery(sql)){
+            controllo=true;
+        }
+        closeConnection();
+        return controllo;
     }
 
     @Override
     public boolean insertIntoSQL() {
-        return false;
+        openConnection();
+        boolean controllo=false;
+        //id è auto-incrementante quindi non va inserito
+        String sql="Insert into Ordine(matricola,prezzo,dataordine,attività,Descrizione) values('"
+                +   this.getMatricola()  + "','"
+                +   this.getPezzo()    + "','"
+                +   this.getDataOrdine()   + "','"
+                +   this.getAttivita()    + "','"
+                +   this.getDescrizione()         +"')";
+
+        if(updateQuery(sql)){
+            controllo=true;
+        }
+        closeConnection();
+        return controllo;
     }
 
     @Override
     public boolean deleteIntoSQL() {
-        return false;
+        openConnection();
+        boolean controllo=false;
+
+        String sql="delete from Ordine where id='" + this.getId() + "'";
+
+        if(updateQuery(sql)){
+            controllo=true;
+        }
+        closeConnection();
+        return controllo;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Ordine ordine = (Ordine) o;
+
+        return Id == ordine.Id;
+
+    }
+
+
+
     //Setter and getter
+
+
     public int getId() {
         return Id;
     }
@@ -85,11 +136,11 @@ public class Ordine extends Model {
         Pezzo = pezzo;
     }
 
-    public Date getDataOrdine() {
+    public String getDataOrdine() {
         return DataOrdine;
     }
 
-    public void setDataOrdine(Date dataOrdine) {
+    public void setDataOrdine(String dataOrdine) {
         DataOrdine = dataOrdine;
     }
 
@@ -107,5 +158,13 @@ public class Ordine extends Model {
 
     public void setApprovazione(boolean approvazione) {
         Approvazione = approvazione;
+    }
+
+    public String getDescrizione() {
+        return Descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        Descrizione = descrizione;
     }
 }

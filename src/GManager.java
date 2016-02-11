@@ -8,13 +8,16 @@ import java.util.Map;
  */
 public class GManager {
     public static void main(String args[]) {
-
-        Incontro i = new Incontro("2016-01-22","milestone");
-        Incontro a = new Incontro("2016-01-22","milestone");
+        Progetto p2 = new Progetto("P2");
 
 
-        System.out.println((i==a) + "  " + (i.equals(a)));
+        for(Sequenza appoggio:p2.getStato()){
+            for(Attivita app:appoggio.getStato()){
+                System.out.println(app.getId()+" "+app.getCosto()+" "+app.getDescrizione());
+            }
+        }
 
+        System.out.println(p2.getDeadline());
     }
 
 }

@@ -5,6 +5,7 @@ import com.sun.javafx.sg.prism.NGShape;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by nicola on 08/02/16.
@@ -15,31 +16,56 @@ public class Progetto extends Model {
     private String Nome;
     private String Deadline;
     private double Costo;
+    private double perccompletamentoProgetto;
 
-    public Progetto(String chiave){
-        openConnection();
-        String sql= "select * from sequenza where nomeprogetto= '"+ chiave + "'";
-        ResultSet query= selectQuery(sql);
-
-        try{
-          Sequenza appoggio= new Sequenza();
-            while (query.next()){
-                appoggio.setCosto(query.getDouble("costo"));
-                appoggio.setNome(query.getString("nome"));
-                appoggio.setFine(query.getDate("fine"));
-                appoggio.setPercentComplSeq(query.getFloat("percentcomplseq"));
-                stato.add(stato.size(), appoggio);
-            }
-        }catch(SQLException se) {
-            se.printStackTrace();
-        }finally {
-            openConnection();
-        }
-
-        this.setCosto(calcola_costo());
+    /**
+     * Costruttore vuoto
+     */
+    public Progetto(){
         return;
     }
 
+    /**
+     * Costruttore da sql
+     * @param chiave
+     */
+    public Progetto(String chiave){
+        openConnection();
+        //prelevo dal db i nomi delle sequenze collegate al progetto
+        String sql= "select nome from sequenza where nomeprogetto='"+ chiave + "'";
+        ResultSet query= selectQuery(sql);
+
+        //creo una lista contenente l'elenco delle sequenze da istanziare in stato
+        List<String> seq = new ArrayList<String>();
+
+        try {
+            while(query.next()){
+                seq.add(seq.size(),query.getString("nome"));
+            }
+        }catch (SQLException se){
+            se.printStackTrace();
+        }
+
+
+        //creo un array per contenere lo stato di progetto
+        this.stato=new ArrayList<Sequenza>();
+
+        //per ogni elemento dell'array 'seq' creo una sequenza da inserire nello 'stato' di progetto
+        for (String appoggio:seq){
+            Sequenza s= new Sequenza(appoggio);
+
+            stato.add(stato.size(),s);
+
+        }
+
+        this.setCosto(this.calcola_costo());
+        return;
+    }
+
+    /**
+     * Calcola il costo di un progetto
+     * @return
+     */
     protected double calcola_costo(){
         double sum=0;
         for (Sequenza appoggio:this.stato){
@@ -48,86 +74,57 @@ public class Progetto extends Model {
         return sum;
     }
 
-    public boolean cambio_nome(String old_nome, String  new_nome){
-        boolean controllo= false;
-        if (old_nome.equals(getNome())){
-            this.setNome(new_nome);
-            openConnection();
-            String sql= "update from progetto nome='"+ new_nome +"' where nome='" + old_nome +"'";
-            if (updateQuery(sql)){
-                controllo=true;
-            }
-            closeConnection();
-        }
-        return controllo;
-    }
 
-    public boolean cambio_Deadline(String old_dead, String new_dead){
-        boolean controllo= false;
-        if (old_dead.equals(getDeadline())){
-            setDeadline(new_dead);
-            openConnection();
-            String sql= "update from progetto deadline='"+ new_dead +"' where nome='"+ this.getNome()+ "'";
-            if (updateQuery(sql)){
-                controllo=true;
-            }
-            closeConnection();
-        }
-        return controllo;
-    }
-
-    public boolean deletefromsql (){
-        boolean controllo= false;
+    @Override
+    public boolean updateIntoSQL(String... var) {
         openConnection();
-        String sql= "delete from progetto where nome='"+ this.getNome()+ "'";
-        if (updateQuery(sql)){
-            controllo= true;
+        boolean conrollo=false;
+        String sql="update progetto set "
+                + var[0] + "='" + var[1]
+                +"' where nome='"+ this.getNome() + "'";
+        if(updateQuery(sql)){
+            conrollo=true;
+        }
+        closeConnection();
+
+        return conrollo;
+    }
+
+    @Override
+    public boolean insertIntoSQL() {
+        boolean controllo=false;
+        openConnection();
+
+        for(Sequenza appoggio:this.getStato()){
+            appoggio.insertIntoSQL();
+        }
+
+        String sql="insert into progetto values('"
+                + this.getNome() + "','"
+                + this.getDeadline() + "')";
+
+        if(updateQuery(sql)){
+            controllo=true;
+        }
+        closeConnection();
+
+        return controllo;
+    }
+
+    @Override
+    public boolean deleteIntoSQL() {
+        openConnection();
+        boolean controllo=false;
+        String sql="delete from progetto where sequenza='" + this.getNome() + "'";
+
+        if(updateQuery(sql)){
+            controllo=true;
         }
         closeConnection();
         return controllo;
     }
 
-    public ArrayList<String> generastato (){
-        ArrayList appoggio= new ArrayList();
-        openConnection();
-        String sql= "select nome, costo, fine, nomeprogetto from sequenza where nomeprogetto='"+ getNome()+ "'";
-        ResultSet query= selectQuery(sql);
-        try{
-            while (query.next()){
-                appoggio.add(appoggio.size(), query.getString("nome"));
-                appoggio.add(appoggio.size(), query.getString("nomeprogetto"));
-                appoggio.add(appoggio.size(), query.getDouble("costo"));
-                appoggio.add(appoggio.size(), query.getString("fine"));
-
-            }
-        }catch (SQLException se){
-            se.printStackTrace();
-        }finally {
-            closeConnection();
-        }
-        return appoggio;
-    }
-
-
-
-    public Progetto(){
-        return;
-    }
-
-    @Override
-    public boolean updateIntoSQL(String... var) {
-        return false;
-    }
-
-    @Override
-    public boolean insertIntoSQL() {
-        return false;
-    }
-
-    @Override
-    public boolean deleteIntoSQL() {
-        return false;
-    }
+    //getter and setter
 
     public double getCosto() {
         return Costo;

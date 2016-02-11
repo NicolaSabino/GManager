@@ -31,12 +31,13 @@ public class Fornitore extends Model {
         String sql= "select * from Fornitore where nome='"+ chiave +"'";
         ResultSet query= selectQuery(sql);
         try{
-            query.next();
-            this.setNome(query.getString("nome"));
-            this.setIndirizzo(query.getString("indirizzo"));
-            this.setTelefono(query.getString("telefono"));
-            this.setMail(query.getString("mail"));
-            this.setCEO(query.getString("ceo"));
+            if(query.next()) {
+                this.setNome(query.getString("nome"));
+                this.setIndirizzo(query.getString("indirizzo"));
+                this.setTelefono(query.getString("telefono"));
+                this.setMail(query.getString("mail"));
+                this.setCEO(query.getString("ceo"));
+            }
         }catch (SQLException se){
             se.printStackTrace();
         }finally {
