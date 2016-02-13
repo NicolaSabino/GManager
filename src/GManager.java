@@ -1,5 +1,7 @@
 import Model.*;
+import View.*;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.Map;
 
@@ -8,16 +10,20 @@ import java.util.Map;
  */
 public class GManager {
     public static void main(String args[]) {
-        Progetto p2 = new Progetto("P2");
-
-
-        for(Sequenza appoggio:p2.getStato()){
-            for(Attivita app:appoggio.getStato()){
-                System.out.println(app.getId()+" "+app.getCosto()+" "+app.getDescrizione());
-            }
+	  
+	try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
         }
 
-        System.out.println(p2.getDeadline());
+        RootFrame rootFrame = new RootFrame();
     }
 
 }
