@@ -26,12 +26,9 @@ public class GManager {
             e.printStackTrace();
         }
 
-        //creo il frame principale
-        RootFrame rootFrame = new RootFrame();
 
-
-        //creo il controller e passo come parametro la view
-        MainController controller_G = new MainController(rootFrame);
+        //creo il controller
+        MainController controller_G = new MainController();
     }
 
 }

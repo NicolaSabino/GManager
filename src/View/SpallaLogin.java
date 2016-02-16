@@ -12,7 +12,7 @@ public class SpallaLogin {
         return;
     }
 
-    public JPanel getSpallaLogin(){
+    public JPanel getPannelloPrincipale(){
         return pannelloPrincipale;
     }
 

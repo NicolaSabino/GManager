@@ -10,8 +10,8 @@ public class RootFrame extends JFrame{
     private JPanel rootPanel;
     private JPanel bottomPanell;
     private JPanel leftPanell;
-    private JScrollPane mainScrollPane;
-    private JScrollPane sideScrollPane;
+    private JScrollPane mainScrollPane; // Scroll SX
+    private JScrollPane sideScrollPane; // Scroll DX
     private JLabel link;
 
     /**
@@ -28,7 +28,7 @@ public class RootFrame extends JFrame{
 
         //all'atto della creazione si inseriscono la maschera di login al mainSP e la spalla vuota all sideSP
         this.setMainScrollPane(new Login().getPannelloPrincipale());
-        this.setSideScrollPane(new SpallaLogin().getSpallaLogin());
+        this.setSideScrollPane(new SpallaLogin().getPannelloPrincipale());
     }
 
 
