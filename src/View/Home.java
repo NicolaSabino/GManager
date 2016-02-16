@@ -6,7 +6,7 @@ import javax.swing.*;
  * Created by edoardo on 15/02/16.
  */
 public class Home extends JFrame {
-    private JPanel panelHome;
+    private JPanel pannelloPrincipale;
     private JScrollPane scrollEventi;
     private JScrollPane scrollCompiti;
     private JLabel nomeSequenza;
@@ -14,8 +14,17 @@ public class Home extends JFrame {
 
     public Home() {
         pack();
-        setContentPane(panelHome);
-        setExtendedState(MAXIMIZED_BOTH);
+        setContentPane(pannelloPrincipale);
         setVisible(true);
+
+    }
+
+    public JPanel getPannelloPrincipale() {
+        return pannelloPrincipale;
+    }
+
+    public void setSequenza(String nome){
+        nomeSequenza.setText(nome);
+        return;
     }
 }
