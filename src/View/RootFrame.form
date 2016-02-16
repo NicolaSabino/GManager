@@ -23,7 +23,7 @@
           <component id="35830" class="javax.swing.JLabel" binding="link">
             <constraints border-constraint="Center"/>
             <properties>
-              <font name="Lucida Sans" style="0"/>
+              <font style="0"/>
               <text value="More Info @ www.github.com/NicolaSabino/GManager.git"/>
             </properties>
           </component>

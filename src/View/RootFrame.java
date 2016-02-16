@@ -26,9 +26,7 @@ public class RootFrame extends JFrame{
         //setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
 
-        //all'atto della creazione si inseriscono la maschera di login al mainSP e la spalla vuota all sideSP
-        this.setMainScrollPane(new Login().getPannelloPrincipale());
-        this.setSideScrollPane(new SpallaLogin().getPannelloPrincipale());
+
     }
 
 
