@@ -25,7 +25,6 @@ public class Utente extends Model {
      * @param chiave
      */
 
-
     public Utente (String chiave){
         openConnection();
         String sql ="select * from datilavorativi a join datianagrafici b " +
@@ -147,6 +146,26 @@ public class Utente extends Model {
     }
 
 
+    public String selezionaSequenzaUtente(){
+        openConnection();
+        String ris="Unknown";
+        String sql ="select a.nomesequenza from attività a join incarichi i on i.id=a.id where i.matricola='" + this.getMatricola() + "' limit 1";
+        ResultSet query = selectQuery(sql);
+
+        try {
+            if(query.next()){
+                ris=query.getString("nomesequenza");
+            }
+        }catch (SQLException se){
+            se.printStackTrace();
+        }finally {
+            closeConnection();
+        }
+
+        return ris;
+
+    }
+
 
     // getter and setter
 
@@ -206,34 +225,5 @@ public class Utente extends Model {
         this.telefono = telefono;
     }
 
-    //metodo di controllo
 
-    public List<Map> selectAllData() {
-        ArrayList<Map> utenti = new ArrayList<>();
-
-        openConnection();
-        String sql = "select id, nomesequenza, costo, precedenza from attività";
-        ResultSet query = selectQuery(sql);
-        int i = 0;
-
-        try {
-            while (query.next()){
-                Map user = new HashMap();
-
-                user.put("id", query.getInt("id"));
-                user.put("nomesequenza", query.getString("nomesequenza"));
-                user.put("costo", query.getDouble("costo"));
-                user.put("precedenza", query.getInt("precedenza"));
-
-                utenti.add(i, user);
-                i++;
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        } finally {
-            closeConnection();
-        }
-
-        return utenti;
-    }
 }

@@ -16,6 +16,8 @@ public class Home extends JFrame {
         pack();
         setContentPane(pannelloPrincipale);
         setVisible(true);
+        progressBarCompl.setVisible(true);
+
 
     }
 
@@ -25,6 +27,13 @@ public class Home extends JFrame {
 
     public void setSequenza(String nome){
         nomeSequenza.setText(nome);
+        return;
+    }
+
+    public  void setProgressBarCompl(int n){
+        progressBarCompl.setString(n + "%");
+        progressBarCompl.setValue(n);
+        progressBarCompl.setStringPainted(true);
         return;
     }
 }

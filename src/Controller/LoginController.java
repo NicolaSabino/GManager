@@ -43,7 +43,7 @@ public class LoginController {
 
     private void loginAction(){
         loginView.getLoginValue(); //serve per leggere i due textfield
-        Acl controllo= new Acl(loginView.getLog_mat(),loginView.getLog_pass());
+        WhiteList controllo= new WhiteList(loginView.getLog_mat(),loginView.getLog_pass());
 
         //meccanismo di display dei risultati
 

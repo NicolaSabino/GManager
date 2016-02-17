@@ -52,8 +52,8 @@ public class Spalla {
         ricercaButton.setVisible(true);
         ordiniButton.setVisible(true);
 
-        gestisciButton.setEnabled(false);
-        appuntamentiButton.setEnabled(false);
+        gestisciButton.setVisible(false);
+        appuntamentiButton.setVisible(false);
 
         //informazioni dell'utente
         InfoUtente.setVisible(true);

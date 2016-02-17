@@ -142,6 +142,7 @@
         <properties>
           <enabled value="true"/>
           <text value="Gestisci"/>
+          <visible value="true"/>
         </properties>
       </component>
       <component id="e0c9" class="javax.swing.JButton" binding="appuntamentiButton" default-binding="true">
@@ -155,6 +156,7 @@
         <properties>
           <enabled value="true"/>
           <text value="Appuntamenti"/>
+          <visible value="true"/>
         </properties>
       </component>
       <vspacer id="9826d">

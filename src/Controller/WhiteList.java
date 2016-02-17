@@ -13,7 +13,7 @@ import java.util.Objects;
 
 
 
-public class Acl {
+public class WhiteList {
     // ACCESS-CONTROL-LIST
     //gli oggetti istanziati da questa classe hanno il compito di controllare l'accesso alle risorse da parte dei vari utenti
 
@@ -30,7 +30,7 @@ public class Acl {
      * @param matricola
      * @param passwd
      */
-    public Acl(String matricola, char[] passwd){
+    public WhiteList(String matricola, char[] passwd){
 
         this.setMatricola(matricola);
         this.setPasswd(passwd);
