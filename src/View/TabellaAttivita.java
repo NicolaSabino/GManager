@@ -5,21 +5,46 @@ import Model.Attivita;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Created by nicola on 17/02/16.
  */
 public class TabellaAttivita {
     private JPanel pannelloPrincipale;
+    private JTable Tabella;
+    private JScrollPane scroll;
+    private JLabel Attivita;
 
-    public TabellaAttivita(ArrayList<Attivita> elenco) {
-        DefaultTableModel m = new DefaultTableModel();
-        String[] intestazione= {"Id","Nome Sequenza" , "Precedenza " , "Descrizione" , "data Inizio","data Fine prevista","data Fine", "costo"};
+    /**
+     * Genera dinamicamente la tabella mediante l'elenco delle attivita da mostrare
+     * @param elenco
+     */
+    public void setModelTabella(ArrayList<Model.Attivita> elenco) {
+        String col[] = {"Id","nome Sequenza","Precedenza", "Descrizione", "Data Inizio", "Data Fine Prevista", "Data Fine", "€" };
 
-        for(Attivita appoggio:elenco){
+        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
 
+        //trasformo gli incarichi per generare il modello per la tabellsa
+        for(Attivita appoggio:elenco) {
+            int id = appoggio.getId();
+            String nomesequenza = appoggio.getNomesequenza();
+            int precedenza = appoggio.getPrecedenza();
+            String descrizione = appoggio.getDescrizione();
+            String datainizio = appoggio.getDatainizio();
+            String datafneprevista = appoggio.getDatafineprevista();
+            String datafine = appoggio.getDatafine();
+            double costo = appoggio.getCosto();
+
+            Object[] data = {id, nomesequenza, precedenza, descrizione, datainizio, datafneprevista, datafine, costo};
+
+            tableModel.addRow(data);
         }
-        JTable= new JTable(elenco,intestazione);
+
+        Tabella.setModel(tableModel);
+
+    }
+
+    public JPanel getPannelloPrincipale() {
+        return pannelloPrincipale;
     }
 }

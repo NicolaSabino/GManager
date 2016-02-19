@@ -19,6 +19,8 @@ public class Utente extends Model {
     private String Cognome;
     private String mail;
     private String telefono;
+    private ArrayList<Attivita> incarichi;
+    private ArrayList<Incontro> appuntamenti;
 
     /**
      * costruttore da SQL
@@ -166,6 +168,61 @@ public class Utente extends Model {
 
     }
 
+    public void popolaIncarichi(){
+        openConnection();
+        this.incarichi=new ArrayList<Attivita>();
+        String sql="select  a.id,a.nomesequenza,a.precedenza,a.descrizione,a.datainizio,a.datafineprevista,a.datafine,a.costo " +
+                "from attività a join incarichi i on i.id=a.id where i.matricola='" + this.getMatricola() + "'";
+        ResultSet query = selectQuery(sql);
+        try{
+            while(query.next()){
+                Attivita appoggio= new Attivita();
+                appoggio.setCosto(query.getDouble("costo"));
+                appoggio.setDatafine(query.getString("datafine"));
+                appoggio.setDatainizio(query.getString("datainizio"));
+                appoggio.setDatafineprevista(query.getString("datafineprevista"));
+                appoggio.setDescrizione(query.getString("descrizione"));
+                appoggio.setId(query.getInt("id"));
+                appoggio.setNomesequenza(query.getString("nomesequenza"));
+                appoggio.setPrecedenza(query.getInt("precedenza"));
+
+                incarichi.add(incarichi.size(),appoggio);
+            }
+        }catch (SQLException se){
+            se.printStackTrace();
+        }finally {
+            closeConnection();
+        }
+        return;
+    }
+
+    public void popolaAppuntamenti(){
+        openConnection();
+        this.appuntamenti=new ArrayList<Incontro>();
+        String sql="select i.tipo,i.data,i.ora,i.luogo,i.verbale from incontro i join partecipazione p " +
+                "on i.tipo=p.tipo and i.data=p.data and i.ora=p.ora " +
+                "where p.matricola='" + this.getMatricola() + "'";
+        ResultSet query= selectQuery(sql);
+        try {
+            while (query.next()){
+                Incontro appoggio = new Incontro();
+                appoggio.setTipo(query.getString("tipo"));
+                appoggio.setData(query.getString("data"));
+                appoggio.setOra(query.getString("ora"));
+                appoggio.setLuogo(query.getString("luogo"));
+                appoggio.setVerbale(query.getString("verbale"));
+
+                appuntamenti.add(appuntamenti.size(),appoggio);
+            }
+        }catch (SQLException se){
+            se.printStackTrace();
+        }finally {
+            closeConnection();
+        }
+        return;
+    }
+
+
 
     // getter and setter
 
@@ -225,5 +282,11 @@ public class Utente extends Model {
         this.telefono = telefono;
     }
 
+    public ArrayList<Attivita> getIncarichi() {
+        return incarichi;
+    }
 
+    public ArrayList<Incontro> getAppuntamenti() {
+        return appuntamenti;
+    }
 }

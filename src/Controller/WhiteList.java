@@ -49,28 +49,32 @@ public class WhiteList {
             //  creo un utente a partire dalla matricola inserita nella view
             //  se la matricola non è presente ne db creo un utente senza alcun valore
             Utente u = new Utente(this.getMatricola());
+        if(u.getMatricola()==null) {
+            this.setPermesso(Permesso.NR);
+        }else{
 
             char[] pwd_conv = u.getPwd().toCharArray(); // password prelevata dal db e adeguatamente converitita
 
-        if (this.getPasswd().length != pwd_conv.length) {
-            this.setPermesso(Permesso.NR);
-        } else if(Arrays.equals (this.getPasswd(),pwd_conv)){
-            switch(u.getRuolo()) {
-                case "US":{
-                    this.setPermesso(Permesso.US);
-                    break;
-                }
-                case "GL":{
-                    this.setPermesso(Permesso.GL);
-                    break;
-                }
+            if (this.getPasswd().length != pwd_conv.length) {
+                this.setPermesso(Permesso.NR);
+            } else if(Arrays.equals (this.getPasswd(),pwd_conv)){
+                switch(u.getRuolo()) {
+                    case "US":{
+                        this.setPermesso(Permesso.US);
+                        break;
+                    }
+                    case "GL":{
+                        this.setPermesso(Permesso.GL);
+                        break;
+                    }
 
-                case "TL":{
+                    case "TL":{
                     this.setPermesso(Permesso.TL);
-                }
+                    }
 
-                default: this.setPermesso(Permesso.NR);
+                    default: this.setPermesso(Permesso.NR);
             }
+        }
         }
 
         return;
