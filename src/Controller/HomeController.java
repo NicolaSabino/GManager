@@ -6,7 +6,10 @@ import Model.Sequenza;
 import Model.Utente;
 import View.*;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -15,9 +18,16 @@ import java.util.ArrayList;
 public class HomeController {
     RootFrame rootFrame;
     Utente utilizzatore;
-
+    ListaNotifiche notifiche;
     Home home;
 
+    /**
+     * Costruttore di home controller
+     * @param p
+     * @param s spalla dell'interfaccia grafica
+     * @param r frame principale dove settare le viste
+     * @param mat matricola dell'utilizzatore
+     */
     public HomeController(Permesso p, Spalla s,RootFrame r, String mat) {
         this.utilizzatore= new Utente(mat);
         this.rootFrame=r;
@@ -60,12 +70,10 @@ public class HomeController {
         home.setScrollEventi(t2.getPannelloPrincipale());
 
         //mostro l'elenco delle notifiche
-        MessaggioBroadcast m = new MessaggioBroadcast();
-        ArrayList<String> a = m.selezionaNotifiche();
-        ListaNotifiche n = new ListaNotifiche();
-        n.setNotifiche(a);
-        home.setScrollNotifiche(n.getPannelloPrincipale());
-
+        MessaggiController m = new MessaggiController(this.utilizzatore);
+        this.notifiche=m.getListaNotifiche();
+        home.setScrollNotifiche(notifiche.getPannelloPrincipale());
 
     }
+
 }

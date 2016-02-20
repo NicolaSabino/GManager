@@ -1,5 +1,6 @@
 package Controller;
 
+import View.NuovoMessaggio;
 import View.RootFrame;
 import View.Login;
 import View.Spalla;
@@ -16,6 +17,10 @@ public class LoginController {
     private Login loginView;
     private Spalla spalla;
 
+    /**
+     * costruttore del controller di login
+     * @param view frame principale
+     */
     public LoginController(RootFrame view) {
         this.view=view;
 
@@ -30,6 +35,9 @@ public class LoginController {
         return;
     }
 
+    /**
+     * listener del bottone di login
+     */
     public void loginListener(){
         JButton loginButton = loginView.getEntraButton();
         loginButton.addActionListener(new ActionListener() {
@@ -40,7 +48,9 @@ public class LoginController {
         });
     }
 
-
+    /**
+     * metodo di accesso
+     */
     private void loginAction(){
         loginView.getLoginValue(); //serve per leggere i due textfield
         WhiteList controllo= new WhiteList(loginView.getLog_mat(),loginView.getLog_pass());
@@ -53,6 +63,7 @@ public class LoginController {
         {
             loginView.displayErrorMessage("Matricola o password erati");
         }
+
 
 
     }

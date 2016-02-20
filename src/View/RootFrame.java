@@ -21,7 +21,7 @@ public class RootFrame extends JFrame{
         super("G");
         setContentPane(rootPanel);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(1500, 800);
+        setSize(1900, 900);
         setLocationRelativeTo(null);
         //setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);

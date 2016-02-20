@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="View.ListaNotifiche">
-  <grid id="27dc6" binding="pannelloPrincipale" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="pannelloPrincipale" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="5" left="5" bottom="5" right="5"/>
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
@@ -8,27 +8,34 @@
     <properties/>
     <border type="none"/>
     <children>
-      <scrollpane id="b86a0">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="4c71c" class="javax.swing.JList" binding="notifiche">
-            <constraints/>
-            <properties>
-              <model/>
-            </properties>
-          </component>
-        </children>
-      </scrollpane>
-      <component id="bd27" class="javax.swing.JLabel">
+      <component id="bd27" class="javax.swing.JLabel" binding="lnotifiche">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Notifiche"/>
+        </properties>
+      </component>
+      <scrollpane id="b86a0" binding="scrollNotifiche">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="-1" height="300"/>
+            <preferred-size width="-1" height="300"/>
+            <maximum-size width="-1" height="300"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children/>
+      </scrollpane>
+      <component id="e35e5" class="javax.swing.JButton" binding="ButtonNuovo">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <hideActionText value="false"/>
+          <horizontalAlignment value="0"/>
+          <text value="Nuovo Messaggio"/>
         </properties>
       </component>
     </children>

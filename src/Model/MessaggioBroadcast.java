@@ -45,17 +45,40 @@ public class MessaggioBroadcast extends Model{
 
     @Override
     public String toString() {
-        String s = this.getMittente() + ": "+ this.getMessaggio() +"  @" +this.getData();
+        String s;
+        switch (this.tipo){
+            case "TL":{
+                s ="<html><b><font color=red>" + this.getData()+"  "+this.getMittente()+": </font></b>" + this.getMessaggio() + "</html>";
+                break;
+            }
+
+            case "GL":{
+                s ="<html><b><font color=blue>" + this.getData()+"  "+this.getMittente()+": </font></b>" + this.getMessaggio() + "</html>";
+                break;
+            }
+
+            case "US":{
+                s ="<html><b>" + this.getData()+"  "+this.getMittente()+": </b>" + this.getMessaggio() + "</html>";
+                break;
+            }
+
+            case "AUTO":{
+                s ="<html><b><font color=#778899>" + this.getData()+"  "+this.getMittente()+": </b>" + this.getMessaggio() + "</font></html>";
+                break;
+            }
+            default: s ="<html><b>" + this.getData()+"  "+this.getMittente()+": </b>" + this.getMessaggio() + "</html>";
+        }
+
         return s;
     }
 
     public ArrayList<String> selezionaNotifiche(){
         openConnection();
         ArrayList<String> ris = new ArrayList<String>();
-        String sql = "select * from broadcast";
+        String sql = "select * from broadcast order by data";
         ResultSet query = selectQuery(sql);
         try {
-            if(query.next()){
+            while(query.next()){
                 MessaggioBroadcast appoggio = new MessaggioBroadcast();
                 appoggio.setTipo(query.getString("tipo"));
                 appoggio.setId(query.getInt("id"));

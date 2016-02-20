@@ -8,13 +8,26 @@ import java.util.ArrayList;
  */
 public class ListaNotifiche {
     private JPanel pannelloPrincipale;
-    private JList notifiche;
 
-    public void setNotifiche(ArrayList<String> a) {
-        this.notifiche = new JList(a.toArray());
+    private JLabel lnotifiche;
+    private JScrollPane scrollNotifiche;
+    private JButton ButtonNuovo;
+
+    public ListaNotifiche(ArrayList<String> a) {
+        JList notifiche = new JList(a.toArray());
+        notifiche.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        notifiche.setVisibleRowCount(-1);
+        notifiche.setVisible(true);
+        scrollNotifiche.setViewportView(notifiche);
     }
 
     public JPanel getPannelloPrincipale() {
         return pannelloPrincipale;
     }
+
+    public JButton getButtonNuovo() {
+        return ButtonNuovo;
+    }
 }
+
+
