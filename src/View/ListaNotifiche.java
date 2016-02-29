@@ -28,6 +28,11 @@ public class ListaNotifiche {
     public JButton getButtonNuovo() {
         return ButtonNuovo;
     }
+
+    public void aggiorna(){
+        this.pannelloPrincipale.repaint();
+    }
+
 }
 
 

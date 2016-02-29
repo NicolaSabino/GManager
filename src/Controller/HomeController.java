@@ -55,9 +55,6 @@ public class HomeController {
         home.setSequenza(utilizzatore.selezionaSequenzaUtente());
         home.setProgressBarCompl((int) sequenzaDiAppartenenza.getPercentComplSeq());
 
-        //genero gli incarichi dell'utilizzatore e gli appuntamenti
-        utilizzatore.popolaIncarichi();
-        utilizzatore.popolaAppuntamenti();
 
         //mostro a video gli incarichi
         TabellaAttivita t= new TabellaAttivita();
@@ -69,8 +66,8 @@ public class HomeController {
         t2.setModelTabella(utilizzatore.getAppuntamenti());
         home.setScrollEventi(t2.getPannelloPrincipale());
 
-        //mostro l'elenco delle notifiche
-        MessaggiController m = new MessaggiController(this.utilizzatore);
+        //mostro l'elenco dei messaggi-notifiche
+        MessaggiController m = new MessaggiController(this.utilizzatore,this.home);
         this.notifiche=m.getListaNotifiche();
         home.setScrollNotifiche(notifiche.getPannelloPrincipale());
 

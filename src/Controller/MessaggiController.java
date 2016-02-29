@@ -2,6 +2,7 @@ package Controller;
 
 import Model.MessaggioBroadcast;
 import Model.Utente;
+import View.Home;
 import View.ListaNotifiche;
 import View.NuovoMessaggio;
 
@@ -20,13 +21,24 @@ public class MessaggiController {
     private ArrayList<String> elencoNotifiche;
     private Utente utilizzatore;
     private NuovoMessaggio n;
+    private Home h;
 
-    public MessaggiController(Utente u){
+
+    public MessaggiController(Utente u,Home home){
         this.utilizzatore=u;
         MessaggioBroadcast m = new MessaggioBroadcast();
+
+        //genero l'elenco delle notifiche
         this.elencoNotifiche = m.selezionaNotifiche();
+        //creo la nuova view con le notifiche create
         this.listaNotifiche =new ListaNotifiche(elencoNotifiche);
+
+        //creo il listener che controlla il bottone NUOVO MESSAGGIO
         this.NuovoMessaggioListener();
+
+        //mi conservo la home per aggiornarla successivamente
+        this.h=home;
+
         return;
     }
 
@@ -34,7 +46,7 @@ public class MessaggiController {
         return listaNotifiche;
     }
 
-    public void NuovoMessaggioListener(){
+    protected void NuovoMessaggioListener(){
         JButton b = listaNotifiche.getButtonNuovo();
         b.addActionListener(new ActionListener() {
             @Override
@@ -47,22 +59,43 @@ public class MessaggiController {
         return;
     }
 
-    public void CreaMessaggioListener(){
+    protected void CreaMessaggioListener(){
         JButton b = n.getInviaButton();
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println();
                 MessaggioBroadcast messaggio = new MessaggioBroadcast();
                 messaggio.setMessaggio(n.getTesto());
                 messaggio.setData("CURRENT_DATE");
-                messaggio.setMittente(utilizzatore.getNome() + utilizzatore.getCognome());
+                messaggio.setMittente(utilizzatore.getNome() + " " + utilizzatore.getCognome());
                 messaggio.setTipo(utilizzatore.getRuolo());
                 if(messaggio.insertIntoSQL()){
-                    JOptionPane.showMessageDialog(new JFrame("errore"),"messaggio inserito con successo!");
+                    //JOptionPane.showMessageDialog(new JFrame("errore"),"messaggio inserito con successo!");
+                    aggiorna();
+
+                    //dispose chiude la finestra
+                    n.dispose();
+                }else {
+                    JOptionPane.showMessageDialog(new JFrame("errore"), "massimo 60 caratteri!");
                 }
+
+                //aggiorno l'interfaccia grafica
             }
         });
+    }
+
+    public void aggiorna(){
+        MessaggioBroadcast m = new MessaggioBroadcast();
+
+        //genero il nuovo elenco delle notifiche
+        this.elencoNotifiche = m.selezionaNotifiche();
+
+        //creo la nuova view con le notifiche create
+        this.listaNotifiche =new ListaNotifiche(elencoNotifiche);
+        this.h.setScrollNotifiche(listaNotifiche.getPannelloPrincipale());
+
+        //creo il listener che controlla il bottone NUOVO MESSAGGIO
+        this.NuovoMessaggioListener();
     }
 
     //getter and setter

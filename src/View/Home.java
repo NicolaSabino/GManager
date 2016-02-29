@@ -52,5 +52,9 @@ public class Home extends JFrame {
     public void setScrollNotifiche(Component panel) {
         this.scrollNotifiche.setViewportView(panel);
     }
+
+    public JScrollPane getScrollNotifiche(){
+        return scrollNotifiche;
+    }
 }
 

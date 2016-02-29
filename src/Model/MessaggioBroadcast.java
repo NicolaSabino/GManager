@@ -28,10 +28,10 @@ public class MessaggioBroadcast extends Model{
     public boolean insertIntoSQL() {
         boolean controllo=false;
         openConnection();
-        String sql="insert into broadcast(data,messaggio,tipo) values("
+        String sql="insert into broadcast(data,messaggio,tipo,mittente) values("
                 +"CURRENT_DATE,'" + this.getMessaggio() + "','"
-                + this.getTipo() + "')";
-        if(updateIntoSQL()){
+                + this.getTipo() + "','" + this.getMittente() +"')";
+        if(updateQuery(sql)){
             controllo=true;
         }
         closeConnection();
@@ -75,7 +75,7 @@ public class MessaggioBroadcast extends Model{
     public ArrayList<String> selezionaNotifiche(){
         openConnection();
         ArrayList<String> ris = new ArrayList<String>();
-        String sql = "select * from broadcast order by data";
+        String sql = "select * from broadcast order by data desc";
         ResultSet query = selectQuery(sql);
         try {
             while(query.next()){

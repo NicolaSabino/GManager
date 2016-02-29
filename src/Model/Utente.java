@@ -48,6 +48,9 @@ public class Utente extends Model {
             closeConnection();
         }
 
+        this.popolaAppuntamenti();
+        this.popolaIncarichi();
+
     }
 
     /**
