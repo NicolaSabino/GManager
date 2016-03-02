@@ -14,7 +14,6 @@ public class Spalla {
     private JButton ricercaButton;
     private JButton ordiniButton;
     private JButton gestisciButton;
-    private JButton appuntamentiButton;
     private JPanel InfoUtente;
     private JLabel Utente;
     private JLabel nomeUtente;
@@ -36,7 +35,6 @@ public class Spalla {
         ricercaButton.setVisible(false);
         ordiniButton.setVisible(false);
         gestisciButton.setVisible(false);
-        appuntamentiButton.setVisible(false);
         InfoUtente.setVisible(false);
 
 
@@ -53,7 +51,6 @@ public class Spalla {
         ordiniButton.setVisible(true);
 
         gestisciButton.setVisible(false);
-        appuntamentiButton.setVisible(false);
 
         //informazioni dell'utente
         InfoUtente.setVisible(true);
@@ -77,7 +74,6 @@ public class Spalla {
         ordiniButton.setVisible(true);
 
         gestisciButton.setVisible(true);
-        appuntamentiButton.setVisible(true);
 
 
         //informazioni dell'utente

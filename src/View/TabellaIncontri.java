@@ -33,6 +33,7 @@ public class TabellaIncontri {
         }
 
         Tabella.setModel(tableModel);
+        Tabella.setEnabled(false);
 
     }
     public JPanel getPannelloPrincipale() {

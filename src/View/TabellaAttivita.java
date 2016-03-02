@@ -41,6 +41,7 @@ public class TabellaAttivita {
         }
 
         Tabella.setModel(tableModel);
+        Tabella.setEnabled(false);
 
     }
 

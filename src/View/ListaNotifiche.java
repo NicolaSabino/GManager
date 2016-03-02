@@ -19,6 +19,7 @@ public class ListaNotifiche {
         notifiche.setVisibleRowCount(-1);
         notifiche.setVisible(true);
         scrollNotifiche.setViewportView(notifiche);
+
     }
 
     public JPanel getPannelloPrincipale() {

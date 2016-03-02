@@ -28,27 +28,10 @@ public class HomeController {
      * @param r frame principale dove settare le viste
      * @param mat matricola dell'utilizzatore
      */
-    public HomeController(Permesso p, Spalla s,RootFrame r, String mat) {
+    public HomeController(Permesso p,RootFrame r, String mat) {
         this.utilizzatore= new Utente(mat);
         this.rootFrame=r;
         this.home=new Home();
-
-        switch (p){
-            case US:{
-                //setto le informazioni dell'utente in alto a sinistra sulla spalla
-                s.usMode(utilizzatore);
-                break;
-            }
-            case GL:{
-                s.proMode(utilizzatore);
-                break;
-            }
-            case TL:{
-                s.proMode(utilizzatore);
-                break;
-            }
-
-        }
 
         r.setMainScrollPane(home.getPannelloPrincipale());
         Sequenza sequenzaDiAppartenenza = new Sequenza(utilizzatore.selezionaSequenzaUtente());

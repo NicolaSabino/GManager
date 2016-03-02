@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  * Created by nicola on 14/02/16.
  */
 public class LoginController {
-    private RootFrame view;
+    private RootFrame rootFrame;
     private Login loginView;
     private Spalla spalla;
 
@@ -22,7 +22,7 @@ public class LoginController {
      * @param view frame principale
      */
     public LoginController(RootFrame view) {
-        this.view=view;
+        this.rootFrame=view;
 
         loginView = new Login();
 
@@ -58,7 +58,7 @@ public class LoginController {
         //meccanismo di display dei risultati
 
         if(controllo.getPermesso()==Permesso.US || controllo.getPermesso()==Permesso.GL || controllo.getPermesso()==Permesso.TL){
-            HomeController h = new HomeController(controllo.getPermesso(),spalla,view,loginView.getLog_mat());
+            SpallaController s = new SpallaController(controllo.getPermesso(),spalla,loginView.getLog_mat(),rootFrame);
         }else
         {
             loginView.displayErrorMessage("Matricola o password erati");
