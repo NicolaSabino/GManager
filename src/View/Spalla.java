@@ -90,4 +90,24 @@ public class Spalla {
     public JPanel getPannelloPrincipale() {
         return pannelloPrincipale;
     }
+
+    public JButton getRicercaButton(){
+        return ricercaButton;
+    }
+
+    public JButton getHomeButton() {
+        return homeButton;
+    }
+
+    public JButton getImpostazioniButton() {
+        return impostazioniButton;
+    }
+
+    public JButton getOrdiniButton() {
+        return ordiniButton;
+    }
+
+    public JButton getGestisciButton() {
+        return gestisciButton;
+    }
 }

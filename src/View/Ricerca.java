@@ -14,11 +14,10 @@ public class Ricerca extends JFrame {
 
 
     public Ricerca(){
-        setContentPane(primoPanel);
-        pack();
-        setSize(1900, 900);
-
         setVisible(true);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    public JPanel getPrimoPanel() {
+        return primoPanel;
     }
 }

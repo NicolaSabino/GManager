@@ -58,7 +58,7 @@ public class LoginController {
         //meccanismo di display dei risultati
 
         if(controllo.getPermesso()==Permesso.US || controllo.getPermesso()==Permesso.GL || controllo.getPermesso()==Permesso.TL){
-            SpallaController s = new SpallaController(controllo.getPermesso(),spalla,loginView.getLog_mat(),rootFrame);
+            SpallaController s = new SpallaController(controllo.getPermesso(),spalla,loginView.getLog_mat(),rootFrame,loginView.getLog_mat());
         }else
         {
             loginView.displayErrorMessage("Matricola o password erati");

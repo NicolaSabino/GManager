@@ -56,4 +56,8 @@ public class HomeController {
 
     }
 
+    public void apriHome(){
+        rootFrame.setMainScrollPane(home.getPannelloPrincipale());
+    }
+
 }
