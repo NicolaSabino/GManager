@@ -1,5 +1,7 @@
 package View;
 
+import Model.Utente;
+
 import javax.swing.*;
 
 /**
@@ -79,5 +81,14 @@ public class Impostazioni extends JPanel{
 
     public JButton getButtonLogout() {
         return buttonLogout;
+    }
+
+    public Utente getModifiche(){
+        Utente appoggio= new Utente();
+        appoggio.setNome(campoNome.getText());
+        appoggio.setCognome(campoCognome.getText());
+        appoggio.setTelefono(campoTelefono.getText());
+        appoggio.setMail(campoEmail.getText());
+        return appoggio;
     }
 }

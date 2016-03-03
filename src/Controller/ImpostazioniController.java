@@ -15,11 +15,13 @@ public class ImpostazioniController {
 
     private RootFrame rootFrame;
     private Impostazioni impostazioni;
+    private Utente utilizzatore;
 
     public ImpostazioniController(RootFrame rootFrame, Utente utilizzatore) {
 
         this.rootFrame=rootFrame;
         this.impostazioni= new Impostazioni();
+        this.utilizzatore=utilizzatore;
 
         //imposto i campi dell'interfaccia
         this.impostazioni.setCampoNome(utilizzatore.getNome());
@@ -53,5 +55,9 @@ public class ImpostazioniController {
 
     protected void modificaCampi(){
         this.impostazioni.disabilitaCampi(false);
+
+        utilizzatore.updateIntoSQL("nome",impostazioni.getModifiche().getNome());
+        // todo edo finiscilo
+
     }
 }
