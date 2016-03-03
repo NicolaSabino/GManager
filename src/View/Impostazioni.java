@@ -5,7 +5,7 @@ import javax.swing.*;
 /**
  * Created by edoardo on 02/03/16.
  */
-public class Impostazioni extends JFrame{
+public class Impostazioni extends JPanel{
 
 
     private JPanel pannelloPrincipale;

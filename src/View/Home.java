@@ -7,7 +7,7 @@ import java.awt.*;
 /**
  * Created by edoardo on 15/02/16.
  */
-public class Home extends JFrame {
+public class Home extends JPanel {
     private JPanel pannelloPrincipale;
     private JScrollPane scrollEventi;
     private JScrollPane scrollCompiti;
@@ -17,11 +17,8 @@ public class Home extends JFrame {
 
 
     public Home() {
-        pack();
-        setContentPane(pannelloPrincipale);
         setVisible(true);
         progressBarCompl.setVisible(true);
-
 
     }
 

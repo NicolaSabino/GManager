@@ -5,7 +5,7 @@ import javax.swing.*;
 /**
  * Created by edoardo on 01/03/16.
  */
-public class Ricerca extends JFrame {
+public class Ricerca extends JPanel {
     private JPanel primoPanel;
     private JPanel panelRicerca;
     private JComboBox comboBoxRicerca;
