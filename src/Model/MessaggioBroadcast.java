@@ -75,7 +75,7 @@ public class MessaggioBroadcast extends Model{
     public ArrayList<String> selezionaNotifiche(){
         openConnection();
         ArrayList<String> ris = new ArrayList<String>();
-        String sql = "select * from broadcast order by data desc";
+        String sql = "select * from broadcast order by id desc";
         ResultSet query = selectQuery(sql);
         try {
             while(query.next()){

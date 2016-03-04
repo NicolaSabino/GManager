@@ -76,14 +76,17 @@ public class Utente extends Model {
             openConnection();
             String sql = "update datianagrafici set " + var[0] + " ='" + var[1]
                     + "'where matricola = '" + this.getMatricola() + "'";
-            controllo=true;
+            if(updateQuery(sql)){
+                controllo=true;
+            }
 
-        }else if(var[0]=="ruolo"){
+        }else if(var[0]=="ruolo" || var[0]=="pwd"){
             openConnection();
             String sql = "update datilavorativi set " + var[0] + " ='" + var[1]
                     + "'where matricola = '" + this.getMatricola() + "'";
-
-            controllo=true;
+            if(updateQuery(sql)){
+                controllo=true;
+            }
         }else{
             controllo=false;
         }

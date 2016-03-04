@@ -25,6 +25,8 @@ public class RootFrame extends JFrame{
         setLocationRelativeTo(null);
         //setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
+        ImageIcon imageIcon=new ImageIcon("logo_GManagersvg.png");
+        this.setIconImage(imageIcon.getImage());
 
 
     }

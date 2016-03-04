@@ -70,6 +70,7 @@ public class WhiteList {
 
                     case "TL":{
                     this.setPermesso(Permesso.TL);
+                        break;
                     }
 
                     default: this.setPermesso(Permesso.NR);

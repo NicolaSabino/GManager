@@ -35,7 +35,7 @@ public class ImpostazioniController {
 
         //imposto i listner
         this.modificaListner();
-
+        this.salvaListener();
         return;
     }
 
@@ -53,11 +53,38 @@ public class ImpostazioniController {
         });
     }
 
+    protected void salvaListener() {
+        JButton salva = impostazioni.getButtonSalva();
+        salva.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                salvaCampi();
+            }
+        });
+    }
+
     protected void modificaCampi(){
         this.impostazioni.disabilitaCampi(false);
+    }
 
-        utilizzatore.updateIntoSQL("nome",impostazioni.getModifiche().getNome());
-        // todo edo finiscilo
+    protected void salvaCampi(){
 
+        utilizzatore.updateIntoSQL("nome", impostazioni.getModifiche().getNome());
+        utilizzatore.setNome(impostazioni.getModifiche().getNome());
+
+        utilizzatore.updateIntoSQL("cognome", impostazioni.getModifiche().getCognome());
+        utilizzatore.setCognome(impostazioni.getModifiche().getCognome());
+
+        utilizzatore.updateIntoSQL("telefono", impostazioni.getModifiche().getTelefono());
+        utilizzatore.setTelefono(impostazioni.getModifiche().getTelefono());
+
+        utilizzatore.updateIntoSQL("mail", impostazioni.getModifiche().getMail());
+        utilizzatore.setMail(impostazioni.getModifiche().getMail());
+
+        utilizzatore.updateIntoSQL("pwd",impostazioni.getModifiche().getPwd());
+        utilizzatore.setPwd(impostazioni.getModifiche().getPwd());
+        this.impostazioni.disabilitaCampi(true);
     }
 }
+
+//todo aggiungere un repain e controllare bug sulla modifica della password

@@ -32,6 +32,8 @@ public class Impostazioni extends JPanel{
         this.campoPassword.setEnabled(!controllo);
         this.campoTelefono.setEnabled(!controllo);
         this.buttonSalva.setEnabled(!controllo);
+        this.buttonModifica.setEnabled(controllo);
+        this.buttonLogout.setEnabled(controllo);
     }
 
 
