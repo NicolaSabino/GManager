@@ -13,7 +13,6 @@ public class TabellaAttivita {
     private JPanel pannelloPrincipale;
     private JTable Tabella;
     private JScrollPane scroll;
-    private JLabel Attivita;
 
     /**
      * Genera dinamicamente la tabella mediante l'elenco delle attivita da mostrare

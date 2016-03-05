@@ -86,6 +86,48 @@ public class Sequenza extends Attivita {
     }
 
     /**
+     * metodo per creare un insieme di attività prodotte come risultato di una ricerca
+     */
+    public Sequenza(String...var){
+
+        // todo ampliare questo metodo
+        this.stato=new ArrayList<Attivita>();
+        openConnection();
+        String sql;
+        if(var[0]=="descrizione") {
+            sql = "select a.id,a.nomesequenza,a.precedenza,a.descrizione,a.datainizio,a.datafineprevista,a.datafine,a.costo from attività a " +
+                    "where a.descrizione like '%" + var[1] + "%'";
+            ResultSet query = selectQuery(sql);
+
+            try{
+                while (query.next()){
+                    Attivita appoggio=new Attivita();
+
+                    appoggio.setId(query.getInt("id"));
+                    appoggio.setNomesequenza(query.getString("nomesequenza"));
+                    appoggio.setPrecedenza(query.getInt("precedenza"));
+                    appoggio.setDatainizio(query.getString("datainizio"));
+                    appoggio.setDatafine(query.getString("datafine"));
+                    appoggio.setDatafineprevista(query.getString("datafineprevista"));
+                    appoggio.setDescrizione(query.getString("descrizione"));
+                    appoggio.setCosto(query.getDouble("costo"));
+
+                    this.stato.add(stato.size(), appoggio);
+                }
+
+            }catch (SQLException se){
+                se.printStackTrace();
+            }finally {
+                closeConnection();
+            }
+        }else if(var[0]=="descrizione+ultimato"){
+            // TODO: finire
+            return;
+        }
+        return;
+    }
+
+    /**
      * metodo che calcola il costo di una sequenza
      * @return
      */

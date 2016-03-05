@@ -1,16 +1,17 @@
 package Controller;
 
+import Model.Attivita;
 import Model.Gruppo;
-import View.Impostazioni;
-import View.Ricerca;
-import View.RootFrame;
-import View.TabellaUtenti;
+import Model.Progetto;
+import Model.Sequenza;
+import View.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 /**
  * Created by nicola on 02/03/16.
@@ -69,7 +70,7 @@ public class RicercaController {
         switch (mod){
             case 1 :{
 
-                    //ricerca
+                    //ricerca per nome
                     Gruppo g = new Gruppo();
                     g.createFrom("nome+cognome",ricerca.getTestoCampo1(),ricerca.getTestoCampo2());
                     TabellaUtenti tabellaUtenti = new TabellaUtenti();
@@ -79,13 +80,37 @@ public class RicercaController {
             }
             case 2:{
 
+                //ricerca attività
+                Sequenza s = new Sequenza("descrizione",ricerca.getTestoCampo1());
+                TabellaAttivita tabellaAttivita = new TabellaAttivita();
+                tabellaAttivita.setModelTabella(s.getStato());
+                ricerca.setScrollRIcerca(tabellaAttivita.getPannelloPrincipale());
                 break;
             }
             case 3:{
-
+                //ricerca attività
+                Sequenza s = new Sequenza(ricerca.getTestoCampo1());
+                TabellaAttivita tabellaAttivita = new TabellaAttivita();
+                tabellaAttivita.setModelTabella(s.getStato());
+                ricerca.setScrollRIcerca(tabellaAttivita.getPannelloPrincipale());
                 break;
             }
             case 4:{
+                //ricerca progetto
+                Progetto p = new Progetto(ricerca.getTestoCampo1());
+                TabellaAttivita tabellaAttivita = new TabellaAttivita();
+                ArrayList<Attivita> risultatoRicerca = new ArrayList<Attivita>();
+
+                //seleziono tutte le attività di un determinato progetto considerando le sue sequenze
+                for(Sequenza appoggio:p.getStato()){
+                    for(Attivita app:appoggio.getStato()){
+                        risultatoRicerca.add(risultatoRicerca.size(),app);
+                    }
+                }
+
+                tabellaAttivita.setModelTabella(risultatoRicerca);
+                ricerca.setScrollRIcerca(tabellaAttivita.getPannelloPrincipale());
+
                return;
             }
         }
@@ -103,12 +128,12 @@ public class RicercaController {
                 break;
             }
             case 3:{
-                ricerca.CercaSequenzaProgetto();
+                ricerca.CercaSequenza();
                 this.mod=3;
                 break;
             }
             case 4:{
-                ricerca.CercaSequenzaProgetto();
+                ricerca.CercaProgetto();
                 this.mod=4;
                 break;
             }

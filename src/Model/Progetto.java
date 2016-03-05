@@ -124,6 +124,8 @@ public class Progetto extends Model {
         return controllo;
     }
 
+
+
     //getter and setter
 
     public double getCosto() {

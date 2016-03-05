@@ -1,9 +1,11 @@
 package View;
 
-import Model.Model;
+import Model.Progetti;
+import Model.Progetto;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by edoardo on 01/03/16.
@@ -20,12 +22,23 @@ public class Ricerca extends JPanel {
     private JLabel label2;
     private JButton Cerca;
     private JScrollPane ScrollRIcerca;
+    private JButton salvaRicerca;
+    private JComboBox comboProgetti;
+    private JLabel labelProgetti;
 
 
     public Ricerca(){
         setVisible(true);
         comboBoxRicerca.setSelectedIndex(0); //setto di default la ricerca su utente
         CercaUtente();
+
+        //genero i progetti disponibili nellla modalità cerca progetto e li inserisco nella combobox dei progetti
+        Progetti p = new Progetti();
+        ArrayList<String> s = new ArrayList<String>();
+        for(Progetto appoggio:p.getStato()){
+            this.comboProgetti.add
+        }
+
     }
 
     public void CercaUtente(){
@@ -34,6 +47,8 @@ public class Ricerca extends JPanel {
         label2.setVisible(true);
         campo2.setVisible(true);
         Cerca.setVisible(true);
+        labelProgetti.setVisible(false);
+        comboProgetti.setVisible(false);
     }
 
     public void CercaAttivita(){
@@ -41,13 +56,27 @@ public class Ricerca extends JPanel {
         label2.setVisible(false);
         campo2.setVisible(false);
         Cerca.setVisible(true);
+        labelProgetti.setVisible(false);
+        comboProgetti.setVisible(false);
     }
 
-    public void CercaSequenzaProgetto(){
+    public void CercaSequenza(){
         label1.setText("Nome");
         label2.setVisible(false);
         campo2.setVisible(false);
         Cerca.setVisible(true);
+        labelProgetti.setVisible(false);
+        comboProgetti.setVisible(false);
+    }
+
+    public void CercaProgetto(){
+        label1.setVisible(false);
+        label2.setVisible(false);
+        campo1.setVisible(false);
+        campo2.setVisible(false);
+        Cerca.setVisible(true);
+        labelProgetti.setVisible(true);
+        comboProgetti.setVisible(true);
     }
 
 
