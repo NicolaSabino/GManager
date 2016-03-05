@@ -19,21 +19,22 @@ public class TabellaAttivita {
      * Genera dinamicamente la tabella mediante l'elenco delle attivita da mostrare
      * @param elenco
      */
-    public void setModelTabella(ArrayList<Model.Attivita> elenco) {
+    public void setModelTabella(ArrayList<Attivita> elenco) {
         String col[] = {"Id","nome Sequenza","Precedenza", "Descrizione", "Data Inizio", "Data Fine Prevista", "Data Fine", "€" };
 
         DefaultTableModel tableModel = new DefaultTableModel(col, 0);
 
         //trasformo gli incarichi per generare il modello per la tabellsa
         for(Attivita appoggio:elenco) {
-            int id = appoggio.getId();
-            String nomesequenza = appoggio.getNomesequenza();
-            int precedenza = appoggio.getPrecedenza();
-            String descrizione = appoggio.getDescrizione();
-            String datainizio = appoggio.getDatainizio();
-            String datafneprevista = appoggio.getDatafineprevista();
-            String datafine = appoggio.getDatafine();
-            double costo = appoggio.getCosto();
+
+            int id                  = appoggio.getId();
+            String nomesequenza     = appoggio.getNomesequenza();
+            int precedenza          = appoggio.getPrecedenza();
+            String descrizione      = appoggio.getDescrizione();
+            String datainizio       = appoggio.getDatainizio();
+            String datafneprevista  = appoggio.getDatafineprevista();
+            String datafine         = appoggio.getDatafine();
+            double costo            = appoggio.getCosto();
 
             Object[] data = {id, nomesequenza, precedenza, descrizione, datainizio, datafneprevista, datafine, costo};
 
