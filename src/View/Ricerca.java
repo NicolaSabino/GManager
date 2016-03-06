@@ -4,6 +4,7 @@ import Model.Progetti;
 import Model.Progetto;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -35,9 +36,12 @@ public class Ricerca extends JPanel {
         //genero i progetti disponibili nellla modalità cerca progetto e li inserisco nella combobox dei progetti
         Progetti p = new Progetti();
         ArrayList<String> s = new ArrayList<String>();
+
         for(Progetto appoggio:p.getStato()){
-            this.comboProgetti.add
+            s.add(s.size(),appoggio.getNome());
         }
+        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel(s.toArray());
+        comboProgetti.setModel(comboBoxModel);
 
     }
 
@@ -46,6 +50,7 @@ public class Ricerca extends JPanel {
         label2.setText("Cognome");
         label2.setVisible(true);
         campo2.setVisible(true);
+        campo1.setVisible(true);
         Cerca.setVisible(true);
         labelProgetti.setVisible(false);
         comboProgetti.setVisible(false);

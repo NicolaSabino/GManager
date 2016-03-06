@@ -31,6 +31,7 @@ public class Progetto extends Model {
      */
     public Progetto(String chiave){
         openConnection();
+        this.setNome(chiave);
         //prelevo dal db i nomi delle sequenze collegate al progetto
         String sql= "select nome from sequenza where nomeprogetto='"+ chiave + "'";
         ResultSet query= selectQuery(sql);
