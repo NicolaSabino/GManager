@@ -21,6 +21,7 @@ public class RicercaController {
     private RootFrame rootFrame;
     private Ricerca ricerca;
     private int mod;
+    private String campoProgetto;
 
 
     public RicercaController(RootFrame rootFrame) {
@@ -28,7 +29,9 @@ public class RicercaController {
         this.ricerca= new Ricerca();
         this.mod=1;
 
+        //attivo i listner
         listnerComboBox();
+        listnerComboProgetto();
         listnerBottoneCerca();
         return;
     }
@@ -56,6 +59,16 @@ public class RicercaController {
         });
     }
 
+    public void listnerComboProgetto(){
+        JComboBox box = ricerca.getComboProgetti();
+        box.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                setCampoProgetto(e.getItem().toString());
+            }
+        });
+    }
+
     public void listnerBottoneCerca(){
         JButton cerca =ricerca.getCerca();
         cerca.addActionListener(new ActionListener() {
@@ -65,6 +78,8 @@ public class RicercaController {
             }
         });
     }
+
+
 
     protected void stampaRisultato(){
         switch (mod){
@@ -97,7 +112,7 @@ public class RicercaController {
             }
             case 4:{
                 //ricerca progetto
-                Progetto p = new Progetto(ricerca.getTestoCampo1());
+                Progetto p = new Progetto(this.campoProgetto);
                 TabellaAttivita tabellaAttivita = new TabellaAttivita();
                 ArrayList<Attivita> risultatoRicerca = new ArrayList<Attivita>();
 
@@ -138,5 +153,9 @@ public class RicercaController {
                 break;
             }
         }
+    }
+
+    public void setCampoProgetto(String campoProgetto) {
+        this.campoProgetto = campoProgetto;
     }
 }

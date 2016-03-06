@@ -126,7 +126,6 @@ public class Progetto extends Model {
     }
 
 
-
     //getter and setter
 
     public double getCosto() {

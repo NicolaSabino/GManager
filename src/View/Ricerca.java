@@ -18,7 +18,6 @@ public class Ricerca extends JPanel {
     private JTextField campo1;
     private JTextField campo2;
     private JLabel titoloRicerca;
-    private JCheckBox checkBox;
     private JLabel label1;
     private JLabel label2;
     private JButton Cerca;
@@ -37,6 +36,8 @@ public class Ricerca extends JPanel {
         Progetti p = new Progetti();
         ArrayList<String> s = new ArrayList<String>();
 
+        //primo campo di default
+        s.add(s.size(),"<html><font color=#778899>Seleziona il progetto</font></html>");
         for(Progetto appoggio:p.getStato()){
             s.add(s.size(),appoggio.getNome());
         }
@@ -108,5 +109,9 @@ public class Ricerca extends JPanel {
 
     public void setScrollRIcerca(Component panel) {
         this.ScrollRIcerca.setViewportView(panel);
+    }
+
+    public JComboBox getComboProgetti() {
+        return comboProgetti;
     }
 }

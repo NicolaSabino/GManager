@@ -70,7 +70,6 @@ public class MessaggiController {
                 messaggio.setMittente(utilizzatore.getNome() + " " + utilizzatore.getCognome());
                 messaggio.setTipo(utilizzatore.getRuolo());
                 if(messaggio.insertIntoSQL()){
-                    //JOptionPane.showMessageDialog(new JFrame("errore"),"messaggio inserito con successo!");
                     aggiorna();
 
                     //dispose chiude la finestra
