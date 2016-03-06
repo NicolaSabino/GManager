@@ -23,11 +23,13 @@ public class ImpostazioniController {
         this.impostazioni= new Impostazioni();
         this.utilizzatore=utilizzatore;
 
+
         //imposto i campi dell'interfaccia
         this.impostazioni.setCampoNome(utilizzatore.getNome());
         this.impostazioni.setCampoCognome(utilizzatore.getCognome());
         this.impostazioni.setCampoEmail(utilizzatore.getMail());
         this.impostazioni.setCampoPassword(utilizzatore.getPwd());
+        this.impostazioni.setCampoPasswordCheck(utilizzatore.getPwd());
         this.impostazioni.setCampoTelefono(utilizzatore.getTelefono());
 
         //setto tutti i campi come disabilitati
@@ -36,6 +38,8 @@ public class ImpostazioniController {
         //imposto i listner
         this.modificaListner();
         this.salvaListener();
+        this.logoutListener();
+
         return;
     }
 
@@ -53,6 +57,11 @@ public class ImpostazioniController {
         });
     }
 
+    protected void modificaCampi(){
+        this.impostazioni.disabilitaCampi(false);
+    }
+
+
     protected void salvaListener() {
         JButton salva = impostazioni.getButtonSalva();
         salva.addActionListener(new ActionListener() {
@@ -63,28 +72,29 @@ public class ImpostazioniController {
         });
     }
 
-    protected void modificaCampi(){
-        this.impostazioni.disabilitaCampi(false);
+    protected void logoutListener() {
+        JButton salva = impostazioni.getButtonLogout();
+        salva.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                MainController controller_G = new MainController();
+
+            }
+        });
     }
+
 
     protected void salvaCampi(){
 
         utilizzatore.updateIntoSQL("nome", impostazioni.getModifiche().getNome());
-        utilizzatore.setNome(impostazioni.getModifiche().getNome());
-
         utilizzatore.updateIntoSQL("cognome", impostazioni.getModifiche().getCognome());
-        utilizzatore.setCognome(impostazioni.getModifiche().getCognome());
-
         utilizzatore.updateIntoSQL("telefono", impostazioni.getModifiche().getTelefono());
-        utilizzatore.setTelefono(impostazioni.getModifiche().getTelefono());
-
         utilizzatore.updateIntoSQL("mail", impostazioni.getModifiche().getMail());
-        utilizzatore.setMail(impostazioni.getModifiche().getMail());
-
-        utilizzatore.updateIntoSQL("pwd",impostazioni.getModifiche().getPwd());
-        utilizzatore.setPwd(impostazioni.getModifiche().getPwd());
+        if(impostazioni.getModifiche().getPwd().equals(new String(impostazioni.getCampoPasswordCheck().getPassword()))) {
+            utilizzatore.updateIntoSQL("pwd", impostazioni.getModifiche().getPwd());
+        }else impostazioni.displayErrorMessage("Le due password non coincidono!\n(nota: le altre modifiche sono state accettate)", "errore!");
         this.impostazioni.disabilitaCampi(true);
     }
-}
 
-//todo aggiungere un repain e controllare bug sulla modifica della password
+}

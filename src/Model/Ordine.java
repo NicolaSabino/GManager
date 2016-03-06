@@ -10,11 +10,13 @@ import java.sql.SQLException;
 public class Ordine extends Model {
     private int Id;
     private String Matricola;
-    private String Pezzo;
+    private float Prezzo;
     private String DataOrdine;
     private String Attivita;
     private boolean Approvazione;
     private String Descrizione;
+    private int Quantita;
+
 
     /**
      * Costruttore vuoto
@@ -36,9 +38,10 @@ public class Ordine extends Model {
                 this.setId(query.getInt("id"));
                 this.setMatricola(query.getString("matricola"));
                 this.setDataOrdine(query.getString("dataordine"));
-                this.setPezzo(query.getString("prezzo"));
+                this.setPrezzo(query.getFloat("prezzo"));
                 this.setApprovazione(query.getBoolean("approvazione"));
                 this.setDescrizione(query.getString("descrizione"));
+                this.setQuantita(query.getInt("quantita"));
             }
 
         }catch (SQLException se){
@@ -70,7 +73,7 @@ public class Ordine extends Model {
         //id è auto-incrementante quindi non va inserito
         String sql="Insert into Ordine(matricola,prezzo,dataordine,attività,Descrizione) values('"
                 +   this.getMatricola()  + "','"
-                +   this.getPezzo()    + "','"
+                +   this.getPrezzo()    + "','"
                 +   this.getDataOrdine()   + "','"
                 +   this.getAttivita()    + "','"
                 +   this.getDescrizione()         +"')";
@@ -111,7 +114,6 @@ public class Ordine extends Model {
 
     //Setter and getter
 
-
     public int getId() {
         return Id;
     }
@@ -128,12 +130,12 @@ public class Ordine extends Model {
         Matricola = matricola;
     }
 
-    public String getPezzo() {
-        return Pezzo;
+    public float getPrezzo() {
+        return Prezzo;
     }
 
-    public void setPezzo(String pezzo) {
-        Pezzo = pezzo;
+    public void setPrezzo(float prezzo) {
+        Prezzo = prezzo;
     }
 
     public String getDataOrdine() {
@@ -166,5 +168,13 @@ public class Ordine extends Model {
 
     public void setDescrizione(String descrizione) {
         Descrizione = descrizione;
+    }
+
+    public int getQuantita() {
+        return Quantita;
+    }
+
+    public void setQuantita(int quantita) {
+        Quantita = quantita;
     }
 }

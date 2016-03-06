@@ -22,6 +22,7 @@ public class SpallaController {
     private RicercaController ricercaController;
     private ImpostazioniController impostazioniController;
     private GestisciController gestisciControler;
+    private OrdiniController ordiniController;
 
     public SpallaController(Permesso p, Spalla s, String mat,RootFrame r,String mat_utilizzatore) {
 
@@ -54,6 +55,7 @@ public class SpallaController {
         this.ricercaController      = new RicercaController(rootFrame);
         this.impostazioniController = new ImpostazioniController(rootFrame,utilizzatore);
         this.gestisciControler      = new GestisciController(rootFrame);
+        this.ordiniController       = new OrdiniController(rootFrame,utilizzatore);
         //GestisciController    gestisciController     = new GestisciController();
 
 
@@ -62,6 +64,7 @@ public class SpallaController {
         this.homeListner();
         this.impostazioniListner();
         this.gestisciListner();
+        this.ordiniListener();
         return;
     }
 
@@ -120,6 +123,19 @@ public class SpallaController {
         });
     }
 
+    /**
+     * listner del bottone ordini
+     */
+    private void ordiniListener(){
+        JButton ordini=spalla.getOrdiniButton();
+        ordini.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                avviaOrdini();
+            }
+        });
+    }
+
 
 
 
@@ -139,5 +155,8 @@ public class SpallaController {
 
     protected void avviaGestisci(){
         gestisciControler.apriGestisci();
+    }
+    protected void avviaOrdini(){
+        ordiniController.apriOrdini();
     }
 }

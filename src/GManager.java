@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 public class GManager {
     public static void main(String args[]) {
 
+
         //try catch per il look and feel
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
