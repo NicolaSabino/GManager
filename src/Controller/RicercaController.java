@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.Attivita;
-import Model.Gruppo;
+import Model.Gruppi.*;
 import Model.Progetto;
 import Model.Sequenza;
 import View.*;
@@ -28,6 +28,7 @@ public class RicercaController {
         this.rootFrame=rootFrame;
         this.ricerca= new Ricerca();
         this.mod=1;
+        stampaRisultato();
 
         //attivo i listner
         listnerComboBox();
@@ -86,7 +87,7 @@ public class RicercaController {
             case 1 :{
 
                     //ricerca per nome
-                    Gruppo g = new Gruppo();
+                    Model.Gruppi.Gruppo g = new Model.Gruppi.Gruppo();
                     g.createFrom("nome+cognome",ricerca.getTestoCampo1(),ricerca.getTestoCampo2());
                     TabellaUtenti tabellaUtenti = new TabellaUtenti();
                     tabellaUtenti.setModelTabella(g.getElenco());

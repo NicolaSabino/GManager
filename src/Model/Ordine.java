@@ -12,7 +12,7 @@ public class Ordine extends Model {
     private String Matricola;
     private float Prezzo;
     private String DataOrdine;
-    private String Attivita;
+    private int Attivita;
     private boolean Approvazione;
     private String Descrizione;
     private int Quantita;
@@ -29,7 +29,7 @@ public class Ordine extends Model {
      * Costruttore da sql
      * @param id
      */
-    public Ordine (String id){
+    public Ordine (int id){
         openConnection();
         String sql="select * from Ordine where id='"+ id + "'";
         ResultSet query= selectQuery(sql);
@@ -146,11 +146,11 @@ public class Ordine extends Model {
         DataOrdine = dataOrdine;
     }
 
-    public String getAttivita() {
+    public int getAttivita() {
         return Attivita;
     }
 
-    public void setAttivita(String attivita) {
+    public void setAttivita(int attivita) {
         Attivita = attivita;
     }
 

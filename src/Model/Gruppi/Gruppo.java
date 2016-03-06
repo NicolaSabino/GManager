@@ -1,5 +1,7 @@
-package Model;
+package Model.Gruppi;
 
+
+import Model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -1,24 +1,26 @@
-package Model;
+package Model.Gruppi;
+
+import Model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by nicola on 05/03/16.
+ * Created by nicola on 06/03/16.
  */
-public class Progetti extends Model{
-    private ArrayList<Progetto> stato;
+public class GruppoOrdini extends Model{
+    private ArrayList<Ordine> stato;
 
-    public Progetti(){
+    public GruppoOrdini() {
         openConnection();
-        this.stato= new ArrayList<Progetto>();
-        String sql="select * from progetto";
+        this.stato= new ArrayList<Ordine>();
+        String sql="select * from Ordine";
         ResultSet query = selectQuery(sql);
 
         try {
             while (query.next()){
-                Progetto app= new Progetto(query.getString("nome"));
+                Ordine app= new Ordine(query.getInt("id"));
                 stato.add(stato.size(),app);
             }
         }catch (SQLException se){
@@ -26,7 +28,6 @@ public class Progetti extends Model{
         }finally {
             closeConnection();
         }
-
     }
 
     @Override
@@ -44,11 +45,11 @@ public class Progetti extends Model{
         return false;
     }
 
-    public ArrayList<Progetto> getStato() {
+    public ArrayList<Ordine> getStato() {
         return stato;
     }
 
-    public void setStato(ArrayList<Progetto> stato) {
+    public void setStato(ArrayList<Ordine> stato) {
         this.stato = stato;
     }
 }

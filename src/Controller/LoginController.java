@@ -32,6 +32,7 @@ public class LoginController {
         spalla.loginMode();
         view.setSideScrollPane(spalla.getPannelloPrincipale());
         view.setMainScrollPane(loginView.getPannelloPrincipale());
+        loginListener();
         return;
     }
 

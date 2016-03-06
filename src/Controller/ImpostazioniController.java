@@ -77,9 +77,7 @@ public class ImpostazioniController {
         salva.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                MainController controller_G = new MainController();
-
+                LoginController l = new LoginController(rootFrame);
             }
         });
     }

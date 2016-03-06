@@ -1,6 +1,6 @@
 package View;
 
-import Model.Progetti;
+import Model.Gruppi.GruppoProgetti;
 import Model.Progetto;
 
 import javax.swing.*;
@@ -33,7 +33,7 @@ public class Ricerca extends JPanel {
         CercaUtente();
 
         //genero i progetti disponibili nellla modalità cerca progetto e li inserisco nella combobox dei progetti
-        Progetti p = new Progetti();
+        GruppoProgetti p = new GruppoProgetti();
         ArrayList<String> s = new ArrayList<String>();
 
         //primo campo di default
@@ -49,9 +49,11 @@ public class Ricerca extends JPanel {
     public void CercaUtente(){
         label1.setText("Nome");
         label2.setText("Cognome");
+        label1.setVisible(true);
         label2.setVisible(true);
         campo2.setVisible(true);
         campo1.setVisible(true);
+        campo1.setText("");
         Cerca.setVisible(true);
         labelProgetti.setVisible(false);
         comboProgetti.setVisible(false);
@@ -60,6 +62,7 @@ public class Ricerca extends JPanel {
     public void CercaAttivita(){
         label1.setText("Descrizione");
         label2.setVisible(false);
+        campo1.setVisible(true);
         campo2.setVisible(false);
         Cerca.setVisible(true);
         labelProgetti.setVisible(false);

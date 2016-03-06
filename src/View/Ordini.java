@@ -4,6 +4,7 @@ import Model.Ordine;
 import Model.Utente;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by edoardo on 06/03/16.
@@ -18,8 +19,9 @@ public class Ordini extends JPanel{
     private JTextField campoDescrizione;
     private JSpinner spinnerQuantità;
     private JLabel AttivitaLabel;
-    private JTextField campoAttivita;
+    private JFormattedTextField campoAttivita;
     private JSpinner spinnerPrezzo;
+    private JScrollPane scrollOrdini;
 
     public Ordini(){ setVisible(true);}
 
@@ -57,8 +59,12 @@ public class Ordini extends JPanel{
         appoggio.setPrezzo((Float) spinnerPrezzo.getValue());           //Prezzo
         appoggio.setQuantita((Integer) spinnerQuantità.getValue());     //Quantità
         appoggio.setDescrizione(campoDescrizione.getText());            //Descrizione
-        appoggio.setAttivita(campoAttivita.getText());                  //Attività
+        appoggio.setAttivita((Integer) campoAttivita.getValue());                  //Attività
 
         return appoggio;
+    }
+
+    public void setScrollOrdini(Component scrollOrdini) {
+        this.scrollOrdini.setViewportView(scrollOrdini);
     }
 }

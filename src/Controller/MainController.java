@@ -23,7 +23,7 @@ public class MainController {
 
         //prima di far partire i vari controller faccio partire quello del login
         loginController = new LoginController(this.view);
-        loginController.loginListener();
+
 
         return;
     }
