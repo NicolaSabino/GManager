@@ -1,9 +1,13 @@
 package View;
 
 import Model.Attivita;
+import Model.Ordine;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.text.TableView;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -43,7 +47,9 @@ public class TabellaAttivita {
         Tabella.setModel(tableModel);
         Tabella.setEnabled(false);
 
+
     }
+
 
     public JPanel getPannelloPrincipale() {
         return pannelloPrincipale;

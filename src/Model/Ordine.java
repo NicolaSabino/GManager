@@ -13,7 +13,7 @@ public class Ordine extends Model {
     private float Prezzo;
     private String DataOrdine;
     private int Attivita;
-    private boolean Approvazione;
+    private String Approvazione;
     private String Descrizione;
     private int Quantita;
 
@@ -39,9 +39,10 @@ public class Ordine extends Model {
                 this.setMatricola(query.getString("matricola"));
                 this.setDataOrdine(query.getString("dataordine"));
                 this.setPrezzo(query.getFloat("prezzo"));
-                this.setApprovazione(query.getBoolean("approvazione"));
+                this.setApprovazione(query.getString("approvazione"));
                 this.setDescrizione(query.getString("descrizione"));
                 this.setQuantita(query.getInt("quantita"));
+                this.setAttivita(query.getInt("attività"));
             }
 
         }catch (SQLException se){
@@ -71,12 +72,13 @@ public class Ordine extends Model {
         openConnection();
         boolean controllo=false;
         //id è auto-incrementante quindi non va inserito
-        String sql="Insert into Ordine(matricola,prezzo,dataordine,attività,Descrizione) values('"
-                +   this.getMatricola()  + "','"
-                +   this.getPrezzo()    + "','"
-                +   this.getDataOrdine()   + "','"
-                +   this.getAttivita()    + "','"
-                +   this.getDescrizione()         +"')";
+        String sql="Insert into Ordine(matricola,prezzo,dataordine,attività,descrizione,quantita) values('"
+                +   this.getMatricola()     + "','"
+                +   this.getPrezzo()        + "',"
+                +   " CURRENT_DATE ,'" +
+                +   this.getAttivita() + "','"
+                +   this.getDescrizione()   +"','"
+                +   this.getQuantita()      + "')";
 
         if(updateQuery(sql)){
             controllo=true;
@@ -154,11 +156,11 @@ public class Ordine extends Model {
         Attivita = attivita;
     }
 
-    public boolean isApprovazione() {
+    public String getApprovazione() {
         return Approvazione;
     }
 
-    public void setApprovazione(boolean approvazione) {
+    public void setApprovazione(String approvazione) {
         Approvazione = approvazione;
     }
 

@@ -19,17 +19,22 @@ public class Ordini extends JPanel{
     private JTextField campoDescrizione;
     private JSpinner spinnerQuantità;
     private JLabel AttivitaLabel;
-    private JFormattedTextField campoAttivita;
-    private JSpinner spinnerPrezzo;
+    private JTextField campoAttivita;
+    private JTextField fieldPrezzo;
     private JScrollPane scrollOrdini;
 
-    public Ordini(){ setVisible(true);}
+    public Ordini(){
+        setVisible(true);
+        StaticMethod.textFieldLimitOnlyDouble(fieldPrezzo);
+        StaticMethod.textFieldLimitOnlyInt(campoAttivita,4);
+    }
 
 
     public void cancellaCampi(){
         this.campoPrezzo.setText("");
         this.campoQuantita.setText("");
         this.campoNomePezzo.setText("");
+
     }
 
     public JTextField getCampoPrezzo() {
@@ -56,15 +61,43 @@ public class Ordini extends JPanel{
 
         Ordine appoggio= new Ordine();
         appoggio.setMatricola(utilizzatore.getMatricola());             //matricola
-        appoggio.setPrezzo((Float) spinnerPrezzo.getValue());           //Prezzo
-        appoggio.setQuantita((Integer) spinnerQuantità.getValue());     //Quantità
+        appoggio.setPrezzo(Float.parseFloat(fieldPrezzo.getText()));           //Prezzo
+        appoggio.setQuantita(Integer.parseInt(spinnerQuantità.getValue().toString()));     //Quantità
         appoggio.setDescrizione(campoDescrizione.getText());            //Descrizione
-        appoggio.setAttivita((Integer) campoAttivita.getValue());                  //Attività
+        appoggio.setAttivita(Integer.parseInt(campoAttivita.getText()));       //Attività
 
         return appoggio;
     }
 
     public void setScrollOrdini(Component scrollOrdini) {
         this.scrollOrdini.setViewportView(scrollOrdini);
+    }
+
+    public JButton getAggiungiOrdineButton() {
+        return aggiungiOrdineButton;
+    }
+
+    public JTextField getCampoId() {
+        return campoId;
+    }
+
+    public JTextField getCampoDescrizione() {
+        return campoDescrizione;
+    }
+
+    public JSpinner getSpinnerQuantità() {
+        return spinnerQuantità;
+    }
+
+    public JLabel getAttivitaLabel() {
+        return AttivitaLabel;
+    }
+
+    public JTextField getCampoAttivita() {
+        return campoAttivita;
+    }
+
+    public JTextField getFieldPrezzo() {
+        return fieldPrezzo;
     }
 }

@@ -1,16 +1,12 @@
 package Controller;
 
 import Model.Attivita;
-import Model.Gruppi.*;
 import Model.Progetto;
 import Model.Sequenza;
 import View.*;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +17,7 @@ public class RicercaController {
     private RootFrame rootFrame;
     private Ricerca ricerca;
     private int mod;
-    private String campoProgetto;
+    private String campoDiRIcerca;
 
 
     public RicercaController(RootFrame rootFrame) {
@@ -32,8 +28,8 @@ public class RicercaController {
 
         //attivo i listner
         listnerComboBox();
-        listnerComboProgetto();
-        listnerBottoneCerca();
+        listnerCombo();
+        listnerCerca();
         return;
     }
 
@@ -41,6 +37,9 @@ public class RicercaController {
         rootFrame.setMainScrollPane(ricerca.getPrimoPanel());
     }
 
+    /**
+     * Listner della combobox principale
+     */
     public void listnerComboBox(){
         JComboBox comboBox = ricerca.getComboBoxRicerca();
         comboBox.addItemListener(new ItemListener() {
@@ -60,28 +59,50 @@ public class RicercaController {
         });
     }
 
-    public void listnerComboProgetto(){
-        JComboBox box = ricerca.getComboProgetti();
+    /**
+     * ItemListner della combobox di progetti/sequenze
+     */
+    public void listnerCombo(){
+        JComboBox box = ricerca.getComboProgettiSequenze();
         box.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                setCampoProgetto(e.getItem().toString());
-            }
-        });
-    }
-
-    public void listnerBottoneCerca(){
-        JButton cerca =ricerca.getCerca();
-        cerca.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+                setCampoDiRIcerca(e.getItem().toString());
                 stampaRisultato();
             }
         });
     }
 
+    /**
+     * keylistner di ricerca che chiamano il metodo stampa risultato
+     */
+    public void listnerCerca(){
+        //JButton cerca =ricerca.getCerca();
+        JTextField textField1 = ricerca.getCampo1();
+        JTextField textField2 = ricerca.getCampo2();
+
+        textField1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                stampaRisultato();
+            }
+        });
+
+        textField2.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                stampaRisultato();
+            }
+        });
+
+    }
 
 
+    /**
+     * metodo che stampa a video sotto forma tabellare il risultato della ricerca
+     */
     protected void stampaRisultato(){
         switch (mod){
             case 1 :{
@@ -104,8 +125,8 @@ public class RicercaController {
                 break;
             }
             case 3:{
-                //ricerca attività
-                Sequenza s = new Sequenza(ricerca.getTestoCampo1());
+                //ricerca Sequenza
+                Sequenza s = new Sequenza(this.campoDiRIcerca);
                 TabellaAttivita tabellaAttivita = new TabellaAttivita();
                 tabellaAttivita.setModelTabella(s.getStato());
                 ricerca.setScrollRIcerca(tabellaAttivita.getPannelloPrincipale());
@@ -113,7 +134,7 @@ public class RicercaController {
             }
             case 4:{
                 //ricerca progetto
-                Progetto p = new Progetto(this.campoProgetto);
+                Progetto p = new Progetto(this.campoDiRIcerca);
                 TabellaAttivita tabellaAttivita = new TabellaAttivita();
                 ArrayList<Attivita> risultatoRicerca = new ArrayList<Attivita>();
 
@@ -131,6 +152,11 @@ public class RicercaController {
             }
         }
     }
+
+    /**
+     * metodo che setta la MODALIÀ DI VIEW
+     * @param mod
+     */
     public void modalitaView(int mod){
         switch (mod){
             case 1 :{
@@ -156,7 +182,9 @@ public class RicercaController {
         }
     }
 
-    public void setCampoProgetto(String campoProgetto) {
-        this.campoProgetto = campoProgetto;
+
+
+    public void setCampoDiRIcerca(String campoDiRIcerca) {
+        this.campoDiRIcerca = campoDiRIcerca;
     }
 }

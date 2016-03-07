@@ -80,17 +80,9 @@
               <text value="Attività"/>
             </properties>
           </component>
-          <component id="15ec5" class="javax.swing.JFormattedTextField" binding="campoAttivita">
+          <component id="26a6f" class="javax.swing.JTextField" binding="campoAttivita">
             <constraints>
               <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
-                <preferred-size width="211" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="15f0b" class="javax.swing.JSpinner" binding="spinnerPrezzo">
-            <constraints>
-              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="211" height="-1"/>
               </grid>
             </constraints>
@@ -103,6 +95,16 @@
             <properties>
               <font size="24" style="1"/>
               <text value="Crea nuovo ordine"/>
+            </properties>
+          </component>
+          <component id="e7640" class="javax.swing.JTextField" binding="fieldPrezzo">
+            <constraints>
+              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="211" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <text value=""/>
             </properties>
           </component>
         </children>
