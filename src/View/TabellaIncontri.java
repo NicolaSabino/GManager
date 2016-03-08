@@ -18,7 +18,7 @@ public class TabellaIncontri {
     public void setModelTabella(ArrayList<Incontro> elenco) {
         String col[] = {"Tipo","Data","Ora", "Luogo"};
 
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+        CustomTable tableModel = new CustomTable(col, 0);
 
 
         for(Incontro appoggio:elenco) {
@@ -33,7 +33,7 @@ public class TabellaIncontri {
         }
 
         Tabella.setModel(tableModel);
-        Tabella.setEnabled(false);
+
 
     }
     public JPanel getPannelloPrincipale() {

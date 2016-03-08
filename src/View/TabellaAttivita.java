@@ -26,7 +26,7 @@ public class TabellaAttivita {
     public void setModelTabella(ArrayList<Attivita> elenco) {
         String col[] = {"Id","nome Sequenza","Precedenza", "Descrizione", "Data Inizio", "Data Fine Prevista", "Data Fine", "€" };
 
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+        CustomTable tableModel = new CustomTable(col, 0);
 
         //trasformo gli incarichi per generare il modello per la tabellsa
         for(Attivita appoggio:elenco) {
@@ -46,7 +46,7 @@ public class TabellaAttivita {
         }
 
         Tabella.setModel(tableModel);
-        Tabella.setEnabled(false);
+
 
 
     }

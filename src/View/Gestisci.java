@@ -6,6 +6,7 @@ import Model.Progetto;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 
 /**
@@ -121,7 +122,8 @@ public class Gestisci {
 
     public void popolaProgetti(){
         String col[] = {"Nome Progetto" , "Deadline" , "Costo"};
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+
+        CustomTable t = new CustomTable(col,0);
 
         GruppoProgetti progetti = new GruppoProgetti();
 
@@ -133,11 +135,11 @@ public class Gestisci {
 
             Object[] data = {nome,deadline,costo};
 
-            tableModel.addRow(data);
+            t.addRow(data);
         }
 
-        tableProgetti.setModel(tableModel);
-        tableProgetti.setEnabled(false);
+        tableProgetti.setModel(t);
+
     }
 
     public JPanel getPanelloPrincipale() {

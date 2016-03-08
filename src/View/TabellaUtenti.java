@@ -16,7 +16,7 @@ public class TabellaUtenti {
     public void setModelTabella(ArrayList<Utente> elenco){
         String col[] = {"Matricola","Nome","Cognome", "Ruolo","Telefono", "Mail"};
 
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+        CustomTable tableModel = new CustomTable(col, 0);
 
         //trasformo gli incarichi per generare il modello per la tabellsa
         for(Utente appoggio:elenco) {
@@ -34,7 +34,7 @@ public class TabellaUtenti {
         }
 
         ElencoUtenti.setModel(tableModel);
-        ElencoUtenti.setEnabled(false);
+
     }
 
     public JPanel getPannelloPrincipale() {

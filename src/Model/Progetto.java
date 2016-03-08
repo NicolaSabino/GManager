@@ -30,47 +30,10 @@ public class Progetto extends Model {
      * @param chiave
      */
     public Progetto(String chiave){
-        openConnection();
         this.setNome(chiave);
-        //prelevo dal db i nomi delle sequenze collegate al progetto
-        String sql= "select nome from sequenza where nomeprogetto='"+ chiave + "'";
-        ResultSet query= selectQuery(sql);
-
-        //creo una lista contenente l'elenco delle sequenze da istanziare in stato
-        List<String> seq = new ArrayList<String>();
-
-        try {
-            while(query.next()){
-                seq.add(seq.size(),query.getString("nome"));
-            }
-        }catch (SQLException se){
-            se.printStackTrace();
-        }
-
-
-        //creo un array per contenere lo stato di progetto
-        this.stato=new ArrayList<Sequenza>();
-
-        //per ogni elemento dell'array 'seq' creo una sequenza da inserire nello 'stato' di progetto
-        for (String appoggio:seq){
-            Sequenza s= new Sequenza(appoggio);
-
-            stato.add(stato.size(),s);
-
-        }
-
-        String sql2="select deadline from progetto where nome='" + chiave + "'";
-        ResultSet query2 = selectQuery(sql2);
-
-        try {
-            if(query2.next()){
-                this.setDeadline(query.getString("deadline"));
-            }
-        }catch (SQLException se){
-            se.printStackTrace();
-        }
-
-        this.setCosto(this.calcola_costo());
+        popolaStato();
+        calcolaDeadline();
+        this.setCosto(calcola_costo());
         return;
     }
 
@@ -132,6 +95,52 @@ public class Progetto extends Model {
         return controllo;
     }
 
+    public void popolaStato(){
+        openConnection();
+        //prelevo dal db i nomi delle sequenze collegate al progetto
+        String sql= "select nome from sequenza where nomeprogetto='"+ this.getNome() + "'";
+        ResultSet query= selectQuery(sql);
+
+        //creo una lista contenente l'elenco delle sequenze da istanziare in stato
+        List<String> seq = new ArrayList<String>();
+
+        try {
+            while(query.next()){
+                seq.add(seq.size(),query.getString("nome"));
+            }
+        }catch (SQLException se){
+            se.printStackTrace();
+        }finally {
+            closeConnection();
+        }
+
+
+        //creo un array per contenere lo stato di progetto
+        this.stato=new ArrayList<Sequenza>();
+
+        //per ogni elemento dell'array 'seq' creo una sequenza da inserire nello 'stato' di progetto
+        for (String appoggio:seq){
+            Sequenza s= new Sequenza(appoggio);
+
+            stato.add(stato.size(),s);
+
+        }
+    }
+
+    protected void calcolaDeadline(){
+        openConnection();
+        String sql="select deadline from progetto where nome='" + getNome() + "'";
+        ResultSet query=selectQuery(sql);
+        try {
+            if(query.next()){
+                this.setDeadline(query.getString("deadline"));
+            }
+        }catch (SQLException se){
+            se.printStackTrace();
+        }finally {
+            closeConnection();
+        }
+    }
 
     //getter and setter
 

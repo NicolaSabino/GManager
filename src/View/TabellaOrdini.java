@@ -24,7 +24,7 @@ public class TabellaOrdini {
     public void setModelTabella(ArrayList<Ordine> elenco) {
         String col[] = {"Descrizione","Quantità","Prezzo","Data","Attività","Approvazione",};
 
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+        CustomTable tableModel = new CustomTable(col, 0);
 
         //trasformo gli incarichi per generare il modello per la tabellsa
         for(Ordine appoggio:elenco) {
