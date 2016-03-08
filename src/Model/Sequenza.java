@@ -63,6 +63,7 @@ public class Sequenza extends Attivita {
 
                 appoggio.setId(query.getInt("id"));
                 appoggio.setNomesequenza(query.getString("nomesequenza"));
+                appoggio.setDescrizione(query.getString("descrizione"));
                 appoggio.setPrecedenza(query.getInt("precedenza"));
                 appoggio.setDatainizio(query.getString("datainizio"));
                 appoggio.setDatafine(query.getString("datafine"));

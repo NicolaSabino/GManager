@@ -19,6 +19,7 @@ public class HomeController {
     RootFrame rootFrame;
     Utente utilizzatore;
     ListaNotifiche notifiche;
+    MessaggiController messaggiController;
     Home home;
 
     /**
@@ -50,8 +51,8 @@ public class HomeController {
         home.setScrollEventi(t2.getPannelloPrincipale());
 
         //mostro l'elenco dei messaggi-notifiche
-        MessaggiController m = new MessaggiController(this.utilizzatore,this.home);
-        this.notifiche=m.getListaNotifiche();
+        this.messaggiController= new MessaggiController(this.utilizzatore,this.home);
+        this.notifiche=messaggiController.getListaNotifiche();
         home.setScrollNotifiche(notifiche.getPannelloPrincipale());
 
     }
@@ -60,4 +61,7 @@ public class HomeController {
         rootFrame.setMainScrollPane(home.getPannelloPrincipale());
     }
 
+    public MessaggiController getMessaggiController() {
+        return messaggiController;
+    }
 }

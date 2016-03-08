@@ -27,7 +27,7 @@ public class Attivita extends Model {
      * Costruttore da sql
      * @param chiave
      */
-    public Attivita(String chiave){
+    public Attivita(int chiave){
 
         openConnection();
         String sql= "select * from  attività where id='"+ chiave + "'";

@@ -10,9 +10,7 @@ import java.awt.*;
  * Created by edoardo on 06/03/16.
  */
 public class Ordini extends JPanel{
-    private JTextField campoPrezzo;
-    private JTextField campoQuantita;
-    private JTextField campoNomePezzo;
+
     private JButton aggiungiOrdineButton;
     private JPanel pannelloPrincipale;
     private JTextField campoId;
@@ -25,29 +23,15 @@ public class Ordini extends JPanel{
 
     public Ordini(){
         setVisible(true);
+        StaticMethod.textFieldLimitLength(campoDescrizione,60);
         StaticMethod.textFieldLimitOnlyDouble(fieldPrezzo);
         StaticMethod.textFieldLimitOnlyInt(campoAttivita,4);
     }
 
 
-    public void cancellaCampi(){
-        this.campoPrezzo.setText("");
-        this.campoQuantita.setText("");
-        this.campoNomePezzo.setText("");
 
-    }
 
-    public JTextField getCampoPrezzo() {
-        return campoPrezzo;
-    }
 
-    public JTextField getCampoQuantita() {
-        return campoQuantita;
-    }
-
-    public JTextField getCampoNomePezzo() {
-        return campoNomePezzo;
-    }
 
     public JPanel getPannelloPrincipale() {
         return pannelloPrincipale;
@@ -67,6 +51,13 @@ public class Ordini extends JPanel{
         appoggio.setAttivita(Integer.parseInt(campoAttivita.getText()));       //Attività
 
         return appoggio;
+    }
+
+    public void clean(){
+        campoDescrizione.setText("");
+        campoAttivita.setText("");
+        spinnerQuantità.setValue(0);
+        fieldPrezzo.setText("");
     }
 
     public void setScrollOrdini(Component scrollOrdini) {

@@ -15,37 +15,46 @@ public class TabellaOrdini {
     private JPanel pannelloPrincipale;
     private JTable tabella;
     private JScrollPane scroll;
+    private String Utente;
+
+    public TabellaOrdini(String matricolautente){
+        this.Utente=matricolautente;
+    }
 
     public void setModelTabella(ArrayList<Ordine> elenco) {
-        String col[] = {"Id","Descrizione","Quantità","Prezzo","Data","Attività","Approvazione",};
+        String col[] = {"Descrizione","Quantità","Prezzo","Data","Attività","Approvazione",};
 
         DefaultTableModel tableModel = new DefaultTableModel(col, 0);
 
         //trasformo gli incarichi per generare il modello per la tabellsa
         for(Ordine appoggio:elenco) {
 
-            int id = appoggio.getId();
-            String descrizione = appoggio.getDescrizione();
+            String descrizione;
+            if(appoggio.getMatricola().compareTo(this.Utente)==0){
+                descrizione = "<html><p font color=" + "blue>" + appoggio.getDescrizione() + "</p></html>";
+            }else{
+                descrizione = appoggio.getDescrizione();
+            }
             int quantita = appoggio.getQuantita();
             float prezzo = appoggio.getPrezzo();
             String data = appoggio.getDataOrdine();
             int attivita = appoggio.getAttivita();
             String approvazione;
 
-            //todo correggere
-            if (appoggio.getApprovazione()=="Approvato") {
+
+            if (appoggio.getApprovazione().compareTo("Approvato")==0) {
                 approvazione="<html><font color=green>Approvato</font></html>";
-            } else if(appoggio.getApprovazione()=="Da Approvare"){
+            } else if(appoggio.getApprovazione().compareTo("Da Approvare")==0){
                 approvazione="<html><font color=orange>Da Approvare</font></html>";
-            }else if(appoggio.getApprovazione()=="Non Approvato"){
-                approvazione="<html><font color=red>Da Approvare</font></html>";
+            }else if(appoggio.getApprovazione().compareTo("Non Approvato")==0){
+                approvazione="<html><font color=red>Non Approvato</font></html>";
             }else{
                 approvazione="null";
             }
 
 
 
-            Object[] objects = {id,descrizione,quantita,prezzo,data,attivita,approvazione};
+            Object[] objects = {descrizione,quantita,prezzo,data,attivita,approvazione};
 
             tableModel.addRow(objects);
         }

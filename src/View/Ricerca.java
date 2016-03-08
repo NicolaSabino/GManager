@@ -25,6 +25,7 @@ public class Ricerca extends JPanel {
     private JScrollPane ScrollRIcerca;
     private JButton salvaRicerca;
     private JComboBox comboProgettiSequenze;
+    private JCheckBox chechkstato;
 
 
     public Ricerca(){
@@ -44,6 +45,7 @@ public class Ricerca extends JPanel {
         campo1.setVisible(true);
         campo1.setText("");
         comboProgettiSequenze.setVisible(false);
+
     }
 
     public void CercaAttivita(){
@@ -146,5 +148,9 @@ public class Ricerca extends JPanel {
 
     public JTextField getCampo2() {
         return campo2;
+    }
+
+    public JCheckBox getChechkstato() {
+        return chechkstato;
     }
 }

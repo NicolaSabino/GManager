@@ -1,7 +1,9 @@
 package Controller;
 
 
+import Model.Attivita;
 import Model.Gruppi.GruppoOrdini;
+import Model.MessaggioBroadcast;
 import Model.Utente;
 import Model.Ordine;
 import View.Ordini;
@@ -19,16 +21,18 @@ public class OrdiniController {
     private RootFrame rootFrame;
     private Ordini ordini;
     private Utente utilizzatore;
+    private HomeController homeController;
 
-    public OrdiniController(RootFrame rootFrame, Utente utilizzatore) {
+    public OrdiniController(RootFrame rootFrame, Utente utilizzatore,HomeController homeController) {
 
         this.rootFrame = rootFrame;
         this.ordini = new Ordini();
         this.utilizzatore = utilizzatore;
+        this.homeController=homeController;
 
         //genero la lista degli ordini da visualizzare
         GruppoOrdini o = new GruppoOrdini();
-        TabellaOrdini t = new TabellaOrdini();
+        TabellaOrdini t = new TabellaOrdini(utilizzatore.getMatricola());
         t.setModelTabella(o.getStato());
         ordini.setScrollOrdini(t.getPannelloPrincipale());
 
@@ -56,9 +60,22 @@ public class OrdiniController {
 
         //aggiorno la tabella
         GruppoOrdini a = new GruppoOrdini();
-        TabellaOrdini t = new TabellaOrdini();
+        TabellaOrdini t = new TabellaOrdini(utilizzatore.getMatricola());
         t.setModelTabella(a.getStato());
         ordini.setScrollOrdini(t.getPannelloPrincipale());
+
+        //inserisco un messaggio
+        MessaggioBroadcast messaggio = new MessaggioBroadcast();
+        messaggio.setTipo("AUTO");
+        messaggio.setMittente("AUTO");
+        messaggio.setMessaggio(utilizzatore.getNome() + " " + utilizzatore.getCognome() +
+                " ha creato un nuovo ordine:" + o.getDescrizione());
+        messaggio.insertIntoSQL();
+        //aggiorno la home
+        this.homeController.getMessaggiController().aggiorna();
+
+        //ripulisco ordini
+        ordini.clean();
     }
     public void apriOrdini(){
         rootFrame.setMainScrollPane(ordini.getPannelloPrincipale());

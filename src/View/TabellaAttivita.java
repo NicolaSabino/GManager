@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.TableView;
 import java.awt.*;
+import java.awt.geom.Arc2D;
 import java.util.ArrayList;
 
 /**
@@ -49,6 +50,8 @@ public class TabellaAttivita {
 
 
     }
+
+
 
 
     public JPanel getPannelloPrincipale() {

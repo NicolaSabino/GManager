@@ -59,6 +59,17 @@ public class Progetto extends Model {
 
         }
 
+        String sql2="select deadline from progetto where nome='" + chiave + "'";
+        ResultSet query2 = selectQuery(sql2);
+
+        try {
+            if(query2.next()){
+                this.setDeadline(query.getString("deadline"));
+            }
+        }catch (SQLException se){
+            se.printStackTrace();
+        }
+
         this.setCosto(this.calcola_costo());
         return;
     }
@@ -95,10 +106,6 @@ public class Progetto extends Model {
     public boolean insertIntoSQL() {
         boolean controllo=false;
         openConnection();
-
-        for(Sequenza appoggio:this.getStato()){
-            appoggio.insertIntoSQL();
-        }
 
         String sql="insert into progetto values('"
                 + this.getNome() + "','"
