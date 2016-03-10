@@ -24,11 +24,8 @@ public class Gestisci {
     private JTabbedPane tabbedPane2;
     private JTabbedPane tabbedPane3;
     private JTextField textFieldCosto;
-    private JTextField textFieldFine;
     private JButton creaSeqenzaButton;
-    private JTextField textFieldNomeMod;
-    private JTextField textFieldFineMod;
-    private JTextField textFieldCostoMod;
+    private JTextField fieldNomeSequenza_modifica;
     private JButton eliminaSequenzaButton;
     private JButton modificaSequenza;
     private JTextField textField1;
@@ -89,6 +86,16 @@ public class Gestisci {
     private JLabel labelNomeProgetto_modifica;
     private JLabel labelDataFine_modifica;
     private JButton buttonSalvaModificheProgetto;
+    private JComboBox comboBox1;
+    private JComboBox comboBox2;
+    private JComboBox comboBox3;
+    private JComboBox combo;
+    private JComboBox comboBox5;
+    private JComboBox comboBox6;
+    private JTable table2;
+    private JLabel lableNomeSequenza;
+    private JTextField fieldNomeSequenza;
+    private JButton button1;
 
     public Gestisci() {
         //setto gestisci progetto
@@ -97,6 +104,7 @@ public class Gestisci {
         disabilitaComponenti(true,fieldNomeProgetto_modifica, comboGiornoProgetto_modifica, comboMeseProgetto_modifica, comboAnnoProgetto_modifica);
         buttonSalvaModificheProgetto.setVisible(false);
         buttonEliminaProgetto.setEnabled(false);
+        buttonModificaProgetto.setEnabled(false);
         popolaProgetti();
 
         //limitazioni
@@ -140,6 +148,15 @@ public class Gestisci {
 
     }
 
+    public void glMode(){
+        tableProgetti.setEnabled(false);
+        buttonCreaProgetto.setEnabled(false);
+        fieldNomeProgetto.setEnabled(false);
+        comboAnnoProgetto.setEnabled(false);
+        comboMeseProgetto.setEnabled(false);
+        comboGiornoProgetto.setEnabled(false);
+        labelModificaProgetto.setVisible(false);
+    }
 
     public JPanel getPanelloPrincipale() {
         return panelloPrincipale;

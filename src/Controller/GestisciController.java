@@ -28,9 +28,15 @@ public class GestisciController {
         this.utilizzatore=utente;
         this.homeController=home;
 
+        //disabilito alcuni campi per i group leader
+        if(utilizzatore.getRuolo().equals("GL")) {
+            gestisci.glMode();
+        }else{
+            listnerSelezioneProgetto();
+        }
+
         //listner
         listnerCrea();
-        listnerSelezioneProgetto();
         listnerModificaProgetto();
         listnerEliminaProgetto();
 
@@ -59,6 +65,7 @@ public class GestisciController {
 
                 popolaCampiModificaProgetto(tabellaProgetti.getSelectedRow());
                 gestisci.getLabelModificaProgetto().setVisible(false);
+                gestisci.getButtonModificaProgetto().setEnabled(true);
                 gestisci.getButtonEliminaProgetto().setEnabled(true);
                 gestisci.getTabProgetti().setSelectedIndex(1);
 
@@ -156,12 +163,27 @@ public class GestisciController {
 
         Progetto p = new Progetto(nome);
 
+        String nuovoNome=gestisci.getFieldNomeProgetto_modifica().getText().toString();
+
         String data= gestisci.getComboAnnoProgetto_modifica().getSelectedItem().toString() + "-"
                 + gestisci.getComboMeseProgetto_modifica().getSelectedItem().toString() + "-"
                 + gestisci.getComboGiornoProgetto_modifica().getSelectedItem().toString();
 
-        p.updateIntoSQL("deadline",data);
-        String nuovoNome=gestisci.getFieldNomeProgetto_modifica().getText().toString();
+
+        if(!data.equals(p.getDeadline())){
+            p.updateIntoSQL("deadline",data);
+            MessaggioBroadcast messaggio = new MessaggioBroadcast();
+            messaggio.setMittente("AUTO");
+            messaggio.setTipo("AUTO");
+            messaggio.setMessaggio(utilizzatore.getNome() +" " + utilizzatore.getCognome() + " " +
+                    "ha modificato la DeadLine del progeto " + nome + " alla data " + data );
+            messaggio.insertIntoSQL();
+
+            //aggionro i messaggi
+            homeController.getMessaggiController().aggiorna();
+        }
+
+
 
         if(!nome.equals(nuovoNome)){
             p.updateIntoSQL("nome",nuovoNome);
@@ -169,7 +191,7 @@ public class GestisciController {
             messaggio.setMittente("AUTO");
             messaggio.setTipo("AUTO");
             messaggio.setMessaggio(utilizzatore.getNome() +" " + utilizzatore.getCognome() + " " +
-                    "[Progetto] " + nome + " -->" + nuovoNome);
+                    "ha aggiornato il nome del progetto " + nome + " in " + nuovoNome);
             messaggio.insertIntoSQL();
 
             //aggionro i messaggi
@@ -182,6 +204,8 @@ public class GestisciController {
         gestisci.getButtonSalvaModificheProgetto().setVisible(false);
 
         gestisci.getButtonModificaProgetto().setVisible(true);
+
+        gestisci.getButtonEliminaProgetto().setEnabled(false);
 
 
 
