@@ -86,7 +86,7 @@ public class Progetto extends Model {
     public boolean deleteIntoSQL() {
         openConnection();
         boolean controllo=false;
-        String sql="delete from progetto where sequenza='" + this.getNome() + "'";
+        String sql="delete from progetto where nome='" + this.getNome() + "'";
 
         if(updateQuery(sql)){
             controllo=true;

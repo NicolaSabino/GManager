@@ -1,12 +1,10 @@
 package View;
 
-import Model.Attivita;
 import Model.Gruppi.GruppoProgetti;
 import Model.Progetto;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
 
 /**
@@ -65,7 +63,7 @@ public class Gestisci {
     private JPanel panelUtenti;
     private JScrollPane scrollProgetti;
     private JTable tableProgetti;
-    private JTabbedPane tabbedPane4;
+    private JTabbedPane tabProgetti;
     private JTable table1;
     private JScrollPane scrollAttività;
     private JLabel labelModificaAttivita;
@@ -74,51 +72,51 @@ public class Gestisci {
     private JLabel labelNomeProgetto;
     private JLabel labelFineProgetto;
     private JTextField fieldNomeProgetto;
-    private JTextField fieldGiornoProgetto;
-    private JTextField fieldMeseProgetto;
-    private JTextField fieldAnnoProgetto;
+    private JComboBox comboGiornoProgetto;
+    private JComboBox comboMeseProgetto;
+    private JComboBox comboAnnoProgetto;
     private JButton buttonCreaProgetto;
     private JLabel labelAnno;
     private JLabel lableMese;
     private JLabel lableGiorno;
     private JTextField fieldNomeProgetto_modifica;
-    private JTextField fieldGiornoProgetto_modifica;
-    private JTextField fieldMeseProgetto_modifica;
-    private JTextField fieldAnnoProgetto_modifica;
+    private JComboBox comboGiornoProgetto_modifica;
+    private JComboBox comboMeseProgetto_modifica;
+    private JComboBox comboAnnoProgetto_modifica;
     private JButton buttonModificaProgetto;
     private JButton buttonEliminaProgetto;
     private JLabel labelModificaProgetto;
     private JLabel labelNomeProgetto_modifica;
     private JLabel labelDataFine_modifica;
+    private JButton buttonSalvaModificheProgetto;
 
     public Gestisci() {
         //setto gestisci progetto
         buttonEliminaProgetto.setForeground(Color.red);
         labelModificaProgetto.setText("<html><b>...Seleziona il progetto da modificare...</b></html>");
-        disabilitaComponenti(fieldNomeProgetto_modifica,fieldGiornoProgetto_modifica,fieldMeseProgetto_modifica,fieldAnnoProgetto_modifica);
+        disabilitaComponenti(true,fieldNomeProgetto_modifica, comboGiornoProgetto_modifica, comboMeseProgetto_modifica, comboAnnoProgetto_modifica);
+        buttonSalvaModificheProgetto.setVisible(false);
+        buttonEliminaProgetto.setEnabled(false);
         popolaProgetti();
 
         //limitazioni
         StaticMethod.textFieldLimitLength(fieldNomeProgetto,20);
         StaticMethod.textFieldLimitLength(fieldNomeProgetto_modifica,20);
 
-        StaticMethod.textFieldLimitOnlyInt(fieldAnnoProgetto,4);
-        StaticMethod.textFieldLimitOnlyInt(fieldMeseProgetto,2);
-        StaticMethod.textFieldLimitOnlyInt(fieldGiornoProgetto,2);
+        StaticMethod.populateData(comboGiornoProgetto,comboMeseProgetto,comboAnnoProgetto,5,0);
+        StaticMethod.populateData(comboGiornoProgetto_modifica,comboMeseProgetto_modifica,comboAnnoProgetto_modifica,5,0);
 
-        StaticMethod.textFieldLimitOnlyInt(fieldAnnoProgetto_modifica,4);
-        StaticMethod.textFieldLimitOnlyInt(fieldMeseProgetto_modifica,2);
-        StaticMethod.textFieldLimitOnlyInt(fieldGiornoProgetto_modifica,2);
 
 
         //setto le
     }
 
-    public void disabilitaComponenti(Component ...elementi){
+    public void disabilitaComponenti(boolean b,Component ...elementi){
         for(Component appoggio:elementi){
-            appoggio.setEnabled(false);
+            appoggio.setEnabled(!b);
         }
     }
+
 
     public void popolaProgetti(){
         String col[] = {"Nome Progetto" , "Deadline" , "Costo"};
@@ -142,6 +140,7 @@ public class Gestisci {
 
     }
 
+
     public JPanel getPanelloPrincipale() {
         return panelloPrincipale;
     }
@@ -153,18 +152,75 @@ public class Gestisci {
     public Progetto getParametriCreaProgetto(){
         Progetto p = new Progetto();
         p.setNome(fieldNomeProgetto.getText());
-        p.setDeadline(fieldAnnoProgetto.getText() + "-" + fieldMeseProgetto.getText() + "-" + fieldGiornoProgetto.getText());
+        p.setDeadline(comboAnnoProgetto.getSelectedItem().toString() + "-" + comboMeseProgetto.getSelectedItem().toString() + "-" + comboGiornoProgetto.getSelectedItem().toString());
         return p;
     }
 
     public Progetto getParametriModificaProgetto(){
         Progetto p = new Progetto();
         p.setNome(fieldNomeProgetto_modifica.getText());
-        p.setDeadline(fieldAnnoProgetto_modifica.getText() + "-" + fieldMeseProgetto_modifica.getText() + "-" + fieldGiornoProgetto_modifica.getText());
+        p.setDeadline(comboAnnoProgetto_modifica.getSelectedItem().toString() + "-" + comboMeseProgetto_modifica.getSelectedItem().toString()
+                + "-" + comboGiornoProgetto_modifica.getSelectedItem().toString());
         return p;
     }
 
     public JButton getButtonCreaProgetto() {
         return buttonCreaProgetto;
+    }
+
+    public JTextField getFieldNomeProgetto() {
+        return fieldNomeProgetto;
+    }
+
+    public JTextField getFieldNomeProgetto_modifica() {
+        return fieldNomeProgetto_modifica;
+    }
+
+    public JComboBox getComboGiornoProgetto() {
+        return comboGiornoProgetto;
+    }
+
+    public JComboBox getComboMeseProgetto() {
+        return comboMeseProgetto;
+    }
+
+    public JComboBox getComboAnnoProgetto() {
+        return comboAnnoProgetto;
+    }
+
+    public JComboBox getComboGiornoProgetto_modifica() {
+        return comboGiornoProgetto_modifica;
+    }
+
+    public JComboBox getComboMeseProgetto_modifica() {
+        return comboMeseProgetto_modifica;
+    }
+
+    public JComboBox getComboAnnoProgetto_modifica() {
+        return comboAnnoProgetto_modifica;
+    }
+
+    public JTable getTableProgetti() {
+        return tableProgetti;
+    }
+
+    public JButton getButtonModificaProgetto() {
+        return buttonModificaProgetto;
+    }
+
+    public JLabel getLabelModificaProgetto() {
+        return labelModificaProgetto;
+    }
+
+    public JButton getButtonSalvaModificheProgetto() {
+        return buttonSalvaModificheProgetto;
+    }
+
+    public JTabbedPane getTabProgetti() {
+        return tabProgetti;
+    }
+
+    public JButton getButtonEliminaProgetto() {
+        return buttonEliminaProgetto;
     }
 }

@@ -54,7 +54,7 @@ public class SpallaController {
         this.homeController         = new HomeController(permesso,rootFrame,mat_utilizzatore);  //di default quando creo HomeControlle si imposta automaticamente sul mainScrollpane
         this.ricercaController      = new RicercaController(rootFrame);
         this.impostazioniController = new ImpostazioniController(rootFrame,utilizzatore);
-        this.gestisciControler      = new GestisciController(rootFrame,utilizzatore);
+        this.gestisciControler      = new GestisciController(rootFrame,utilizzatore,homeController);
         this.ordiniController       = new OrdiniController(rootFrame,utilizzatore,this.homeController);
         //GestisciController    gestisciController     = new GestisciController();
 

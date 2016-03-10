@@ -83,15 +83,15 @@ public class StaticMethod {
      * @param interval  anni da inserire prima dell'anno corrente
      * @param pos       anno da selezionare di default (0 = posizione anno più lontano, max = interval -1)
      */
-    public static void populateDataNascita(JComboBox giorno, JComboBox mese, JComboBox anno, int interval, int pos){
+    public static void populateData(JComboBox giorno, JComboBox mese, JComboBox anno, int interval, int pos){
         populateDataEmissione(giorno, mese, null);
 
         Integer i;
         Vector<Integer> anniNascita = new Vector<>();
         Integer annoCorrente = Calendar.getInstance().get(Calendar.YEAR);
         int j = 0;
-        for (i = 0; i < interval; i++){
-            anniNascita.add(j, annoCorrente - i);
+        for (i = interval; i >= 0; i--){
+            anniNascita.add(j, annoCorrente + i);
         }
 
         anno.setModel(new DefaultComboBoxModel<Integer>(anniNascita));

@@ -75,7 +75,7 @@ public class MessaggiController {
                     //dispose chiude la finestra
                     n.dispose();
                 }else {
-                    JOptionPane.showMessageDialog(new JFrame("errore"), "massimo 60 caratteri!");
+                    JOptionPane.showMessageDialog(new JFrame("errore"), "massimo 160 caratteri!");
                 }
 
                 //aggiorno l'interfaccia grafica
