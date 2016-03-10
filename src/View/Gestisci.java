@@ -1,7 +1,9 @@
 package View;
 
+import Model.Attivita;
 import Model.Gruppi.GruppoProgetti;
 import Model.Progetto;
+import Model.Sequenza;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -23,11 +25,10 @@ public class Gestisci {
     private JTabbedPane tabbedPane1;
     private JTabbedPane tabbedPane2;
     private JTabbedPane tabbedPane3;
-    private JTextField textFieldCosto;
-    private JButton creaSeqenzaButton;
+    private JButton buttonCreaSequenza;
     private JTextField fieldNomeSequenza_modifica;
-    private JButton eliminaSequenzaButton;
-    private JButton modificaSequenza;
+    private JButton buttonEliminaSequenza;
+    private JButton buttonModificaSequenza;
     private JTextField textField1;
     private JTextField textField2;
     private JTextField textField3;
@@ -86,26 +87,37 @@ public class Gestisci {
     private JLabel labelNomeProgetto_modifica;
     private JLabel labelDataFine_modifica;
     private JButton buttonSalvaModificheProgetto;
-    private JComboBox comboBox1;
-    private JComboBox comboBox2;
-    private JComboBox comboBox3;
-    private JComboBox combo;
-    private JComboBox comboBox5;
-    private JComboBox comboBox6;
-    private JTable table2;
+    private JComboBox comboGiornoSequenza;
+    private JComboBox comboMeseSequenza;
+    private JComboBox comboAnnoSequenza;
+    private JComboBox comboGiornoSequenza_modifica;
+    private JComboBox comboMeseSequenza_modifica;
+    private JComboBox comboAnnoSequenza_modifica;
+    private JTable tableSequenze;
     private JLabel lableNomeSequenza;
     private JTextField fieldNomeSequenza;
-    private JButton button1;
+    private JButton buttonSalvaModificheSequenza;
 
     public Gestisci() {
         //setto gestisci progetto
         buttonEliminaProgetto.setForeground(Color.red);
         labelModificaProgetto.setText("<html><b>...Seleziona il progetto da modificare...</b></html>");
+
+
         disabilitaComponenti(true,fieldNomeProgetto_modifica, comboGiornoProgetto_modifica, comboMeseProgetto_modifica, comboAnnoProgetto_modifica);
+        disabilitaComponenti(true,fieldNomeSequenza_modifica, comboGiornoSequenza_modifica, comboMeseSequenza_modifica, comboAnnoSequenza_modifica);
+
         buttonSalvaModificheProgetto.setVisible(false);
         buttonEliminaProgetto.setEnabled(false);
         buttonModificaProgetto.setEnabled(false);
+
         popolaProgetti();
+
+        buttonSalvaModificheSequenza.setVisible(false);
+        buttonEliminaSequenza.setEnabled(false);
+        buttonModificaSequenza.setEnabled(false);
+
+        popolaSequenze();
 
         //limitazioni
         StaticMethod.textFieldLimitLength(fieldNomeProgetto,20);
@@ -146,6 +158,27 @@ public class Gestisci {
 
         tableProgetti.setModel(t);
 
+    }
+
+    public void popolaSequenze(){
+        String col[]={"Nome Sequenza" , "Nome Progetto" , "Fine" , "Costo"};
+        CustomTable t = new CustomTable(col,0);
+
+        GruppoProgetti progetti = new GruppoProgetti();
+
+        for(Progetto appoggio:progetti.getStato()){
+            for(Sequenza sequenza:appoggio.getStato()){
+
+                String nomeSequenza = sequenza.getNome();
+                String nomeProgetto = appoggio.getNome();
+                String fine         = sequenza.getFine();
+                Double costo        = sequenza.getCosto();
+
+                Object[] data = {nomeSequenza,nomeProgetto,fine,costo};
+                t.addRow(data);
+            }
+        }
+        tableSequenze.setModel(t);
     }
 
     public void glMode(){

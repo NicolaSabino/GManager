@@ -309,7 +309,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <grid id="ff0da" layout-manager="GridLayoutManager" row-count="5" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                      <grid id="ff0da" layout-manager="GridLayoutManager" row-count="4" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                         <margin top="10" left="10" bottom="10" right="10"/>
                         <constraints>
                           <tabbedpane title="Crea"/>
@@ -333,22 +333,6 @@
                             </constraints>
                             <properties/>
                           </component>
-                          <component id="bf630" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text value="Costo"/>
-                            </properties>
-                          </component>
-                          <component id="3e62b" class="javax.swing.JTextField" binding="textFieldCosto">
-                            <constraints>
-                              <grid row="3" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                                <preferred-size width="150" height="-1"/>
-                              </grid>
-                            </constraints>
-                            <properties/>
-                          </component>
                           <component id="64149" class="javax.swing.JLabel">
                             <constraints>
                               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -357,30 +341,30 @@
                               <text value="Fine"/>
                             </properties>
                           </component>
-                          <component id="357b0" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+                          <component id="357b0" class="javax.swing.JComboBox" binding="comboGiornoSequenza">
                             <constraints>
                               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties/>
                           </component>
-                          <component id="811e5" class="javax.swing.JComboBox" binding="comboBox2" default-binding="true">
+                          <component id="811e5" class="javax.swing.JComboBox" binding="comboMeseSequenza">
                             <constraints>
                               <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties/>
                           </component>
-                          <component id="2707c" class="javax.swing.JComboBox" binding="comboBox3" default-binding="true">
+                          <component id="2707c" class="javax.swing.JComboBox" binding="comboAnnoSequenza">
                             <constraints>
                               <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties/>
                           </component>
-                          <component id="b647c" class="javax.swing.JButton" binding="creaSeqenzaButton">
+                          <component id="b647c" class="javax.swing.JButton" binding="buttonCreaSequenza">
                             <constraints>
-                              <grid row="4" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="1" use-parent-layout="false"/>
+                              <grid row="3" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="1" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <text value="Crea"/>
+                              <text value=" Crea Sequenza"/>
                             </properties>
                           </component>
                           <component id="18bdc" class="javax.swing.JLabel">
@@ -446,10 +430,10 @@
                               <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <text value="Label"/>
+                              <text value="label"/>
                             </properties>
                           </component>
-                          <component id="cfd6b" class="javax.swing.JButton" binding="modificaSequenza">
+                          <component id="cfd6b" class="javax.swing.JButton" binding="buttonModificaSequenza">
                             <constraints>
                               <grid row="4" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -457,7 +441,7 @@
                               <text value="Modifica Sequenza"/>
                             </properties>
                           </component>
-                          <component id="ee38a" class="javax.swing.JButton" binding="eliminaSequenzaButton" default-binding="true">
+                          <component id="ee38a" class="javax.swing.JButton" binding="buttonEliminaSequenza">
                             <constraints>
                               <grid row="6" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -465,7 +449,7 @@
                               <text value="Elimina Sequenza"/>
                             </properties>
                           </component>
-                          <component id="56426" class="javax.swing.JComboBox" binding="combo">
+                          <component id="56426" class="javax.swing.JComboBox" binding="comboGiornoSequenza_modifica">
                             <constraints>
                               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -473,7 +457,7 @@
                               <model/>
                             </properties>
                           </component>
-                          <component id="74459" class="javax.swing.JComboBox" binding="comboBox5" default-binding="true">
+                          <component id="74459" class="javax.swing.JComboBox" binding="comboMeseSequenza_modifica">
                             <constraints>
                               <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -481,7 +465,7 @@
                               <model/>
                             </properties>
                           </component>
-                          <component id="b8dab" class="javax.swing.JComboBox" binding="comboBox6" default-binding="true">
+                          <component id="b8dab" class="javax.swing.JComboBox" binding="comboAnnoSequenza_modifica">
                             <constraints>
                               <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -511,12 +495,12 @@
                               <text value="Anno"/>
                             </properties>
                           </component>
-                          <component id="dff54" class="javax.swing.JButton" binding="button1" default-binding="true">
+                          <component id="dff54" class="javax.swing.JButton" binding="buttonSalvaModificheSequenza">
                             <constraints>
                               <grid row="5" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <text value="Button"/>
+                              <text value="Salva Modifiche"/>
                             </properties>
                           </component>
                         </children>
@@ -550,7 +534,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="fe8eb" class="javax.swing.JTable" binding="table2" default-binding="true">
+                      <component id="fe8eb" class="javax.swing.JTable" binding="tableSequenze">
                         <constraints/>
                         <properties/>
                       </component>
