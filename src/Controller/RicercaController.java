@@ -64,6 +64,7 @@ public class RicercaController {
      */
     public void listnerCombo(){
         JComboBox box = ricerca.getComboProgettiSequenze();
+
         box.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
