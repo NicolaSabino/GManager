@@ -40,4 +40,8 @@ public class TabellaUtenti {
     public JPanel getPannelloPrincipale() {
         return pannelloPrincipale;
     }
+
+    public JTable getElencoUtenti() {
+        return ElencoUtenti;
+    }
 }

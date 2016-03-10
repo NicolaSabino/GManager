@@ -6,6 +6,7 @@ import Model.Sequenza;
 import View.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
@@ -18,12 +19,14 @@ public class RicercaController {
     private Ricerca ricerca;
     private int mod;
     private String campoDiRIcerca;
+    private JTable tabellaOttenuta;
 
 
     public RicercaController(RootFrame rootFrame) {
         this.rootFrame=rootFrame;
         this.ricerca= new Ricerca();
         this.mod=1;
+
         stampaRisultato();
 
         //attivo i listner
@@ -114,6 +117,8 @@ public class RicercaController {
                     TabellaUtenti tabellaUtenti = new TabellaUtenti();
                     tabellaUtenti.setModelTabella(g.getElenco());
                     ricerca.setScrollRIcerca(tabellaUtenti.getPannelloPrincipale());
+
+                    this.tabellaOttenuta=tabellaUtenti.getElencoUtenti();
                 break;
             }
             case 2:{
@@ -123,6 +128,7 @@ public class RicercaController {
                 TabellaAttivita tabellaAttivita = new TabellaAttivita();
                 tabellaAttivita.setModelTabella(s.getStato());
                 ricerca.setScrollRIcerca(tabellaAttivita.getPannelloPrincipale());
+                this.tabellaOttenuta=tabellaAttivita.getTabella();
                 break;
             }
             case 3:{
@@ -131,6 +137,7 @@ public class RicercaController {
                 TabellaAttivita tabellaAttivita = new TabellaAttivita();
                 tabellaAttivita.setModelTabella(s.getStato());
                 ricerca.setScrollRIcerca(tabellaAttivita.getPannelloPrincipale());
+                this.tabellaOttenuta=tabellaAttivita.getTabella();
                 break;
             }
             case 4:{
@@ -148,6 +155,7 @@ public class RicercaController {
 
                 tabellaAttivita.setModelTabella(risultatoRicerca);
                 ricerca.setScrollRIcerca(tabellaAttivita.getPannelloPrincipale());
+                this.tabellaOttenuta=tabellaAttivita.getTabella();
 
                return;
             }
