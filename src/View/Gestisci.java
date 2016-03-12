@@ -1,12 +1,10 @@
 package View;
 
-import Model.Attivita;
 import Model.Gruppi.GruppoProgetti;
 import Model.Progetto;
 import Model.Sequenza;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 /**
@@ -22,7 +20,7 @@ public class Gestisci {
     private JPanel panelSinistro;
     private JPanel panelDestro;
     private JScrollPane scrollSequenze;
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane tabSequenze;
     private JTabbedPane tabbedPane2;
     private JTabbedPane tabbedPane3;
     private JButton buttonCreaSequenza;
@@ -87,25 +85,34 @@ public class Gestisci {
     private JLabel labelNomeProgetto_modifica;
     private JLabel labelDataFine_modifica;
     private JButton buttonSalvaModificheProgetto;
-    private JComboBox comboGiornoSequenza;
-    private JComboBox comboMeseSequenza;
-    private JComboBox comboAnnoSequenza;
-    private JComboBox comboGiornoSequenza_modifica;
-    private JComboBox comboMeseSequenza_modifica;
-    private JComboBox comboAnnoSequenza_modifica;
+    private JComboBox comboGiornoFineSequenza;
+    private JComboBox comboMeseFineSequenza;
+    private JComboBox comboAnnoFineSequenza;
+    private JComboBox comboGiornoFineSequenza_modifica;
+    private JComboBox comboMeseFineSequenza_modifica;
+    private JComboBox comboAnnoFineSequenza_modifica;
     private JTable tableSequenze;
     private JLabel lableNomeSequenza;
     private JTextField fieldNomeSequenza;
     private JButton buttonSalvaModificheSequenza;
+    private JComboBox comboProgetti_modifica;
+    private JComboBox comboProgetti;
+    private JComboBox comboGiornoInizioSequenza;
+    private JComboBox comboMeseInizioSequenza;
+    private JComboBox comboAnnoInizioSequenza;
+    private JComboBox comboGiornoInizioSequenza_modifica;
+    private JComboBox comboMeseInizioSequenza_modifica;
+    private JComboBox comboAnnoInizioSequenza_modifica;
 
     public Gestisci() {
         //setto gestisci progetto
         buttonEliminaProgetto.setForeground(Color.red);
         labelModificaProgetto.setText("<html><b>...Seleziona il progetto da modificare...</b></html>");
+        labelModificaSequenza.setText("<html><b>...Seleziona la sequenza da modificare...</b></html>");
 
 
         disabilitaComponenti(true,fieldNomeProgetto_modifica, comboGiornoProgetto_modifica, comboMeseProgetto_modifica, comboAnnoProgetto_modifica);
-        disabilitaComponenti(true,fieldNomeSequenza_modifica, comboGiornoSequenza_modifica, comboMeseSequenza_modifica, comboAnnoSequenza_modifica);
+
 
         buttonSalvaModificheProgetto.setVisible(false);
         buttonEliminaProgetto.setEnabled(false);
@@ -126,9 +133,11 @@ public class Gestisci {
         StaticMethod.populateData(comboGiornoProgetto,comboMeseProgetto,comboAnnoProgetto,5,0);
         StaticMethod.populateData(comboGiornoProgetto_modifica,comboMeseProgetto_modifica,comboAnnoProgetto_modifica,5,0);
 
+        StaticMethod.popolaComboProgetti(comboProgetti);
+        StaticMethod.popolaComboProgetti(comboProgetti_modifica);
+        comboProgetti_modifica.setEnabled(false);
 
 
-        //setto le
     }
 
     public void disabilitaComponenti(boolean b,Component ...elementi){
@@ -159,6 +168,8 @@ public class Gestisci {
         tableProgetti.setModel(t);
 
     }
+
+
 
     public void popolaSequenze(){
         String col[]={"Nome Sequenza" , "Nome Progetto" , "Fine" , "Costo"};
@@ -191,14 +202,11 @@ public class Gestisci {
         labelModificaProgetto.setVisible(false);
     }
 
+    /* getter */
     public JPanel getPanelloPrincipale() {
         return panelloPrincipale;
     }
 
-    /**
-     * metodo che restituisce un oggetto progetto come risultato dell'inserimento da parte dell'utente in crea progeto
-     * @return
-     */
     public Progetto getParametriCreaProgetto(){
         Progetto p = new Progetto();
         p.setNome(fieldNomeProgetto.getText());
@@ -206,12 +214,12 @@ public class Gestisci {
         return p;
     }
 
-    public Progetto getParametriModificaProgetto(){
-        Progetto p = new Progetto();
-        p.setNome(fieldNomeProgetto_modifica.getText());
-        p.setDeadline(comboAnnoProgetto_modifica.getSelectedItem().toString() + "-" + comboMeseProgetto_modifica.getSelectedItem().toString()
-                + "-" + comboGiornoProgetto_modifica.getSelectedItem().toString());
-        return p;
+    public Sequenza getParametriCreaSequenza(){
+        Sequenza s = new Sequenza();
+        s.setNome(fieldNomeSequenza.getText());
+        s.setNomeprogetto(comboProgetti.getSelectedItem().toString());
+        s.setFine("null");
+        return s;
     }
 
     public JButton getButtonCreaProgetto() {
@@ -272,5 +280,311 @@ public class Gestisci {
 
     public JButton getButtonEliminaProgetto() {
         return buttonEliminaProgetto;
+    }
+
+    public JButton getButtonCreaSequenza() {
+        return buttonCreaSequenza;
+    }
+
+    public JTextField getFieldNomeSequenza_modifica() {
+        return fieldNomeSequenza_modifica;
+    }
+
+    public JButton getButtonEliminaSequenza() {
+        return buttonEliminaSequenza;
+    }
+
+    public JButton getButtonModificaSequenza() {
+        return buttonModificaSequenza;
+    }
+
+    public JTextField getFieldNomeSequenza() {
+        return fieldNomeSequenza;
+    }
+
+    public JComboBox getComboGiornoFineSequenza() {
+        return comboGiornoFineSequenza;
+    }
+
+    public JComboBox getComboMeseFineSequenza() {
+        return comboMeseFineSequenza;
+    }
+
+    public JComboBox getComboAnnoFineSequenza() {
+        return comboAnnoFineSequenza;
+    }
+
+    public JComboBox getComboProgetti() {
+        return comboProgetti;
+    }
+
+    public JTable getTableSequenze() {
+        return tableSequenze;
+    }
+
+    public JTabbedPane getTabbedPanePrincipale() {
+        return tabbedPanePrincipale;
+    }
+
+    public JPanel getPanelSequenze() {
+        return panelSequenze;
+    }
+
+    public JPanel getPanelAttivita() {
+        return panelAttivita;
+    }
+
+    public JPanel getPanelAppuntamenti() {
+        return panelAppuntamenti;
+    }
+
+    public JPanel getPanelOrdini() {
+        return panelOrdini;
+    }
+
+    public JPanel getPanelSinistro() {
+        return panelSinistro;
+    }
+
+    public JPanel getPanelDestro() {
+        return panelDestro;
+    }
+
+    public JScrollPane getScrollSequenze() {
+        return scrollSequenze;
+    }
+
+    public JTabbedPane getTabSequenze() {
+        return tabSequenze;
+    }
+
+    public JTabbedPane getTabbedPane2() {
+        return tabbedPane2;
+    }
+
+    public JTabbedPane getTabbedPane3() {
+        return tabbedPane3;
+    }
+
+    public JTextField getTextField1() {
+        return textField1;
+    }
+
+    public JTextField getTextField2() {
+        return textField2;
+    }
+
+    public JTextField getTextField3() {
+        return textField3;
+    }
+
+    public JTextField getTextField4() {
+        return textField4;
+    }
+
+    public JTextField getTextField5() {
+        return textField5;
+    }
+
+    public JTextField getTextField6() {
+        return textField6;
+    }
+
+    public JButton getCreaAttivitaButton() {
+        return creaAttivitaButton;
+    }
+
+    public JTextField getTextField7() {
+        return textField7;
+    }
+
+    public JTextField getTextField8() {
+        return textField8;
+    }
+
+    public JTextField getTextField9() {
+        return textField9;
+    }
+
+    public JTextField getTextField10() {
+        return textField10;
+    }
+
+    public JTextField getTextField11() {
+        return textField11;
+    }
+
+    public JTextField getTextField12() {
+        return textField12;
+    }
+
+    public JButton getModificaAttivitàButton() {
+        return modificaAttivitàButton;
+    }
+
+    public JButton getEliminaButton() {
+        return eliminaButton;
+    }
+
+    public JTextField getTextField13() {
+        return textField13;
+    }
+
+    public JTextField getTextField14() {
+        return textField14;
+    }
+
+    public JTextField getTextField15() {
+        return textField15;
+    }
+
+    public JTextField getTextField16() {
+        return textField16;
+    }
+
+    public JTextField getTextField17() {
+        return textField17;
+    }
+
+    public JButton getCreaButton() {
+        return creaButton;
+    }
+
+    public JTextField getTextField18() {
+        return textField18;
+    }
+
+    public JTextField getTextField19() {
+        return textField19;
+    }
+
+    public JTextField getTextField20() {
+        return textField20;
+    }
+
+    public JTextField getTextField21() {
+        return textField21;
+    }
+
+    public JTextField getTextField22() {
+        return textField22;
+    }
+
+    public JButton getModificaApuntamentoButton() {
+        return modificaApuntamentoButton;
+    }
+
+    public JButton getCancellaAppuntamentoButton() {
+        return cancellaAppuntamentoButton;
+    }
+
+    public JPanel getPanelProgetti() {
+        return panelProgetti;
+    }
+
+    public JPanel getPanelUtenti() {
+        return panelUtenti;
+    }
+
+    public JScrollPane getScrollProgetti() {
+        return scrollProgetti;
+    }
+
+    public JTable getTable1() {
+        return table1;
+    }
+
+    public JScrollPane getScrollAttività() {
+        return scrollAttività;
+    }
+
+    public JLabel getLabelModificaAttivita() {
+        return labelModificaAttivita;
+    }
+
+    public JLabel getLabelModificaAppuntamento() {
+        return labelModificaAppuntamento;
+    }
+
+    public JLabel getLabelNomeProgetto() {
+        return labelNomeProgetto;
+    }
+
+    public JLabel getLabelFineProgetto() {
+        return labelFineProgetto;
+    }
+
+    public JLabel getLabelAnno() {
+        return labelAnno;
+    }
+
+    public JLabel getLableMese() {
+        return lableMese;
+    }
+
+    public JLabel getLableGiorno() {
+        return lableGiorno;
+    }
+
+    public JLabel getLabelNomeProgetto_modifica() {
+        return labelNomeProgetto_modifica;
+    }
+
+    public JLabel getLabelDataFine_modifica() {
+        return labelDataFine_modifica;
+    }
+
+    public JComboBox getComboGiornoFineSequenza_modifica() {
+        return comboGiornoFineSequenza_modifica;
+    }
+
+    public JComboBox getComboMeseFineSequenza_modifica() {
+        return comboMeseFineSequenza_modifica;
+    }
+
+    public JComboBox getComboAnnoFineSequenza_modifica() {
+        return comboAnnoFineSequenza_modifica;
+    }
+
+    public JLabel getLableNomeSequenza() {
+        return lableNomeSequenza;
+    }
+
+    public JButton getButtonSalvaModificheSequenza() {
+        return buttonSalvaModificheSequenza;
+    }
+
+    public JComboBox getComboProgetti_modifica() {
+        return comboProgetti_modifica;
+    }
+
+    public JComboBox getComboGiornoInizioSequenza() {
+        return comboGiornoInizioSequenza;
+    }
+
+    public JComboBox getComboMeseInizioSequenza() {
+        return comboMeseInizioSequenza;
+    }
+
+    public JComboBox getComboAnnoInizioSequenza() {
+        return comboAnnoInizioSequenza;
+    }
+
+    public JComboBox getComboGiornoInizioSequenza_modifica() {
+        return comboGiornoInizioSequenza_modifica;
+    }
+
+    public JComboBox getComboMeseInizioSequenza_modifica() {
+        return comboMeseInizioSequenza_modifica;
+    }
+
+    public JComboBox getComboAnnoInizioSequenza_modifica() {
+        return comboAnnoInizioSequenza_modifica;
+    }
+
+    public JLabel getLabelModificaSequenza() {
+        return labelModificaSequenza;
+
+
     }
 }

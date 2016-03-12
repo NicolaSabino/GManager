@@ -1,4 +1,9 @@
 package View;
+import Model.Gruppi.GruppoProgetti;
+import Model.Gruppi.GruppoSequenze;
+import Model.Progetto;
+import Model.Sequenza;
+
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -381,6 +386,35 @@ public class StaticMethod {
         for(ActionListener act : button.getActionListeners()) {
             button.removeActionListener(act);
         }
+    }
+
+    public static void popolaComboProgetti( JComboBox box){
+
+        //genero i progetti disponibili nellla modalità cerca progetto e li inserisco nella combobox
+        GruppoProgetti p = new GruppoProgetti();
+        ArrayList<String> s = new ArrayList<String>();
+
+        //primo campo di default
+        s.add(s.size(),"<html><font color=#778899>Seleziona il progetto</font></html>");
+        for(Progetto appoggio:p.getStato()){
+            s.add(s.size(),appoggio.getNome());
+        }
+        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel(s.toArray());
+        box.setModel(comboBoxModel);
+    }
+
+    public static void popolaComboSequenze(JComboBox box){
+        //genero le sequenze disponibili nellla modalità cerca sequenze e li inserisco nella combobox
+        GruppoSequenze s = new GruppoSequenze();
+        ArrayList<String> strings = new ArrayList<String>();
+
+        //primo campo di default
+        strings.add(strings.size(),"<html><font color=#778899>Seleziona la sequenza</font></html>");
+        for(Sequenza appoggio:s.getStato()){
+            strings.add(strings.size(),appoggio.getNome());
+        }
+        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel(strings.toArray());
+        box.setModel(comboBoxModel);
     }
 
 }

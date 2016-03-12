@@ -2,9 +2,12 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="View.RootFrame">
   <grid id="27dc6" binding="rootPanel" layout-manager="BorderLayout" hgap="30" vgap="30">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="930" height="400"/>
     </constraints>
     <properties/>
+    <clientProperties>
+      <html.disable class="java.lang.Boolean" value="false"/>
+    </clientProperties>
     <border type="none" title-justification="2">
       <font/>
     </border>
@@ -24,7 +27,7 @@
             <constraints border-constraint="Center"/>
             <properties>
               <font style="0"/>
-              <text value="More Info @ www.github.com/NicolaSabino/GManager.git"/>
+              <text value="More Info @  www.github.com/NicolaSabino/GManager.git"/>
             </properties>
           </component>
         </children>

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by nicola on 08/02/16.
  */
-public class Sequenza extends Attivita {
+public class Sequenza extends Model{
     //lo stato dell'attività consiste in una collezione di attività che la appartengono
 
     private ArrayList<Attivita> stato;
@@ -202,31 +202,12 @@ public class Sequenza extends Attivita {
 
         boolean controllo=false;
         openConnection();
-        String sql;
 
-
-        for(Attivita appoggio:this.stato){
-
-            sql="insert into attività(nomesequenza,precedenza,descrizione,datainizio,datafineprevista,datafine,costo) values('"
-                    +   this.getNome()              + "','"
-                    +   appoggio.getPrecedenza()    + "','"
-                    +   appoggio.getDescrizione()   + "','"
-                    +   appoggio.getDatainizio()    + "','"
-                    +   appoggio.getDatafineprevista() + "','"
-                    +   appoggio.getDatafine()      + "','"
-                    +   appoggio.getCosto()         + "')";
-
-            if(updateQuery(sql)){
-                controllo=true;
-            }
-        }
-
-        String sql1="insert into Sequenza values('"
+        String sql="insert into sequenza(nome,nomeprogetto) values('"
                 + this.getNome() + "','"
-                + this.getFine() + "','"
                 + this.getNomeprogetto() + "')";
 
-        if(updateQuery(sql1)){
+        if(updateQuery(sql)){
             controllo=true;
         }
 

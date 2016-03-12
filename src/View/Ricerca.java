@@ -70,7 +70,7 @@ public class Ricerca extends JPanel {
 
         comboProgettiSequenze.setVisible(true);
 
-        comboPerSequenza();
+        StaticMethod.popolaComboSequenze(comboProgettiSequenze);
     }
 
     public void CercaProgetto(){
@@ -84,37 +84,10 @@ public class Ricerca extends JPanel {
         //setto la combo
         comboProgettiSequenze.setVisible(true);
 
-        comboPerProgetto();
+        StaticMethod.popolaComboProgetti(comboProgettiSequenze);
     }
 
-    public void comboPerProgetto(){
 
-        //genero i progetti disponibili nellla modalità cerca progetto e li inserisco nella combobox
-        GruppoProgetti p = new GruppoProgetti();
-        ArrayList<String> s = new ArrayList<String>();
-
-        //primo campo di default
-        s.add(s.size(),"<html><font color=#778899>Seleziona il progetto</font></html>");
-        for(Progetto appoggio:p.getStato()){
-            s.add(s.size(),appoggio.getNome());
-        }
-        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel(s.toArray());
-        comboProgettiSequenze.setModel(comboBoxModel);
-    }
-
-    public void comboPerSequenza(){
-        //genero le sequenze disponibili nellla modalità cerca sequenze e li inserisco nella combobox
-        GruppoSequenze s = new GruppoSequenze();
-        ArrayList<String> strings = new ArrayList<String>();
-
-        //primo campo di default
-        strings.add(strings.size(),"<html><font color=#778899>Seleziona la sequenza</font></html>");
-        for(Sequenza appoggio:s.getStato()){
-            strings.add(strings.size(),appoggio.getNome());
-        }
-        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel(strings.toArray());
-        comboProgettiSequenze.setModel(comboBoxModel);
-    }
 
 
     public JPanel getPrimoPanel() {
