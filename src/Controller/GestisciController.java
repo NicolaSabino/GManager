@@ -43,6 +43,7 @@ public class GestisciController {
         //listner
         listnerCreaProgetto();
         listnerModificaProgetto();
+        listnerModificaSequenza();
         listnerEliminaProgetto();
         listnerCreaSequenza();
 
@@ -98,8 +99,7 @@ public class GestisciController {
             public void mouseClicked(MouseEvent e) {
                 popolaCampiModificaSequenza(tabellaSequenze.getSelectedRow());
                 gestisci.getLabelModificaSequenza().setVisible(false);
-                gestisci.getButtonModificaSequenza().setVisible(false);
-                gestisci.getButtonSalvaModificheSequenza().setEnabled(true);
+                gestisci.getButtonModificaSequenza().setEnabled(true);
                 gestisci.getButtonEliminaSequenza().setEnabled(true);
                 gestisci.getTabSequenze().setSelectedIndex(1);
             }
@@ -116,12 +116,32 @@ public class GestisciController {
         });
     }
 
-    protected void listnerSalvaModifiche(String nomevecchioprogetto){
+    protected void listnerModificaSequenza(){
+        JButton modifica=gestisci.getButtonModificaSequenza();
+        modifica.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                abilitaModificaSequenza();
+            }
+        });
+    }
+
+    protected void listnerSalvaModificheProgeto(String nomevecchioprogetto){
         JButton salva = gestisci.getButtonSalvaModificheProgetto();
         salva.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                salvaModifiche(nomevecchioprogetto);
+                salvaModificheProgetto(nomevecchioprogetto);
+            }
+        });
+    }
+
+    protected void listnerSalvaModificheSequenza(String nomevecchiasequenza){
+        JButton salva = gestisci.getButtonSalvaModificheSequenza();
+        salva.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                salvaModificheSequenza(nomevecchiasequenza);
             }
         });
     }
@@ -221,7 +241,7 @@ public class GestisciController {
 
     protected void abilitaModificaProgetto(){
         //creo il listner del salvataggio
-        listnerSalvaModifiche(gestisci.getFieldNomeProgetto_modifica().getText());
+        listnerSalvaModificheProgeto(gestisci.getFieldNomeProgetto_modifica().getText());
 
         //modifico lo stato dell'interfaccia grafica
         gestisci.getButtonSalvaModificheProgetto().setVisible(true);
@@ -232,11 +252,24 @@ public class GestisciController {
                 gestisci.getComboAnnoProgetto_modifica());
     }
 
-    protected void salvaModifiche(String nome){
+    protected void abilitaModificaSequenza(){
+
+        //creo il listner del salvataggio
+        listnerSalvaModificheSequenza(gestisci.getFieldNomeSequenza_modifica().getText());
+
+        //modifico lo stato dell'interfaccia grafica
+        gestisci.getButtonSalvaModificheSequenza().setVisible(true);
+        gestisci.getButtonModificaSequenza().setVisible(false);
+
+        gestisci.disabilitaComponenti(false,gestisci.getFieldNomeSequenza_modifica(),gestisci.getComboProgetti_modifica());
+
+    }
+
+    protected void salvaModificheProgetto(String nome){
 
         Progetto p = new Progetto(nome);
 
-        String nuovoNome=gestisci.getFieldNomeProgetto_modifica().getText().toString();
+        String nuovoNome=gestisci.getFieldNomeProgetto_modifica().getText();
 
         String data= gestisci.getComboAnnoProgetto_modifica().getSelectedItem().toString() + "-"
                 + gestisci.getComboMeseProgetto_modifica().getSelectedItem().toString() + "-"
@@ -288,6 +321,59 @@ public class GestisciController {
 
 
         gestisci.popolaProgetti();
+    }
+
+    protected void salvaModificheSequenza(String nome){
+
+        Sequenza s = new Sequenza(nome);
+
+        String nuovoNome=gestisci.getFieldNomeSequenza_modifica().getText();
+
+        String nuovoNomeProgetto=gestisci.getComboProgetti_modifica().getSelectedItem().toString();
+
+
+        if(!nuovoNomeProgetto.equalsIgnoreCase(s.getNomeprogetto())){
+            s.updateIntoSQL("nomeprogetto",nuovoNomeProgetto);
+            MessaggioBroadcast messaggio = new MessaggioBroadcast();
+            messaggio.setMittente("AUTO");
+            messaggio.setTipo("AUTO");
+            messaggio.setMessaggio(utilizzatore.getNome() +" " + utilizzatore.getCognome() + " " +
+                    "ha riassegnato la sequenza " + s.getNome() + " al progetto " + nuovoNomeProgetto);
+            messaggio.insertIntoSQL();
+
+            //aggionro i messaggi
+            homeController.getMessaggiController().aggiorna();
+        }
+
+
+
+        if(!nuovoNome.equalsIgnoreCase(nome)){
+            s.updateIntoSQL("nome",nuovoNome);
+            MessaggioBroadcast messaggio = new MessaggioBroadcast();
+            messaggio.setMittente("AUTO");
+            messaggio.setTipo("AUTO");
+            messaggio.setMessaggio(utilizzatore.getNome() +" " + utilizzatore.getCognome() + " " +
+                    "ha aggiornato il nome della Sequenza " + nome + " in " + nuovoNome);
+            messaggio.insertIntoSQL();
+
+            //aggionro i messaggi
+            homeController.getMessaggiController().aggiorna();
+        }
+
+
+        //reimposto l'interfaccia grafica
+
+        gestisci.getButtonSalvaModificheSequenza().setVisible(false);
+
+        gestisci.getButtonModificaSequenza().setVisible(true);
+
+        gestisci.getButtonEliminaSequenza().setEnabled(false);
+
+
+
+        gestisci.disabilitaComponenti(true,gestisci.getFieldNomeSequenza_modifica(),gestisci.getComboProgetti_modifica());
+
+        gestisci.popolaSequenze();
     }
 
     protected void eliminaProgetto(){

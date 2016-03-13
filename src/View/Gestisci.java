@@ -112,7 +112,7 @@ public class Gestisci {
 
 
         disabilitaComponenti(true,fieldNomeProgetto_modifica, comboGiornoProgetto_modifica, comboMeseProgetto_modifica, comboAnnoProgetto_modifica);
-
+        fieldNomeSequenza_modifica.setEnabled(false);
 
         buttonSalvaModificheProgetto.setVisible(false);
         buttonEliminaProgetto.setEnabled(false);
