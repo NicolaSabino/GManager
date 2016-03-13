@@ -121,9 +121,31 @@ public class Sequenza extends Model{
             }finally {
                 closeConnection();
             }
-        }else if(var[0]=="descrizione+ultimato"){
-            // TODO: finire
-            return;
+        }else if(var[0]=="tutteLeAttivita"){
+            sql = "select a.id,a.nomesequenza,a.precedenza,a.descrizione,a.datainizio,a.datafineprevista,a.datafine,a.costo from attività a ";
+            ResultSet query = selectQuery(sql);
+
+            try{
+                while (query.next()){
+                    Attivita appoggio=new Attivita();
+
+                    appoggio.setId(query.getInt("id"));
+                    appoggio.setNomesequenza(query.getString("nomesequenza"));
+                    appoggio.setPrecedenza(query.getInt("precedenza"));
+                    appoggio.setDatainizio(query.getString("datainizio"));
+                    appoggio.setDatafine(query.getString("datafine"));
+                    appoggio.setDatafineprevista(query.getString("datafineprevista"));
+                    appoggio.setDescrizione(query.getString("descrizione"));
+                    appoggio.setCosto(query.getDouble("costo"));
+
+                    this.stato.add(stato.size(), appoggio);
+                }
+
+            }catch (SQLException se){
+                se.printStackTrace();
+            }finally {
+                closeConnection();
+            }
         }
         return;
     }
@@ -242,7 +264,7 @@ public class Sequenza extends Model{
     public  boolean deleteIntoSQL(){
         openConnection();
         boolean controllo=false;
-        String sql="delete from sequenza where sequenza='" + this.getNome() + "'";
+        String sql="delete from sequenza where nome='" + this.getNome() + "'";
 
         if(updateQuery(sql)){
             controllo=true;

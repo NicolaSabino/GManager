@@ -1,17 +1,15 @@
 package Controller;
 
+import Model.*;
 import Model.Gruppi.Gruppo;
 import Model.Gruppi.GruppoProgetti;
 import Model.Gruppi.GruppoSequenze;
-import Model.MessaggioBroadcast;
-import Model.Progetto;
-import Model.Sequenza;
-import Model.Utente;
 import View.Gestisci;
 import View.RootFrame;
 import View.StaticMethod;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,13 +40,14 @@ public class GestisciController {
 
         //listner
         listnerCreaProgetto();
+        listnerCreaSequenza();
+        listnerCreaAttivita();
+        listnerSelezioneAttivita();
         listnerModificaProgetto();
         listnerModificaSequenza();
         listnerEliminaProgetto();
-        listnerCreaSequenza();
+        listnerEliminaSequenza();
 
-
-        return;
     }
 
     public void apriGestisci(){
@@ -71,6 +70,16 @@ public class GestisciController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 creaSequenza();
+            }
+        });
+    }
+
+    protected void listnerCreaAttivita(){
+        JButton crea = gestisci.getButtonCreaAttivita();
+        crea.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                creaAttivita();
             }
         });
     }
@@ -102,6 +111,20 @@ public class GestisciController {
                 gestisci.getButtonModificaSequenza().setEnabled(true);
                 gestisci.getButtonEliminaSequenza().setEnabled(true);
                 gestisci.getTabSequenze().setSelectedIndex(1);
+            }
+        });
+    }
+
+    protected void listnerSelezioneAttivita(){
+        JTable tabellaAttivita = gestisci.getTableAttivita();
+        tabellaAttivita.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                popolaCampimodificaAttivita(tabellaAttivita.getSelectedRow());
+                gestisci.getLabelModificaAttivita().setVisible(false);
+                gestisci.getButtonModificaAttivita().setEnabled(true);
+                gestisci.getButtonEliminaAttivita().setEnabled(true);
+                gestisci.getTabAttivita().setSelectedIndex(1);
             }
         });
     }
@@ -156,6 +179,16 @@ public class GestisciController {
         });
     }
 
+    protected void listnerEliminaSequenza(){
+        JButton elimina=gestisci.getButtonEliminaSequenza();
+        elimina.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eliminaSequenza();
+            }
+        });
+    }
+
     protected void creaProgetto(){
 
         Progetto p = gestisci.getParametriCreaProgetto();
@@ -198,6 +231,7 @@ public class GestisciController {
 
             //aggiorno il pannello gestisci sequenze
             StaticMethod.popolaComboProgetti(gestisci.getComboProgetti());
+            StaticMethod.popolaComboProgetti(gestisci.getComboProgetti_modifica());
         }
 
     }
@@ -230,12 +264,92 @@ public class GestisciController {
             //aggionro i messaggi
             homeController.getMessaggiController().aggiorna();
 
-            //aggiorno l'elenco dei progetti
+            //aggiorno l'elenco delle Sequenze
             gestisci.popolaSequenze();
 
             //ripulisco crea
             gestisci.getFieldNomeSequenza().setText("");
             gestisci.getComboProgetti().setSelectedIndex(0);
+        }
+    }
+
+    protected void creaAttivita(){
+        Attivita a = gestisci.getParametriCreaAttivita();
+        GruppoSequenze gruppoSequenze = new GruppoSequenze();
+        int errore = 0;
+
+        for (Sequenza sequenza : gruppoSequenze.getStato()) {
+            for(Attivita attivita : sequenza.getStato()){
+                if(attivita.getDescrizione().equalsIgnoreCase(a.getDescrizione())){
+                    errore++;
+                }
+            }
+        }
+
+        if (errore != 0) {
+            JOptionPane.showMessageDialog(new JFrame("errore"),"esiste già un attività con la medesima descrizione!");
+        }else if(gestisci.getComboSequenze().getSelectedIndex()==0) {
+            JOptionPane.showMessageDialog(new JFrame("errore"),"seleziona una sequenza!");
+        }else{
+
+                try {
+                    a.setCosto(Double.parseDouble(gestisci.getFieldCostoAttivita().getText()));
+                }catch (NumberFormatException e){
+                    a.setCosto(0);
+                }
+
+                if(!gestisci.getFieldPrecedenzaAttivita().getText().equals("")){
+                    String precedenza= gestisci.getFieldPrecedenzaAttivita().getText();
+                    a.insertIntoSQL(precedenza);
+                }else{
+                    a.insertIntoSQL();
+                }
+
+
+                //inserisco un nuovo messaggio
+                MessaggioBroadcast messaggioBroadcast = new MessaggioBroadcast();
+                messaggioBroadcast.setMessaggio(utilizzatore.getNome() + " " + utilizzatore.getCognome() +
+                        " ha creato una nuova Attività in " + a.getNomesequenza() + ": " + a.getDescrizione());
+                messaggioBroadcast.setTipo("AUTO");
+                messaggioBroadcast.setMittente("AUTO");
+                messaggioBroadcast.insertIntoSQL();
+
+                //aggionro i messaggi
+                homeController.getMessaggiController().aggiorna();
+
+
+
+                //aggionro il costo della sequenza
+                Sequenza s = new Sequenza(a.getNomesequenza());
+                double nuovoCosto = s.getCosto() + a.getCosto();
+
+
+
+                if(s.getCosto()!=nuovoCosto){
+                    s.updateIntoSQL("costo", Double.toString(nuovoCosto));
+                    //inserisco un nuovo messaggio
+                    MessaggioBroadcast m = new MessaggioBroadcast();
+                    m.setMessaggio("Aggiornato il costo della sequenza " + a.getNomesequenza() + ": " + nuovoCosto + " €");
+                    m.setTipo("AUTO");
+                    m.setMittente("AUTO");
+                    m.insertIntoSQL();
+
+                    //aggionro i messaggi
+                    homeController.getMessaggiController().aggiorna();
+                }
+
+
+
+                //aggiorno l'elenco delle Attività
+                gestisci.popolaAttivita();
+                gestisci.popolaSequenze();
+
+                //ripulisco crea
+                gestisci.getFieldDescrizioneAttivtia().setText("");
+                gestisci.getFieldCostoAttivita().setText("0");
+                gestisci.getFieldPrecedenzaAttivita().setText("");
+                gestisci.getComboSequenze().setSelectedIndex(0);
+
         }
     }
 
@@ -396,6 +510,8 @@ public class GestisciController {
             homeController.getMessaggiController().aggiorna();
 
             gestisci.popolaProgetti();
+            gestisci.popolaSequenze();
+            //gestisci.popolaAttivita();
 
             gestisci.getFieldNomeProgetto_modifica().setText("");
             gestisci.getComboGiornoProgetto_modifica().setSelectedIndex(0);
@@ -406,10 +522,41 @@ public class GestisciController {
 
             //aggiorno il pannello  delle sequenze
             StaticMethod.popolaComboProgetti(gestisci.getComboProgetti());
-            gestisci.popolaSequenze();
         }
 
 
+    }
+
+    protected void eliminaSequenza(){
+        String nomeSequenza = gestisci.getFieldNomeSequenza_modifica().getText();
+        int response=JOptionPane.showConfirmDialog(null,"vuoi veramente eliminare la sequenza " + nomeSequenza + "? \n" +
+                        "[VERRANNO ELIMINATE TUTTE LE SOTTOATTIVITÀ COLLEGATE]","Cancellazione di " + nomeSequenza,
+                JOptionPane.WARNING_MESSAGE);
+
+        if (response == JOptionPane.YES_OPTION) {
+            Sequenza s = new Sequenza(nomeSequenza);
+            s.deleteIntoSQL();
+
+            MessaggioBroadcast m = new MessaggioBroadcast();
+            m.setTipo("AUTO");
+            m.setMittente("AUTO");
+            m.setMessaggio(utilizzatore.getNome() + utilizzatore.getCognome() + " ha eliminato la sequenza " + nomeSequenza);
+            m.insertIntoSQL();
+
+            //aggionro i messaggi
+            homeController.getMessaggiController().aggiorna();
+
+            gestisci.popolaSequenze();
+            //gestisci.popolaAttivita();
+
+            gestisci.getFieldNomeSequenza_modifica().setText("");
+            gestisci.getComboProgetti_modifica().setSelectedIndex(0);
+            gestisci.getLabelModificaSequenza().setVisible(true);
+            gestisci.getButtonEliminaSequenza().setEnabled(false);
+
+            //aggiorno il pannello  delle Attività
+            //StaticMethod.popolaComboProgetti(gestisci.getComboProgetti());
+        }
     }
 
     protected void popolaCampiModificaProgetto(int riga){
@@ -419,23 +566,57 @@ public class GestisciController {
         data.put("data", tabellaProgetti.getValueAt(riga,1).toString());
         StaticMethod.setOldData(gestisci.getComboGiornoProgetto_modifica(), gestisci.getComboMeseProgetto_modifica(), gestisci.getComboAnnoProgetto_modifica(), data, "data");
     }
+
     protected void popolaCampiModificaSequenza(int riga){
         JTable tabellaSequenze = gestisci.getTableSequenze();
         gestisci.getFieldNomeSequenza_modifica().setText(tabellaSequenze.getValueAt(riga,0).toString());
 
 
         ComboBoxModel model=gestisci.getComboProgetti_modifica().getModel();
-        ArrayList<String> elementi;
         for(int i=0;i<model.getSize();i++){
             String a=tabellaSequenze.getValueAt(riga,1).toString();
             String b=model.getElementAt(i).toString();
 
             if(a.equals(b)){
-                System.out.println("ok");
                 gestisci.getComboProgetti_modifica().setSelectedIndex(i);
             }
         }
     }
 
+    protected void popolaCampimodificaAttivita(int riga){
+        JTable tabellaAttivita = gestisci.getTableAttivita();
+
+        gestisci.getFieldDescrizioneAttivita_modifica().setText(tabellaAttivita.getValueAt(riga,1).toString());
+        gestisci.getFieldPrecedenzaAttivita_modifica().setText(tabellaAttivita.getValueAt(riga,2).toString());
+        gestisci.getFieldCostoAttivta_modifica().setText(tabellaAttivita.getValueAt(riga,7).toString());
+
+        ComboBoxModel model = gestisci.getComboSequenze_modifica().getModel();
+        for(int i=0;i<model.getSize();i++){
+            String a = tabellaAttivita.getValueAt(riga,3).toString();
+            String b = model.getElementAt(i).toString();
+
+            if(a.equals(b)){
+                gestisci.getComboSequenze_modifica().setSelectedIndex(i);
+            }
+        }
+
+        try {
+            Map data = new HashMap<>();
+            data.put("datainizio", tabellaAttivita.getValueAt(riga, 4).toString());
+            data.put("datafineprevista", tabellaAttivita.getValueAt(riga, 5).toString());
+            StaticMethod.setOldData(gestisci.getComboGiornoInizioAttivita_modifica(), gestisci.getComboMeseInizioAttivita_modifica(), gestisci.getComboAnnoInizioAttivita_modifica(), data, "datainizio");
+            StaticMethod.setOldData(gestisci.getComboGiornoFineAttivita_modifica(), gestisci.getComboMeseFineAttivita_modifica(), gestisci.getComboAnnoFineAttivita_modifica(), data, "datafineprevista");
+        }catch (Exception e){
+            gestisci.getComboGiornoInizioAttivita_modifica().setSelectedIndex(0);
+            gestisci.getComboMeseInizioAttivita_modifica().setSelectedIndex(0);
+            gestisci.getComboAnnoInizioAttivita_modifica().setSelectedIndex(0);
+            gestisci.getComboGiornoFineAttivita_modifica().setSelectedIndex(0);
+            gestisci.getComboMeseFineAttivita_modifica().setSelectedIndex(0);
+            gestisci.getComboAnnoFineAttivita_modifica().setSelectedIndex(0);
+        }
+    }
+
 
 }
+
+//todo l'utente non deve poter inserire campi vuoti all'interno del programma

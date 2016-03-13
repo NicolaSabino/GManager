@@ -1,5 +1,6 @@
 package View;
 
+import Model.Attivita;
 import Model.Gruppi.GruppoProgetti;
 import Model.Progetto;
 import Model.Sequenza;
@@ -21,27 +22,27 @@ public class Gestisci {
     private JPanel panelDestro;
     private JScrollPane scrollSequenze;
     private JTabbedPane tabSequenze;
-    private JTabbedPane tabbedPane2;
+    private JTabbedPane tabAttivita;
     private JTabbedPane tabbedPane3;
     private JButton buttonCreaSequenza;
     private JTextField fieldNomeSequenza_modifica;
     private JButton buttonEliminaSequenza;
     private JButton buttonModificaSequenza;
-    private JTextField textField1;
-    private JTextField textField2;
+    private JTextField fieldCostoAttivita;
+    private JTextField fieldDescrizioneAttivtia;
     private JTextField textField3;
-    private JTextField textField4;
+    private JTextField fieldPrecedenzaAttivita;
     private JTextField textField5;
     private JTextField textField6;
-    private JButton creaAttivitaButton;
+    private JButton buttonCreaAttivita;
     private JTextField textField7;
-    private JTextField textField8;
+    private JTextField fieldCostoAttivta_modifica;
     private JTextField textField9;
     private JTextField textField10;
-    private JTextField textField11;
-    private JTextField textField12;
-    private JButton modificaAttivitàButton;
-    private JButton eliminaButton;
+    private JTextField fieldPrecedenzaAttivita_modifica;
+    private JTextField fieldDescrizioneAttivita_modifica;
+    private JButton buttonModificaAttivita;
+    private JButton buttonEliminaAttivita;
     private JTextField textField13;
     private JTextField textField14;
     private JTextField textField15;
@@ -60,7 +61,7 @@ public class Gestisci {
     private JScrollPane scrollProgetti;
     private JTable tableProgetti;
     private JTabbedPane tabProgetti;
-    private JTable table1;
+    private JTable tableAttivita;
     private JScrollPane scrollAttività;
     private JLabel labelModificaAttivita;
     private JLabel labelModificaSequenza;
@@ -97,6 +98,21 @@ public class Gestisci {
     private JButton buttonSalvaModificheSequenza;
     private JComboBox comboProgetti_modifica;
     private JComboBox comboProgetti;
+    private JComboBox comboGiornoInizoAttivita;
+    private JComboBox comboMeseInizioAttivita;
+    private JComboBox comboAnnoInizioAttivita;
+    private JComboBox comboGiornoFineAttivita;
+    private JComboBox comboMeseFineAttivita;
+    private JComboBox comboAnnoFineAttivita;
+    private JComboBox comboGiornoInizioAttivita_modifica;
+    private JComboBox comboMeseInizioAttivita_modifica;
+    private JComboBox comboAnnoInizioAttivita_modifica;
+    private JComboBox comboGiornoFineAttivita_modifica;
+    private JComboBox comboMeseFineAttivita_modifica;
+    private JComboBox comboAnnoFineAttivita_modifica;
+    private JButton buttonSalvaModificeAttivita;
+    private JComboBox comboSequenze;
+    private JComboBox comboSequenze_modifica;
     private JComboBox comboGiornoInizioSequenza;
     private JComboBox comboMeseInizioSequenza;
     private JComboBox comboAnnoInizioSequenza;
@@ -109,10 +125,15 @@ public class Gestisci {
         buttonEliminaProgetto.setForeground(Color.red);
         labelModificaProgetto.setText("<html><b>...Seleziona il progetto da modificare...</b></html>");
         labelModificaSequenza.setText("<html><b>...Seleziona la sequenza da modificare...</b></html>");
+        labelModificaAttivita.setText("<html><b>...Seleziona l'attività da modificare...</b></html>");
 
 
         disabilitaComponenti(true,fieldNomeProgetto_modifica, comboGiornoProgetto_modifica, comboMeseProgetto_modifica, comboAnnoProgetto_modifica);
-        fieldNomeSequenza_modifica.setEnabled(false);
+        disabilitaComponenti(true,fieldNomeSequenza_modifica,comboProgetti_modifica);
+        disabilitaComponenti(true,fieldDescrizioneAttivita_modifica,fieldPrecedenzaAttivita_modifica,fieldCostoAttivta_modifica,
+                comboSequenze_modifica,comboGiornoInizioAttivita_modifica,comboMeseInizioAttivita_modifica,comboAnnoInizioAttivita_modifica,
+                comboGiornoFineAttivita_modifica,comboMeseFineAttivita_modifica,comboAnnoFineAttivita_modifica);
+
 
         buttonSalvaModificheProgetto.setVisible(false);
         buttonEliminaProgetto.setEnabled(false);
@@ -126,15 +147,37 @@ public class Gestisci {
 
         popolaSequenze();
 
+        buttonSalvaModificeAttivita.setVisible(false);
+        buttonEliminaAttivita.setEnabled(false);
+        buttonModificaAttivita.setEnabled(false);
+
+        popolaAttivita();
+
         //limitazioni
+        StaticMethod.textFieldLimitLength(fieldDescrizioneAttivtia,80);
+        StaticMethod.textFieldLimitLength(fieldCostoAttivta_modifica,80);
+        StaticMethod.textFieldLimitOnlyInt(fieldPrecedenzaAttivita,4);
+        StaticMethod.textFieldLimitLength(fieldPrecedenzaAttivita_modifica,4);
+        StaticMethod.textFieldLimitOnlyDouble(fieldCostoAttivita);
+        StaticMethod.textFieldLimitOnlyDouble(fieldCostoAttivta_modifica);
+        fieldCostoAttivita.setText("0");
+        fieldCostoAttivta_modifica.setText("0");
+
         StaticMethod.textFieldLimitLength(fieldNomeProgetto,20);
         StaticMethod.textFieldLimitLength(fieldNomeProgetto_modifica,20);
 
         StaticMethod.populateData(comboGiornoProgetto,comboMeseProgetto,comboAnnoProgetto,5,0);
         StaticMethod.populateData(comboGiornoProgetto_modifica,comboMeseProgetto_modifica,comboAnnoProgetto_modifica,5,0);
+        StaticMethod.populateData(comboGiornoInizoAttivita,comboMeseInizioAttivita,comboAnnoInizioAttivita,5,0);
+        StaticMethod.populateData(comboGiornoFineAttivita,comboMeseFineAttivita,comboAnnoFineAttivita,5,0);
+        StaticMethod.populateData(comboGiornoInizioAttivita_modifica,comboMeseInizioAttivita_modifica,comboAnnoInizioAttivita_modifica,5,0);
+        StaticMethod.populateData(comboGiornoFineAttivita_modifica,comboMeseFineAttivita_modifica,comboAnnoFineAttivita_modifica,5,0);
 
         StaticMethod.popolaComboProgetti(comboProgetti);
         StaticMethod.popolaComboProgetti(comboProgetti_modifica);
+
+        StaticMethod.popolaComboSequenze(comboSequenze);
+        StaticMethod.popolaComboSequenze(comboSequenze_modifica);
         comboProgetti_modifica.setEnabled(false);
 
 
@@ -169,8 +212,6 @@ public class Gestisci {
 
     }
 
-
-
     public void popolaSequenze(){
         String col[]={"Nome Sequenza" , "Nome Progetto" , "Fine" , "Costo"};
         CustomTable t = new CustomTable(col,0);
@@ -190,6 +231,32 @@ public class Gestisci {
             }
         }
         tableSequenze.setModel(t);
+    }
+
+    public void popolaAttivita(){
+        String col[]={"Id","Descrizione","Precedenza","Nome Sequenza","Inizio","Fine Prevista","Fine","Costo"};
+        CustomTable t = new CustomTable(col,0);
+
+        GruppoProgetti progetti = new GruppoProgetti();
+        for(Progetto progetto:progetti.getStato()){
+            for(Sequenza sequenza:progetto.getStato()){
+                for(Attivita attivita:sequenza.getStato()){
+
+                    int id              = attivita.getId();
+                    String descrizione  = attivita.getDescrizione();
+                    int precedenza      = attivita.getPrecedenza();
+                    String nomesequenza = attivita.getNomesequenza();
+                    String inizio       = attivita.getDatainizio();
+                    String fineprevista = attivita.getDatafineprevista();
+                    String fine         = attivita.getDatafine();
+                    double costo        = attivita.getCosto();
+
+                    Object[] data = {id,descrizione,precedenza,nomesequenza,inizio,fineprevista,fine,costo};
+                    t.addRow(data);
+                }
+            }
+        }
+        tableAttivita.setModel(t);
     }
 
     public void glMode(){
@@ -220,6 +287,15 @@ public class Gestisci {
         s.setNomeprogetto(comboProgetti.getSelectedItem().toString());
         s.setFine("null");
         return s;
+    }
+
+    public Attivita getParametriCreaAttivita(){
+        Attivita a = new Attivita();
+        a.setDescrizione(fieldDescrizioneAttivtia.getText());
+        a.setNomesequenza(comboSequenze.getSelectedItem().toString());
+        a.setDatainizio(comboAnnoInizioAttivita.getSelectedItem().toString() + "-" + comboMeseInizioAttivita.getSelectedItem().toString() + "-" + comboGiornoInizoAttivita.getSelectedItem().toString());
+        a.setDatafineprevista(comboAnnoFineAttivita.getSelectedItem().toString() + "-" + comboMeseFineAttivita.getSelectedItem().toString() + "-" + comboGiornoFineAttivita.getSelectedItem().toString());
+        return a;
     }
 
     public JButton getButtonCreaProgetto() {
@@ -358,28 +434,28 @@ public class Gestisci {
         return tabSequenze;
     }
 
-    public JTabbedPane getTabbedPane2() {
-        return tabbedPane2;
+    public JTabbedPane getTabAttivita() {
+        return tabAttivita;
     }
 
     public JTabbedPane getTabbedPane3() {
         return tabbedPane3;
     }
 
-    public JTextField getTextField1() {
-        return textField1;
+    public JTextField getFieldCostoAttivita() {
+        return fieldCostoAttivita;
     }
 
-    public JTextField getTextField2() {
-        return textField2;
+    public JTextField getFieldDescrizioneAttivtia() {
+        return fieldDescrizioneAttivtia;
     }
 
     public JTextField getTextField3() {
         return textField3;
     }
 
-    public JTextField getTextField4() {
-        return textField4;
+    public JTextField getFieldPrecedenzaAttivita() {
+        return fieldPrecedenzaAttivita;
     }
 
     public JTextField getTextField5() {
@@ -390,16 +466,16 @@ public class Gestisci {
         return textField6;
     }
 
-    public JButton getCreaAttivitaButton() {
-        return creaAttivitaButton;
+    public JButton getButtonCreaAttivita() {
+        return buttonCreaAttivita;
     }
 
     public JTextField getTextField7() {
         return textField7;
     }
 
-    public JTextField getTextField8() {
-        return textField8;
+    public JTextField getFieldCostoAttivta_modifica() {
+        return fieldCostoAttivta_modifica;
     }
 
     public JTextField getTextField9() {
@@ -410,20 +486,20 @@ public class Gestisci {
         return textField10;
     }
 
-    public JTextField getTextField11() {
-        return textField11;
+    public JTextField getFieldPrecedenzaAttivita_modifica() {
+        return fieldPrecedenzaAttivita_modifica;
     }
 
-    public JTextField getTextField12() {
-        return textField12;
+    public JTextField getFieldDescrizioneAttivita_modifica() {
+        return fieldDescrizioneAttivita_modifica;
     }
 
-    public JButton getModificaAttivitàButton() {
-        return modificaAttivitàButton;
+    public JButton getButtonModificaAttivita() {
+        return buttonModificaAttivita;
     }
 
-    public JButton getEliminaButton() {
-        return eliminaButton;
+    public JButton getButtonEliminaAttivita() {
+        return buttonEliminaAttivita;
     }
 
     public JTextField getTextField13() {
@@ -490,8 +566,8 @@ public class Gestisci {
         return scrollProgetti;
     }
 
-    public JTable getTable1() {
-        return table1;
+    public JTable getTableAttivita() {
+        return tableAttivita;
     }
 
     public JScrollPane getScrollAttività() {
@@ -586,5 +662,65 @@ public class Gestisci {
         return labelModificaSequenza;
 
 
+    }
+
+    public JComboBox getComboGiornoInizoAttivita() {
+        return comboGiornoInizoAttivita;
+    }
+
+    public JComboBox getComboMeseInizioAttivita() {
+        return comboMeseInizioAttivita;
+    }
+
+    public JComboBox getComboAnnoInizioAttivita() {
+        return comboAnnoInizioAttivita;
+    }
+
+    public JComboBox getComboGiornoFineAttivita() {
+        return comboGiornoFineAttivita;
+    }
+
+    public JComboBox getComboMeseFineAttivita() {
+        return comboMeseFineAttivita;
+    }
+
+    public JComboBox getComboAnnoFineAttivita() {
+        return comboAnnoFineAttivita;
+    }
+
+    public JComboBox getComboGiornoInizioAttivita_modifica() {
+        return comboGiornoInizioAttivita_modifica;
+    }
+
+    public JComboBox getComboMeseInizioAttivita_modifica() {
+        return comboMeseInizioAttivita_modifica;
+    }
+
+    public JComboBox getComboAnnoInizioAttivita_modifica() {
+        return comboAnnoInizioAttivita_modifica;
+    }
+
+    public JComboBox getComboGiornoFineAttivita_modifica() {
+        return comboGiornoFineAttivita_modifica;
+    }
+
+    public JComboBox getComboMeseFineAttivita_modifica() {
+        return comboMeseFineAttivita_modifica;
+    }
+
+    public JComboBox getComboAnnoFineAttivita_modifica() {
+        return comboAnnoFineAttivita_modifica;
+    }
+
+    public JButton getButtonSalvaModificeAttivita() {
+        return buttonSalvaModificeAttivita;
+    }
+
+    public JComboBox getComboSequenze() {
+        return comboSequenze;
+    }
+
+    public JComboBox getComboSequenze_modifica() {
+        return comboSequenze_modifica;
     }
 }
