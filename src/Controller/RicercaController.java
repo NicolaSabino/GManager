@@ -214,21 +214,28 @@ public class RicercaController {
         try {
             File file = new File(posizione);
             FileWriter fileWriter = new FileWriter(file);
-
-            //costruisco l'intestazione
-            for(int col = 0;col < tabellaOttenuta.getColumnCount();col ++){
-                fileWriter.write(tabellaOttenuta.getColumnName(col));
-
-                if(col +1 == tabellaOttenuta.getColumnCount())fileWriter.write("\n");
+            String appoggio;
+            for(int col = 0;col < tabellaOttenuta.getModel().getColumnCount();col ++){//header
+                appoggio= tabellaOttenuta.getModel().getColumnName(col);
+                appoggio = appoggio.replace("\n", " ");
+                fileWriter.write(appoggio);//column name stampa header
+                if(col +1 == tabellaOttenuta.getModel().getColumnCount())fileWriter.write("\n");
                 else fileWriter.write(", ");
             }
 
-            for (int rig = 0; rig < tabellaOttenuta.getRowCount();rig ++) {
-                for (int col = 0;col < tabellaOttenuta.getColumnCount();col ++) {
+            for (int rig = 0; rig < tabellaOttenuta.getModel().getRowCount();rig ++) {
+                for (int col = 0;col < tabellaOttenuta.getModel().getColumnCount();col ++) {
+                    appoggio= tabellaOttenuta.getModel().getValueAt(rig, col) + "";
+                    appoggio = appoggio.replace("\n", " ");
+                    fileWriter.write(/*tabellaOttenuta.getModel().getValueAt(rig, col) + "".replace("\n", " ")*/appoggio);
 
-                    fileWriter.write(tabellaOttenuta.getValueAt(rig, col) + "");
+                    /*
                     if(col +1 != tabellaOttenuta.getColumnCount())fileWriter.write(", ");//a fine riga non ci vuole la virgola
                 }fileWriter.write("\n");
+                */
+                    if (col + 1 == tabellaOttenuta.getModel().getColumnCount()) fileWriter.write("\n");
+                    else fileWriter.write(", ");
+                }
             }
             fileWriter.flush();
             fileWriter.close();
