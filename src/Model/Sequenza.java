@@ -91,7 +91,6 @@ public class Sequenza extends Model{
      */
     public Sequenza(String...var){
 
-        // todo ampliare questo metodo
         this.stato=new ArrayList<Attivita>();
         openConnection();
         String sql;
@@ -166,7 +165,7 @@ public class Sequenza extends Model{
      * Metodo che calcola la fine di una sequenza
      * @return
      */
-    protected String calcolaFine(){
+    public String calcolaFine(){
         openConnection();
         String risultato = null;
         String sql="select datafineprevista as data FROM attività WHERE nomesequenza='" + this.nome + "' order by datafineprevista desc LIMIT 1";

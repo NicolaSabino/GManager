@@ -80,7 +80,7 @@ public class StaticMethod {
     }
 
     /**
-     * Metodo che popola le tre combo box per le date in cui va inserito un anno passato
+     * Metodo che popola le tre combo box per le date
      *
      * @param giorno    JComboBox per inserire i giorni
      * @param mese      JComboBox per inserire i mesi
@@ -105,6 +105,8 @@ public class StaticMethod {
         mese.setSelectedIndex(0);
         anno.setSelectedIndex(pos);
     }
+
+
 
     /**
      * Metodo che popola una generica combo box con i dati passati in una arrayList di string
@@ -198,6 +200,7 @@ public class StaticMethod {
             }
         }
     }
+
 
     /**
      * Metodo che setta un singolo elemente nella combo box
@@ -416,5 +419,7 @@ public class StaticMethod {
         DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel(strings.toArray());
         box.setModel(comboBoxModel);
     }
+
+
 
 }

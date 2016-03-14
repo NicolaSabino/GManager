@@ -110,7 +110,7 @@ public class Gestisci {
     private JComboBox comboGiornoFineAttivita_modifica;
     private JComboBox comboMeseFineAttivita_modifica;
     private JComboBox comboAnnoFineAttivita_modifica;
-    private JButton buttonSalvaModificeAttivita;
+    private JButton buttonSalvaModificheAttivita;
     private JComboBox comboSequenze;
     private JComboBox comboSequenze_modifica;
     private JComboBox comboGiornoInizioSequenza;
@@ -147,7 +147,7 @@ public class Gestisci {
 
         popolaSequenze();
 
-        buttonSalvaModificeAttivita.setVisible(false);
+        buttonSalvaModificheAttivita.setVisible(false);
         buttonEliminaAttivita.setEnabled(false);
         buttonModificaAttivita.setEnabled(false);
 
@@ -712,8 +712,8 @@ public class Gestisci {
         return comboAnnoFineAttivita_modifica;
     }
 
-    public JButton getButtonSalvaModificeAttivita() {
-        return buttonSalvaModificeAttivita;
+    public JButton getButtonSalvaModificheAttivita() {
+        return buttonSalvaModificheAttivita;
     }
 
     public JComboBox getComboSequenze() {
