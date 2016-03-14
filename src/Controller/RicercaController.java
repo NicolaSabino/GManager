@@ -226,7 +226,7 @@ public class RicercaController {
             for (int rig = 0; rig < tabellaOttenuta.getRowCount();rig ++) {
                 for (int col = 0;col < tabellaOttenuta.getColumnCount();col ++) {
 
-                    fileWriter.write(tabellaOttenuta.getValueAt(rig, col).toString());
+                    fileWriter.write(tabellaOttenuta.getValueAt(rig, col) + "");
                     if(col +1 != tabellaOttenuta.getColumnCount())fileWriter.write(", ");//a fine riga non ci vuole la virgola
                 }fileWriter.write("\n");
             }
