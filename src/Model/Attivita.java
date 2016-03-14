@@ -66,14 +66,32 @@ public class Attivita extends Model {
         openConnection();
         boolean controllo=false;
         //id è auto-incrementante quindi non va inserito
-        String sql="Insert into attività(nomesequenza,precedenza,descrizione,datainizio,datafineprevista,datafine,costo) values('"
+        String sql="Insert into attività(nomesequenza,descrizione,datainizio,datafineprevista,costo) values('"
                 +   this.getNomesequenza()  + "','"
-                +   this.getPrecedenza()    + "','"
                 +   this.getDescrizione()   + "','"
                 +   this.getDatainizio()    + "','"
-                +   this.getDatafineprevista() + "','"
-                +   this.getDatafine()      + "','"
-                +   this.getCosto()         +"')";
+                +   this.getDatafineprevista() + "',"
+                +   this.getCosto()         + ")";
+
+        if(updateQuery(sql)){
+            controllo=true;
+        }
+        closeConnection();
+        return controllo;
+    }
+
+
+    public boolean insertIntoSQL(String precedenza){
+        openConnection();
+        boolean controllo=false;
+        //id è auto-incrementante quindi non va inserito
+        String sql="Insert into attività(nomesequenza,descrizione,datainizio,datafineprevista,precedenza,costo) values('"
+                +   this.getNomesequenza()  + "','"
+                +   this.getDescrizione()   + "','"
+                +   this.getDatainizio()    + "','"
+                +   this.getDatafineprevista() + "',"
+                +   precedenza              + ","
+                +   this.getCosto()         + ")";
 
         if(updateQuery(sql)){
             controllo=true;

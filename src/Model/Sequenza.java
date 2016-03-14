@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by nicola on 08/02/16.
  */
-public class Sequenza extends Attivita {
+public class Sequenza extends Model{
     //lo stato dell'attività consiste in una collezione di attività che la appartengono
 
     private ArrayList<Attivita> stato;
@@ -91,7 +91,6 @@ public class Sequenza extends Attivita {
      */
     public Sequenza(String...var){
 
-        // todo ampliare questo metodo
         this.stato=new ArrayList<Attivita>();
         openConnection();
         String sql;
@@ -121,9 +120,31 @@ public class Sequenza extends Attivita {
             }finally {
                 closeConnection();
             }
-        }else if(var[0]=="descrizione+ultimato"){
-            // TODO: finire
-            return;
+        }else if(var[0]=="tutteLeAttivita"){
+            sql = "select a.id,a.nomesequenza,a.precedenza,a.descrizione,a.datainizio,a.datafineprevista,a.datafine,a.costo from attività a ";
+            ResultSet query = selectQuery(sql);
+
+            try{
+                while (query.next()){
+                    Attivita appoggio=new Attivita();
+
+                    appoggio.setId(query.getInt("id"));
+                    appoggio.setNomesequenza(query.getString("nomesequenza"));
+                    appoggio.setPrecedenza(query.getInt("precedenza"));
+                    appoggio.setDatainizio(query.getString("datainizio"));
+                    appoggio.setDatafine(query.getString("datafine"));
+                    appoggio.setDatafineprevista(query.getString("datafineprevista"));
+                    appoggio.setDescrizione(query.getString("descrizione"));
+                    appoggio.setCosto(query.getDouble("costo"));
+
+                    this.stato.add(stato.size(), appoggio);
+                }
+
+            }catch (SQLException se){
+                se.printStackTrace();
+            }finally {
+                closeConnection();
+            }
         }
         return;
     }
@@ -144,7 +165,7 @@ public class Sequenza extends Attivita {
      * Metodo che calcola la fine di una sequenza
      * @return
      */
-    protected String calcolaFine(){
+    public String calcolaFine(){
         openConnection();
         String risultato = null;
         String sql="select datafineprevista as data FROM attività WHERE nomesequenza='" + this.nome + "' order by datafineprevista desc LIMIT 1";
@@ -202,31 +223,12 @@ public class Sequenza extends Attivita {
 
         boolean controllo=false;
         openConnection();
-        String sql;
 
-
-        for(Attivita appoggio:this.stato){
-
-            sql="insert into attività(nomesequenza,precedenza,descrizione,datainizio,datafineprevista,datafine,costo) values('"
-                    +   this.getNome()              + "','"
-                    +   appoggio.getPrecedenza()    + "','"
-                    +   appoggio.getDescrizione()   + "','"
-                    +   appoggio.getDatainizio()    + "','"
-                    +   appoggio.getDatafineprevista() + "','"
-                    +   appoggio.getDatafine()      + "','"
-                    +   appoggio.getCosto()         + "')";
-
-            if(updateQuery(sql)){
-                controllo=true;
-            }
-        }
-
-        String sql1="insert into Sequenza values('"
+        String sql="insert into sequenza(nome,nomeprogetto) values('"
                 + this.getNome() + "','"
-                + this.getFine() + "','"
                 + this.getNomeprogetto() + "')";
 
-        if(updateQuery(sql1)){
+        if(updateQuery(sql)){
             controllo=true;
         }
 
@@ -261,7 +263,7 @@ public class Sequenza extends Attivita {
     public  boolean deleteIntoSQL(){
         openConnection();
         boolean controllo=false;
-        String sql="delete from sequenza where sequenza='" + this.getNome() + "'";
+        String sql="delete from sequenza where nome='" + this.getNome() + "'";
 
         if(updateQuery(sql)){
             controllo=true;

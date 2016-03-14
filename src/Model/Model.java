@@ -2,6 +2,7 @@ package Model;
 
 import database.DBConnection;
 
+import javax.swing.*;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -76,7 +77,9 @@ abstract public class Model {
             stmt.executeUpdate(sql);
             result = true;
         } catch (SQLException se) {
-            se.printStackTrace();
+
+            JOptionPane.showMessageDialog(new JFrame("errore"),"inserire una data compatibile con la deadline!");
+
         }
 
         return result;
@@ -133,7 +136,7 @@ abstract public class Model {
      * metodo astratto che permette di inserire dati nel db
      * @return
      */
-    abstract public boolean insertIntoSQL();
+    abstract public boolean insertIntoSQL()throws SQLException;
 
     /**
      * metodo astratto che permette di eliminare dati dal db

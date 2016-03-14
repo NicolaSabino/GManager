@@ -18,3 +18,5 @@ public class CustomTable extends DefaultTableModel{
         return false;
     }
 }
+
+//todo eliminare la possibilità di spostare le colonne della tabella altrimenti genera degli errori con i mouse listner su gestisci
