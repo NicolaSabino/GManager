@@ -214,15 +214,19 @@ public class RicercaController {
         try {
             File file = new File(posizione);
             FileWriter fileWriter = new FileWriter(file);
-            for(int col = 0;col < tabellaOttenuta.getColumnCount();col ++){//header
+
+            //costruisco l'intestazione
+            for(int col = 0;col < tabellaOttenuta.getColumnCount();col ++){
                 fileWriter.write(tabellaOttenuta.getColumnName(col));
+
                 if(col +1 == tabellaOttenuta.getColumnCount())fileWriter.write("\n");
                 else fileWriter.write(", ");
             }
 
             for (int rig = 0; rig < tabellaOttenuta.getRowCount();rig ++) {
                 for (int col = 0;col < tabellaOttenuta.getColumnCount();col ++) {
-                    fileWriter.write(tabellaOttenuta.getValueAt(rig, col) + "");
+
+                    fileWriter.write(tabellaOttenuta.getValueAt(rig, col).toString());
                     if(col +1 != tabellaOttenuta.getColumnCount())fileWriter.write(", ");//a fine riga non ci vuole la virgola
                 }fileWriter.write("\n");
             }
