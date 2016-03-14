@@ -84,14 +84,13 @@ public class ImpostazioniController {
 
 
     protected void salvaCampi(){
-
-        utilizzatore.updateIntoSQL("nome", impostazioni.getModifiche().getNome());
-        utilizzatore.updateIntoSQL("cognome", impostazioni.getModifiche().getCognome());
-        utilizzatore.updateIntoSQL("telefono", impostazioni.getModifiche().getTelefono());
-        utilizzatore.updateIntoSQL("mail", impostazioni.getModifiche().getMail());
         if(impostazioni.getModifiche().getPwd().equals(new String(impostazioni.getCampoPasswordCheck().getPassword()))) {
             utilizzatore.updateIntoSQL("pwd", impostazioni.getModifiche().getPwd());
-        }else impostazioni.displayErrorMessage("Le due password non coincidono!\n(nota: le altre modifiche sono state accettate)", "errore!");
+            utilizzatore.updateIntoSQL("nome", impostazioni.getModifiche().getNome());
+            utilizzatore.updateIntoSQL("cognome", impostazioni.getModifiche().getCognome());
+            utilizzatore.updateIntoSQL("telefono", impostazioni.getModifiche().getTelefono());
+            utilizzatore.updateIntoSQL("mail", impostazioni.getModifiche().getMail());
+        }else impostazioni.displayErrorMessage("Errore inserimento password!", "errore!");
         this.impostazioni.disabilitaCampi(true);
     }
 

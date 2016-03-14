@@ -5,9 +5,12 @@ import Model.Progetto;
 import Model.Sequenza;
 import View.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -33,6 +36,7 @@ public class RicercaController {
         listnerComboBox();
         listnerCombo();
         listnerCerca();
+        listnerSalvaRicerca();
         return;
     }
 
@@ -191,6 +195,43 @@ public class RicercaController {
         }
     }
 
+    protected void listnerSalvaRicerca() {
+        this.tabellaOttenuta = tabellaOttenuta;
+        JButton salva = ricerca.getSalvaRicerca();
+        salva.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String path = "";
+                String filename = ricerca.getFileName();
+                if(!filename.isEmpty()) path = filename;
+                salvaCSV(path);
+            }
+        });
+    }
+
+    protected void salvaCSV(String posizione) {//String del path di destinazione
+
+        try {
+            File file = new File(posizione);
+            FileWriter fileWriter = new FileWriter(file);
+            for(int col = 0;col < tabellaOttenuta.getColumnCount();col ++){//header
+                fileWriter.write(tabellaOttenuta.getColumnName(col));
+                if(col +1 == tabellaOttenuta.getColumnCount())fileWriter.write("\n");
+                else fileWriter.write(", ");
+            }
+
+            for (int rig = 0; rig < tabellaOttenuta.getRowCount();rig ++) {
+                for (int col = 0;col < tabellaOttenuta.getColumnCount();col ++) {
+                    fileWriter.write(tabellaOttenuta.getValueAt(rig, col) + "");
+                    if(col +1 != tabellaOttenuta.getColumnCount())fileWriter.write(", ");//a fine riga non ci vuole la virgola
+                }fileWriter.write("\n");
+            }
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public void setCampoDiRIcerca(String campoDiRIcerca) {

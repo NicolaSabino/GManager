@@ -1,5 +1,5 @@
 package Controller;
-import Model.Gruppo;
+import Model.Gruppi.*;
 import Model.Utente;
 import sun.plugin.javascript.navig.Array;
 import sun.security.util.Password;

@@ -111,7 +111,7 @@ public class Impostazioni extends JPanel{
         return appoggio;
     }
 
-    public void displayErrorMessage(String errorMessage,String errorTitle){//TODO correzzione messaggio!
+    public void displayErrorMessage(String errorMessage,String errorTitle){
        JOptionPane messaggioErrore = new JOptionPane(errorMessage,JOptionPane.ERROR_MESSAGE  );
         JDialog dialog = messaggioErrore.createDialog(errorTitle);
         dialog.setAlwaysOnTop(true);

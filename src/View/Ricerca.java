@@ -1,13 +1,18 @@
 package View;
 
+import Controller.RicercaController;
 import Model.Attivita;
 import Model.Gruppi.GruppoProgetti;
 import Model.Gruppi.GruppoSequenze;
 import Model.Progetto;
 import Model.Sequenza;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +31,7 @@ public class Ricerca extends JPanel {
     private JButton salvaRicerca;
     private JComboBox comboProgettiSequenze;
     private JCheckBox chechkstato;
+    private JFileChooser fileChooser;
 
 
     public Ricerca(){
@@ -35,6 +41,23 @@ public class Ricerca extends JPanel {
 
 
     }
+
+
+
+    public String getFileName(){
+        JFileChooser fc = new JFileChooser();
+
+        FileNameExtensionFilter textFilter1 = new FileNameExtensionFilter("Text Files","txt");
+        FileNameExtensionFilter textFilter2 = new FileNameExtensionFilter("Csv Files","csv");
+        fc.addChoosableFileFilter(textFilter1);
+        fc.addChoosableFileFilter(textFilter2);
+
+        if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
+            return fc.getSelectedFile().getPath();
+        return "";
+    }
+
+
 
     public void CercaUtente(){
         label1.setText("Nome");
@@ -116,6 +139,11 @@ public class Ricerca extends JPanel {
         comboProgettiSequenze.setModel(comboBoxModel);
     }
 
+
+
+    public JButton getSalvaRicerca() {
+        return salvaRicerca;
+    }
 
     public JPanel getPrimoPanel() {
         return primoPanel;
