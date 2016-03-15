@@ -286,6 +286,14 @@ public class Gestisci {
         tableAttivita.setModel(t);
     }
 
+    public void popolaAppuntamenti(){
+        String col[]={"Tipo","Data","Ora"};
+
+        CustomTable t = new CustomTable(col,0);
+
+        
+    }
+
     public void glMode(){
         tableProgetti.setEnabled(false);
         buttonCreaProgetto.setEnabled(false);

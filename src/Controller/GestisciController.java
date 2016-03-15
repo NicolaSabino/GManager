@@ -431,7 +431,7 @@ public class GestisciController {
         }
     }
 
-    
+
     protected void abilitaModificaProgetto(){
         //creo il listner del salvataggio
         listnerSalvaModificheProgeto(gestisci.getFieldNomeProgetto_modifica().getText());
