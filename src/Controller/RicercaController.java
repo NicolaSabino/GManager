@@ -216,7 +216,6 @@ public class RicercaController {
                 try {
                     salvaCSV(path);
                 } catch (FileNotFoundException e1) {
-                    //TODO dialog errore file non salvato
                     ricerca.displayErrorMessage("Errore, file non creato!", "errore!");
                 }
             }
