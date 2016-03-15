@@ -420,6 +420,35 @@ public class StaticMethod {
         box.setModel(comboBoxModel);
     }
 
+    public static boolean AmaggioreB (JComboBox ggA, JComboBox mmA, JComboBox aaA, JComboBox ggB, JComboBox mmB, JComboBox aaB ){
+
+        int annoA,meseA,giornoA;
+        int annoB,meseB,giornoB;
+        boolean risultato=false;
+
+
+        annoA=Integer.parseInt(aaA.getSelectedItem().toString());
+        annoB=Integer.parseInt (aaB.getSelectedItem().toString());
+        meseA=Integer.parseInt(mmA.getSelectedItem().toString());
+        meseB=Integer.parseInt(mmB.getSelectedItem().toString());
+        giornoA=Integer.parseInt(ggA.getSelectedItem().toString());
+        giornoB=Integer.parseInt(ggB.getSelectedItem().toString());
+
+        if (annoA>annoB){
+
+            risultato=true;
+
+        }else if (meseA>meseB){
+
+            risultato=true;
+
+        }else if (giornoA>giornoB){
+
+            risultato=true;
+        }
+
+        return risultato;
+    }
 
 
 }

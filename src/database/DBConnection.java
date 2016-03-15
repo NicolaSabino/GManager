@@ -11,7 +11,7 @@ import java.sql.SQLException;
  *
  * Classe che gestisce la connessione col database
  */
-public class DBConnection {
+public class    DBConnection {
     // Costanti per la connessione al DB
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DB_NAME = "g_db";
