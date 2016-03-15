@@ -26,7 +26,7 @@ public class RootFrame extends JFrame{
         //setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
 
-        Image icon = Toolkit.getDefaultToolkit().getImage("immagini/LogoGManagerpiccolo.png");
+        Image icon = Toolkit.getDefaultToolkit().getImage("immagini/Logo_GManagerpiccolo.png");
         this.setIconImage(icon);
 
 
