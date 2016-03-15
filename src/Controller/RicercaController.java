@@ -226,7 +226,7 @@ public class RicercaController {
             for (int rig = 0; rig < tabellaOttenuta.getModel().getRowCount();rig ++) {
                 for (int col = 0;col < tabellaOttenuta.getModel().getColumnCount();col ++) {
                     appoggio= tabellaOttenuta.getModel().getValueAt(rig, col) + "";
-                    appoggio = appoggio.replace("\n", " ");
+                    appoggio = appoggio.replace("\n", " "); //correzione bug \n
                     fileWriter.write(/*tabellaOttenuta.getModel().getValueAt(rig, col) + "".replace("\n", " ")*/appoggio);
 
                     /*
