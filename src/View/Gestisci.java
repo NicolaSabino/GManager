@@ -129,6 +129,17 @@ public class Gestisci {
     private JComboBox comboAnnoAppuntamento_modifca;
     private JComboBox comboOraAppuntamento_modifica;
     private JComboBox comboMinutiAppuntamento_modifica;
+    private JRadioButton invitaTuttiRadioButton;
+    private JRadioButton invitaDaUnaSequenzaRadioButton;
+    private JButton buttonInvitati;
+    private JComboBox comboSequenzeAppuntamento;
+    private JTable table1;
+    private JTable table2;
+    private JButton button1;
+    private JButton button2;
+    private JTable table3;
+    private JTabbedPane tabbedPane1;
+    private JRadioButton direttivoRadioButton;
     private JComboBox comboGiornoInizioSequenza;
     private JComboBox comboMeseInizioSequenza;
     private JComboBox comboAnnoInizioSequenza;
