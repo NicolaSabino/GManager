@@ -8,6 +8,7 @@ import Model.Sequenza;
 import javax.swing.*;
 import java.awt.*;
 
+
 /**
  * Created by edoardo on 02/03/16.
  */
@@ -45,17 +46,17 @@ public class Gestisci {
     private JButton buttonEliminaAttivita;
     private JTextField textField13;
     private JTextField textField14;
-    private JTextField textField15;
+    private JTextField fieldLuogoAppuntamento;
     private JTextField textField16;
     private JTextField textField17;
-    private JButton creaButton;
+    private JButton creaAppuntamento;
     private JTextField textField18;
     private JTextField textField19;
-    private JTextField textField20;
+    private JTextField fieldLuogoAppuntamento_modifica;
     private JTextField textField21;
     private JTextField textField22;
-    private JButton modificaApuntamentoButton;
-    private JButton cancellaAppuntamentoButton;
+    private JButton buttonModifcaAppuntamento;
+    private JButton butonCancellaAppuntamento;
     private JPanel panelProgetti;
     private JPanel panelUtenti;
     private JScrollPane scrollProgetti;
@@ -113,6 +114,21 @@ public class Gestisci {
     private JButton buttonSalvaModificheAttivita;
     private JComboBox comboSequenze;
     private JComboBox comboSequenze_modifica;
+    private JComboBox comboTipoAppuntamento;
+    private JTable tableApuntamenti;
+    private JComboBox comboGiornoAppuntamento;
+    private JComboBox comboMeseAppuntamento;
+    private JComboBox comboAnnoAppuntamento;
+    private JComboBox comboOraAppuntamento;
+    private JComboBox comboMinutiAppuntamento;
+    private JButton buttonSalvaAppuntamento;
+    private JComboBox comboTipoAppuntamento_modifica;
+    private JTextArea areaVerbaleAppuntamento;
+    private JComboBox comboGiornoAppuntamento_modifica;
+    private JComboBox comboMeseAppuntamento_modifica;
+    private JComboBox comboAnnoAppuntamento_modifca;
+    private JComboBox comboOraAppuntamento_modifica;
+    private JComboBox comboMinutiAppuntamento_modifica;
     private JComboBox comboGiornoInizioSequenza;
     private JComboBox comboMeseInizioSequenza;
     private JComboBox comboAnnoInizioSequenza;
@@ -510,8 +526,8 @@ public class Gestisci {
         return textField14;
     }
 
-    public JTextField getTextField15() {
-        return textField15;
+    public JTextField getFieldLuogoAppuntamento() {
+        return fieldLuogoAppuntamento;
     }
 
     public JTextField getTextField16() {
@@ -522,8 +538,8 @@ public class Gestisci {
         return textField17;
     }
 
-    public JButton getCreaButton() {
-        return creaButton;
+    public JButton getCreaAppuntamento() {
+        return creaAppuntamento;
     }
 
     public JTextField getTextField18() {
@@ -534,8 +550,8 @@ public class Gestisci {
         return textField19;
     }
 
-    public JTextField getTextField20() {
-        return textField20;
+    public JTextField getFieldLuogoAppuntamento_modifica() {
+        return fieldLuogoAppuntamento_modifica;
     }
 
     public JTextField getTextField21() {
@@ -546,12 +562,12 @@ public class Gestisci {
         return textField22;
     }
 
-    public JButton getModificaApuntamentoButton() {
-        return modificaApuntamentoButton;
+    public JButton getButtonModifcaAppuntamento() {
+        return buttonModifcaAppuntamento;
     }
 
-    public JButton getCancellaAppuntamentoButton() {
-        return cancellaAppuntamentoButton;
+    public JButton getButonCancellaAppuntamento() {
+        return butonCancellaAppuntamento;
     }
 
     public JPanel getPanelProgetti() {
