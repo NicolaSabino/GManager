@@ -21,6 +21,7 @@ public class Spalla {
     private JLabel Ruolo;
     private JLabel ruoloUtente;
     private JLabel Matricola;
+    private JLabel logo;
 
     /**
      * Metodo che nasconde l'interfaccia della spalla all'utente
@@ -36,7 +37,7 @@ public class Spalla {
         ordiniButton.setVisible(false);
         gestisciButton.setVisible(false);
         InfoUtente.setVisible(false);
-
+        logo.setVisible(false);
 
     }
 
@@ -49,6 +50,7 @@ public class Spalla {
         impostazioniButton.setVisible(true);
         ricercaButton.setVisible(true);
         ordiniButton.setVisible(true);
+        logo.setVisible(true);
 
         gestisciButton.setVisible(false);
 
@@ -72,6 +74,7 @@ public class Spalla {
         impostazioniButton.setVisible(true);
         ricercaButton.setVisible(true);
         ordiniButton.setVisible(true);
+        logo.setVisible(true);
 
         gestisciButton.setVisible(true);
 

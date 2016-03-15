@@ -23,6 +23,7 @@ public class GestisciController {
     private HomeController homeController;
     private boolean statoListner;
 
+
     public GestisciController(RootFrame rootFrame, Utente utente,HomeController home) {
         this.rootFrame=rootFrame;
         this.gestisci= new Gestisci();
