@@ -750,4 +750,108 @@ public class Gestisci {
     public JComboBox getComboSequenze_modifica() {
         return comboSequenze_modifica;
     }
+
+    public JComboBox getComboTipoAppuntamento() {
+        return comboTipoAppuntamento;
+    }
+
+    public JTable getTableApuntamenti() {
+        return tableApuntamenti;
+    }
+
+    public JComboBox getComboGiornoAppuntamento() {
+        return comboGiornoAppuntamento;
+    }
+
+    public JComboBox getComboMeseAppuntamento() {
+        return comboMeseAppuntamento;
+    }
+
+    public JComboBox getComboAnnoAppuntamento() {
+        return comboAnnoAppuntamento;
+    }
+
+    public JComboBox getComboOraAppuntamento() {
+        return comboOraAppuntamento;
+    }
+
+    public JComboBox getComboMinutiAppuntamento() {
+        return comboMinutiAppuntamento;
+    }
+
+    public JButton getButtonSalvaAppuntamento() {
+        return buttonSalvaAppuntamento;
+    }
+
+    public JComboBox getComboTipoAppuntamento_modifica() {
+        return comboTipoAppuntamento_modifica;
+    }
+
+    public JTextArea getAreaVerbaleAppuntamento() {
+        return areaVerbaleAppuntamento;
+    }
+
+    public JComboBox getComboGiornoAppuntamento_modifica() {
+        return comboGiornoAppuntamento_modifica;
+    }
+
+    public JComboBox getComboMeseAppuntamento_modifica() {
+        return comboMeseAppuntamento_modifica;
+    }
+
+    public JComboBox getComboAnnoAppuntamento_modifca() {
+        return comboAnnoAppuntamento_modifca;
+    }
+
+    public JComboBox getComboOraAppuntamento_modifica() {
+        return comboOraAppuntamento_modifica;
+    }
+
+    public JComboBox getComboMinutiAppuntamento_modifica() {
+        return comboMinutiAppuntamento_modifica;
+    }
+
+    public JRadioButton getInvitaTuttiRadioButton() {
+        return invitaTuttiRadioButton;
+    }
+
+    public JRadioButton getInvitaDaUnaSequenzaRadioButton() {
+        return invitaDaUnaSequenzaRadioButton;
+    }
+
+    public JButton getButtonInvitati() {
+        return buttonInvitati;
+    }
+
+    public JComboBox getComboSequenzeAppuntamento() {
+        return comboSequenzeAppuntamento;
+    }
+
+    public JTable getTable1() {
+        return table1;
+    }
+
+    public JTable getTable2() {
+        return table2;
+    }
+
+    public JButton getButton1() {
+        return button1;
+    }
+
+    public JButton getButton2() {
+        return button2;
+    }
+
+    public JTable getTable3() {
+        return table3;
+    }
+
+    public JTabbedPane getTabbedPane1() {
+        return tabbedPane1;
+    }
+
+    public JRadioButton getDirettivoRadioButton() {
+        return direttivoRadioButton;
+    }
 }
