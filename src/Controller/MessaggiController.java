@@ -65,7 +65,7 @@ public class MessaggiController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MessaggioBroadcast messaggio = new MessaggioBroadcast();
-                messaggio.setMessaggio(n.getTesto());
+                messaggio.setMessaggio(n.getTesto().replace("\n", " "));
                 messaggio.setData("CURRENT_DATE");
                 messaggio.setMittente(utilizzatore.getNome() + " " + utilizzatore.getCognome());
                 messaggio.setTipo(utilizzatore.getRuolo());
