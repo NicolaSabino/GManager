@@ -203,12 +203,20 @@ public class RicercaController {
             public void actionPerformed(ActionEvent e) {
                 String path = "";
                 String filename = ricerca.getFileName();
-                if(!filename.isEmpty()) path = filename;
-
+                if(!filename.isEmpty()) {
+                    String estensione = filename.substring(filename.length() - 4, filename.length());
+                    if (estensione.equals(".csv") || estensione.equals(".txt")){
+                        // va bene
+                        path = filename;
+                    } else {
+                        // non va bene
+                        path = filename + ".csv";
+                    }
+                }
                 try {
                     salvaCSV(path);
                 } catch (FileNotFoundException e1) {
-                    //todo edoardo fixalo
+                    ricerca.displayErrorMessage("Errore, file non creato!", "errore!");
                 }
             }
         });
@@ -231,13 +239,8 @@ public class RicercaController {
             for (int rig = 0; rig < tabellaOttenuta.getModel().getRowCount();rig ++) {
                 for (int col = 0;col < tabellaOttenuta.getModel().getColumnCount();col ++) {
                     appoggio= tabellaOttenuta.getModel().getValueAt(rig, col) + "";
-                    appoggio = appoggio.replace("\n", " ");
-                    fileWriter.write(/*tabellaOttenuta.getModel().getValueAt(rig, col) + "".replace("\n", " ")*/appoggio);
-
-                    /*
-                    if(col +1 != tabellaOttenuta.getColumnCount())fileWriter.write(", ");//a fine riga non ci vuole la virgola
-                }fileWriter.write("\n");
-                */
+                    appoggio = appoggio.replace("\n", " "); //correzione bug \n
+                    fileWriter.write(appoggio);
                     if (col + 1 == tabellaOttenuta.getModel().getColumnCount()) fileWriter.write("\n");
                     else fileWriter.write(", ");
                 }
