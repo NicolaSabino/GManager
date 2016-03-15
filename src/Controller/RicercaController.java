@@ -204,12 +204,17 @@ public class RicercaController {
                 String path = "";
                 String filename = ricerca.getFileName();
                 if(!filename.isEmpty()) path = filename;
-                salvaCSV(path);
+
+                try {
+                    salvaCSV(path);
+                } catch (FileNotFoundException e1) {
+                    //todo edoardo fixalo
+                }
             }
         });
     }
 
-    protected void salvaCSV(String posizione) {//String del path di destinazione
+    protected void salvaCSV(String posizione)throws FileNotFoundException{//String del path di destinazione
 
         try {
             File file = new File(posizione);
