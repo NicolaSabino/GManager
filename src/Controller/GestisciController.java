@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import Model.Gruppi.Gruppo;
 import Model.Gruppi.GruppoProgetti;
 import Model.Gruppi.GruppoSequenze;
 import View.Gestisci;
@@ -45,6 +46,12 @@ public class GestisciController {
         listnerCreaProgetto();
         listnerCreaSequenza();
         listnerCreaAttivita();
+
+        //TODO fatto da edo
+
+        listnerCreaUtente();
+
+        //TODO */
 
         listnerSelezioneAttivita();
 
@@ -435,6 +442,53 @@ public class GestisciController {
         }
     }
 
+
+    //TODO fatto da edo
+
+    protected void creaUtente(){
+        Utente utente = gestisci.getParametriCreaUtente();
+        Gruppo gruppoUtenti = new Gruppo();
+        int errore=0;
+        gruppoUtenti.createFrom("utenti");
+
+        for (Utente appoggio : gruppoUtenti.getElenco()){
+            if(utente.getMatricola().equals(appoggio.getMatricola())) {
+                errore++;
+            }
+        }
+        if(errore!=0){
+            gestisci.displayErrorMessage("Errore, crezione utente\n" + "codice erroe:" +errore, "errore!");
+        }else utente.insertIntoSQL();
+
+
+        //inserisco un nuovo messaggio
+        MessaggioBroadcast messaggioBroadcast = new MessaggioBroadcast();
+        messaggioBroadcast.setMessaggio(utilizzatore.getNome() + " " + utilizzatore.getCognome() +
+                " ha creato una nuovo Utente con matricola " + utente.getMatricola());
+        messaggioBroadcast.setTipo("AUTO");
+        messaggioBroadcast.setMittente("AUTO");
+
+        messaggioBroadcast.insertIntoSQL();
+
+        //aggionro i messaggi
+        homeController.getMessaggiController().aggiorna();
+
+
+        //aggiorno l'elenco degli Utenti
+        gestisci.popolaUtenti();
+
+        //ripulisco crea
+        gestisci.getFieldMailUtente().setText("");
+        gestisci.getFieldNomeUtente().setText("0");
+        gestisci.getFieldCognomeUtente().setText("");
+        gestisci.getComboRuoloUtente().setSelectedIndex(0);
+        gestisci.getFieldTelefonoUtente().setText("");
+        gestisci.getFieldMailUtente().setText("");
+
+    }
+
+
+    //TODO */
 
     protected void abilitaModificaProgetto(){
         //creo il listner del salvataggio
@@ -898,6 +952,21 @@ public class GestisciController {
             gestisci.getComboAnnoFineAttivita_modifica().setSelectedIndex(0);
         }
     }
+
+    //TODO fatto da edo
+
+    protected void listnerCreaUtente(){
+        JButton crea=gestisci.getButtonCreaUtente();
+        crea.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                creaUtente();
+            }
+        });
+    }
+
+
+    //TODO */
 
 
 }
