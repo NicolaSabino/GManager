@@ -90,7 +90,7 @@ public class GestisciController {
                 try {
                     creaAttivita();
                 }catch (Exception ex){
-                    System.out.println("ihb");
+                  ex.printStackTrace();
                 }
             }
         });
@@ -369,7 +369,10 @@ public class GestisciController {
             JOptionPane.showMessageDialog(new JFrame("errore"),"esiste già un attività con la medesima descrizione!");
         }else if(gestisci.getComboSequenze().getSelectedIndex()==0) {
             JOptionPane.showMessageDialog(new JFrame("errore"),"seleziona una sequenza!");
-        }else{
+        }else if (StaticMethod.AmaggioreB(gestisci.getComboGiornoInizoAttivita(),gestisci.getComboMeseInizioAttivita(),gestisci.getComboAnnoInizioAttivita(),
+                gestisci.getComboGiornoFineAttivita(),gestisci.getComboMeseFineAttivita(),gestisci.getComboAnnoFineAttivita())){
+            JOptionPane.showMessageDialog(new JFrame("Errore"), "La data di inizio attività deve essere minore di quella di fine");
+        }else {
 
 
                 //se l'utente non inserisce alcun valore nel campo costo il try catch inserisce di defaut 0
@@ -421,6 +424,7 @@ public class GestisciController {
                 //aggiorno l'elenco delle Attività
                 gestisci.popolaAttivita();
                 gestisci.popolaSequenze();
+                gestisci.popolaProgetti();
 
                 //ripulisco crea
                 gestisci.getFieldDescrizioneAttivtia().setText("");
