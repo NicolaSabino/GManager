@@ -2,6 +2,8 @@ package Controller;
 
 import Model.*;
 import Model.Gruppi.Gruppo;
+import Model.Gruppi.Gruppo;
+import Model.Gruppi.GruppoAppuntamenti;
 import Model.Gruppi.GruppoProgetti;
 import Model.Gruppi.GruppoSequenze;
 import View.Gestisci;
@@ -10,7 +12,6 @@ import View.StaticMethod;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +47,7 @@ public class GestisciController {
         listnerCreaProgetto();
         listnerCreaSequenza();
         listnerCreaAttivita();
+        listnerCreaAppuntamento();
 
         //TODO fatto da edo
 
@@ -99,6 +101,16 @@ public class GestisciController {
                 }catch (Exception ex){
                   ex.printStackTrace();
                 }
+            }
+        });
+    }
+
+    protected void listnerCreaAppuntamento(){
+        JButton crea = gestisci.getButtonCreaAppuntamento();
+        crea.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                creaAppuntamento();
             }
         });
     }
@@ -442,6 +454,26 @@ public class GestisciController {
         }
     }
 
+    protected void creaAppuntamento(){
+        Incontro incontro =gestisci.getParametriCreaIncontro();
+
+        incontro.insertIntoSQL();
+
+        //inserisco un nuovo messaggio
+        MessaggioBroadcast messaggioBroadcast = new MessaggioBroadcast();
+        messaggioBroadcast.setMessaggio(utilizzatore.getNome() + " " + utilizzatore.getCognome() +
+                " ha creato un nuovo incontro: " + incontro.getLuogo() + " @ "  + incontro.getData() + " " + incontro.getOra());
+        messaggioBroadcast.setTipo("AUTO");
+        messaggioBroadcast.setMittente("AUTO");
+        messaggioBroadcast.insertIntoSQL();
+
+        //aggiorno la home e gestisci
+        homeController.getMessaggiController().aggiorna();
+        homeController.aggiornoAppuntamenti();
+        gestisci.popolaAppuntamenti();
+    }
+
+
 
     //TODO fatto da edo
 
@@ -537,6 +569,7 @@ public class GestisciController {
                 gestisci.getComboSequenze_modifica());
 
     }
+
 
     protected void salvaModificheProgetto(String nome){
 
