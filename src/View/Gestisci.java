@@ -291,7 +291,7 @@ public class Gestisci {
 
         CustomTable t = new CustomTable(col,0);
 
-        
+
     }
 
     public void glMode(){
