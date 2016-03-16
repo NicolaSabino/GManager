@@ -210,6 +210,7 @@ public class Gestisci {
         buttonEliminaAttivita.setEnabled(false);
         buttonModificaAttivita.setEnabled(false);
 
+        invitaTuttiRadioButton.setSelected(true);
 
 
         //limitazioni
@@ -244,6 +245,7 @@ public class Gestisci {
 
         StaticMethod.popolaComboSequenze(comboSequenze);
         StaticMethod.popolaComboSequenze(comboSequenze_modifica);
+        StaticMethod.popolaComboSequenze(comboSequenzeAppuntamento);
         comboProgetti_modifica.setEnabled(false);
 
 

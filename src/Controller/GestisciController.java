@@ -462,15 +462,52 @@ public class GestisciController {
         //inserisco un nuovo messaggio
         MessaggioBroadcast messaggioBroadcast = new MessaggioBroadcast();
         messaggioBroadcast.setMessaggio(utilizzatore.getNome() + " " + utilizzatore.getCognome() +
-                " ha creato un nuovo incontro: " + incontro.getLuogo() + " @ "  + incontro.getData() + " " + incontro.getOra());
+                " ha creato un nuovo incontro: " + incontro.getLuogo() + " alle "  + incontro.getOra() + " del " + incontro.getData());
         messaggioBroadcast.setTipo("AUTO");
         messaggioBroadcast.setMittente("AUTO");
         messaggioBroadcast.insertIntoSQL();
+
+
+
+        Gruppo gruppo = new Gruppo();
+
+        if(gestisci.getInvitaTuttiRadioButton().isSelected()){
+
+            //invito tutti
+            gruppo.createFrom("utenti");
+
+        }else if(gestisci.getDirettivoRadioButton().isSelected()){
+
+            //invito i grouopleader e i teamleader
+            gruppo.createFrom("direttivo");
+        }else if(gestisci.getInvitaDaUnaSequenzaRadioButton().isSelected()){
+
+            String nomeSequenza=gestisci.getComboSequenzeAppuntamento().getSelectedItem().toString();
+            gruppo.createFrom("sequenza",nomeSequenza);
+        }
+
+        for(Utente appoggio: gruppo.getElenco()){
+
+            utilizzatore.invita(appoggio,incontro);
+        }
 
         //aggiorno la home e gestisci
         homeController.getMessaggiController().aggiorna();
         homeController.aggiornoAppuntamenti();
         gestisci.popolaAppuntamenti();
+
+        //resetto l'interfaccia
+        gestisci.getComboTipoAppuntamento().setSelectedIndex(0);
+        gestisci.getFieldLuogoAppuntamento().setText("");
+        gestisci.getComboGiornoAppuntamento().setSelectedIndex(0);
+        gestisci.getComboMeseAppuntamento().setSelectedIndex(0);
+        gestisci.getComboAnnoAppuntamento().setSelectedIndex(0);
+        gestisci.getComboOraAppuntamento().setSelectedIndex(0);
+        gestisci.getComboMinutiAppuntamento().setSelectedIndex(0);
+        gestisci.getInvitaTuttiRadioButton().setSelected(true);
+        gestisci.getDirettivoRadioButton().setSelected(false);
+        gestisci.getInvitaDaUnaSequenzaRadioButton().setSelected(false);
+        gestisci.getComboSequenzeAppuntamento().setSelectedIndex(0);
     }
 
 

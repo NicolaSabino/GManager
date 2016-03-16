@@ -66,6 +66,7 @@ public class HomeController {
     }
 
     public void aggiornoAppuntamenti(){
+        utilizzatore.popolaAppuntamenti();
         TabellaIncontri t2= new TabellaIncontri();
         t2.setModelTabella(utilizzatore.getAppuntamenti());
         home.setScrollEventi(t2.getPannelloPrincipale());
