@@ -1,6 +1,7 @@
 package View;
 
-import Model.Attivita;
+import Model.*;
+import Model.Gruppi.Gruppo;
 import Model.Gruppi.GruppoAppuntamenti;
 import Model.Gruppi.GruppoProgetti;
 import Model.Incontro;
@@ -144,6 +145,11 @@ public class Gestisci {
     private JTable tableUtenti;
     private JTabbedPane tabbedPane1;
     private JRadioButton direttivoRadioButton;
+    private JButton modificaUtenteButton;
+    private JTextField textField1;
+    private JTextField fieldMatricolaUtente_modifica;
+    private JComboBox comboBox1;
+    //private JButton buttonCreaUtente;
     private JButton buttonCreaUtente;
     private JTextField fieldMatricolaUtente;
     private JComboBox comboRuoloUtente;
@@ -178,6 +184,7 @@ public class Gestisci {
         popolaSequenze();
         popolaAttivita();
         popolaAppuntamenti();
+        popolaUtenti();
 
 
         disabilitaComponenti(true,fieldNomeProgetto_modifica, comboGiornoProgetto_modifica, comboMeseProgetto_modifica, comboAnnoProgetto_modifica);
@@ -212,6 +219,10 @@ public class Gestisci {
         StaticMethod.textFieldLimitLength(fieldPrecedenzaAttivita_modifica,4);
         StaticMethod.textFieldLimitOnlyDouble(fieldCostoAttivita);
         StaticMethod.textFieldLimitOnlyDouble(fieldCostoAttivta_modifica);
+        StaticMethod.textFieldLimitOnlyInt(fieldTelefonoUtente,14);
+        StaticMethod.textFieldLimitOnlyInt(fieldTelefonoUtente_modifica,14);
+        StaticMethod.textFieldLimitOnlyInt(fieldMatricolaUtente, 7);
+        StaticMethod.textFieldLimitOnlyInt(fieldMatricolaUtente_modifica, 7);
         fieldCostoAttivita.setText("0");
         fieldCostoAttivta_modifica.setText("0");
 
@@ -318,6 +329,36 @@ public class Gestisci {
         tableAttivita.setModel(t);
     }
 
+    public void popolaUtenti(){
+        String col[]={"Matricola" , "Nome" , "Cognome" , "Ruolo" , "indirizzo e-mail" , "telefono"};
+        CustomTable t = new CustomTable(col,0);
+        Gruppo utenti = new Gruppo();
+        utenti.createFrom("utenti");
+
+        for(Utente appoggio:utenti.getElenco()){
+            String matricola = appoggio.getMatricola();
+            String nome = appoggio.getNome();
+            String cognome = appoggio.getCognome();
+            String mail = appoggio.getMail();
+            String telefono = appoggio.getTelefono();
+            String ruolo = appoggio.getRuolo();
+            Object[] data = {matricola, nome, cognome, ruolo, mail, telefono};
+            t.addRow(data);
+        }
+        tableUtenti.setModel(t);
+
+        //TODO static method + popola apertura
+
+
+    }
+
+    public void displayErrorMessage(String errorMessage,String errorTitle){
+        JOptionPane messaggioErrore = new JOptionPane(errorMessage,JOptionPane.ERROR_MESSAGE  );
+        JDialog dialog = messaggioErrore.createDialog(errorTitle);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+    }
+
     public void popolaAppuntamenti(){
         String col[]={"Tipo","Data","Ora","Luogo","Verbale"};
 
@@ -418,6 +459,18 @@ public class Gestisci {
         i.setOra(comboOraAppuntamento.getSelectedItem().toString() + ":" + comboMinutiAppuntamento.getSelectedItem().toString() + ":00");
         i.setData(comboAnnoAppuntamento.getSelectedItem().toString() + "-" + comboMeseAppuntamento.getSelectedItem().toString() + "-" + comboGiornoAppuntamento.getSelectedItem().toString());
         return i;
+    }
+
+    public Utente getParametriCreaUtente(){
+        Utente u = new Utente();
+        u.setMatricola(fieldMatricolaUtente.getText());
+        u.setNome(fieldNomeUtente.getText());
+        u.setCognome(fieldCognomeUtente.getText());
+        u.setRuolo(comboRuoloUtente.getSelectedItem().toString());
+        u.setTelefono(fieldTelefonoUtente.getText());
+        u.setMail(fieldMailUtente.getText());
+
+        return u;
     }
 
 
@@ -951,5 +1004,63 @@ public class Gestisci {
         return direttivoRadioButton;
     }
 
+    public JButton getModificaUtenteButton() {
+        return modificaUtenteButton;
+    }
 
+    public JTextField getFieldMatricolaUtente_modifica() {
+        return fieldMatricolaUtente_modifica;
+    }
+
+    public JButton getButtonCreaUtente() {
+        return buttonCreaUtente;
+    }
+
+    public JTextField getFieldMatricolaUtente() {
+        return fieldMatricolaUtente;
+    }
+
+    public JComboBox getComboRuoloUtente() {
+        return comboRuoloUtente;
+    }
+
+    public JComboBox getComboRuoloUtente_modifica() {
+        return comboRuoloUtente_modifica;
+    }
+
+    public JButton getButtonModificaUtente() {
+        return buttonModificaUtente;
+    }
+
+    public JTextField getFieldNomeUtente() {
+        return fieldNomeUtente;
+    }
+
+    public JTextField getFieldNomeUtente_modifica() {
+        return fieldNomeUtente_modifica;
+    }
+
+    public JTextField getFieldCognomeUtente_modifica() {
+        return fieldCognomeUtente_modifica;
+    }
+
+    public JTextField getFieldCognomeUtente() {
+        return fieldCognomeUtente;
+    }
+
+    public JTextField getFieldMailUtente_modifica() {
+        return fieldMailUtente_modifica;
+    }
+
+    public JTextField getFieldMailUtente() {
+        return fieldMailUtente;
+    }
+
+    public JTextField getFieldTelefonoUtente_modifica() {
+        return fieldTelefonoUtente_modifica;
+    }
+
+    public JTextField getFieldTelefonoUtente() {
+        return fieldTelefonoUtente;
+    }
 }
