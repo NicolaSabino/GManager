@@ -926,7 +926,7 @@
                                   <text value="Data"/>
                                 </properties>
                               </component>
-                              <component id="56f66" class="javax.swing.JButton" binding="creaAppuntamento">
+                              <component id="56f66" class="javax.swing.JButton" binding="buttonCreaAppuntamento">
                                 <constraints>
                                   <grid row="9" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -938,7 +938,12 @@
                                 <constraints>
                                   <grid row="0" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                                 </constraints>
-                                <properties/>
+                                <properties>
+                                  <model>
+                                    <item value="Milestone"/>
+                                    <item value="Checkpoint"/>
+                                  </model>
+                                </properties>
                               </component>
                               <component id="2429c" class="javax.swing.JTextField" binding="fieldLuogoAppuntamento">
                                 <constraints>
@@ -978,13 +983,55 @@
                                 <constraints>
                                   <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                                 </constraints>
-                                <properties/>
+                                <properties>
+                                  <model>
+                                    <item value="7"/>
+                                    <item value="8"/>
+                                    <item value="9"/>
+                                    <item value="10"/>
+                                    <item value="11"/>
+                                    <item value="12"/>
+                                    <item value="13"/>
+                                    <item value="14"/>
+                                    <item value="15"/>
+                                    <item value="16"/>
+                                    <item value="17"/>
+                                    <item value="18"/>
+                                    <item value="19"/>
+                                    <item value="20"/>
+                                    <item value="21"/>
+                                    <item value="22"/>
+                                    <item value="23"/>
+                                    <item value="0"/>
+                                    <item value="1"/>
+                                    <item value="2"/>
+                                    <item value="3"/>
+                                    <item value="4"/>
+                                    <item value="5"/>
+                                    <item value="6"/>
+                                  </model>
+                                </properties>
                               </component>
                               <component id="8feaa" class="javax.swing.JComboBox" binding="comboMinutiAppuntamento">
                                 <constraints>
                                   <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                                 </constraints>
-                                <properties/>
+                                <properties>
+                                  <model>
+                                    <item value="0"/>
+                                    <item value="5"/>
+                                    <item value="10"/>
+                                    <item value="15"/>
+                                    <item value="20"/>
+                                    <item value="25"/>
+                                    <item value="30"/>
+                                    <item value="35"/>
+                                    <item value="40"/>
+                                    <item value="45"/>
+                                    <item value="50"/>
+                                    <item value="55"/>
+                                  </model>
+                                </properties>
                               </component>
                               <component id="7251c" class="javax.swing.JLabel">
                                 <constraints>

@@ -1,7 +1,9 @@
 package View;
 
 import Model.Attivita;
+import Model.Gruppi.GruppoAppuntamenti;
 import Model.Gruppi.GruppoProgetti;
+import Model.Incontro;
 import Model.Progetto;
 import Model.Sequenza;
 
@@ -49,7 +51,7 @@ public class Gestisci {
     private JTextField fieldLuogoAppuntamento;
     private JTextField textField16;
     private JTextField textField17;
-    private JButton creaAppuntamento;
+    private JButton buttonCreaAppuntamento;
     private JTextField textField18;
     private JTextField textField19;
     private JTextField fieldLuogoAppuntamento_modifica;
@@ -155,6 +157,13 @@ public class Gestisci {
         labelModificaAttivita.setText("<html><b>...Seleziona l'attività da modificare...</b></html>");
 
 
+        //popolo le tabelle
+        popolaProgetti();
+        popolaSequenze();
+        popolaAttivita();
+        popolaAppuntamenti();
+
+
         disabilitaComponenti(true,fieldNomeProgetto_modifica, comboGiornoProgetto_modifica, comboMeseProgetto_modifica, comboAnnoProgetto_modifica);
         disabilitaComponenti(true,fieldNomeSequenza_modifica,comboProgetti_modifica);
         disabilitaComponenti(true,fieldDescrizioneAttivita_modifica,fieldPrecedenzaAttivita_modifica,fieldCostoAttivta_modifica,
@@ -166,19 +175,19 @@ public class Gestisci {
         buttonEliminaProgetto.setEnabled(false);
         buttonModificaProgetto.setEnabled(false);
 
-        popolaProgetti();
+
 
         buttonSalvaModificheSequenza.setVisible(false);
         buttonEliminaSequenza.setEnabled(false);
         buttonModificaSequenza.setEnabled(false);
 
-        popolaSequenze();
+
 
         buttonSalvaModificheAttivita.setVisible(false);
         buttonEliminaAttivita.setEnabled(false);
         buttonModificaAttivita.setEnabled(false);
 
-        popolaAttivita();
+
 
         //limitazioni
         StaticMethod.textFieldLimitLength(fieldDescrizioneAttivtia,80);
@@ -199,6 +208,9 @@ public class Gestisci {
         StaticMethod.populateData(comboGiornoFineAttivita,comboMeseFineAttivita,comboAnnoFineAttivita,5,0);
         StaticMethod.populateData(comboGiornoInizioAttivita_modifica,comboMeseInizioAttivita_modifica,comboAnnoInizioAttivita_modifica,5,0);
         StaticMethod.populateData(comboGiornoFineAttivita_modifica,comboMeseFineAttivita_modifica,comboAnnoFineAttivita_modifica,5,0);
+        StaticMethod.populateData(comboGiornoAppuntamento,comboMeseAppuntamento,comboAnnoAppuntamento,5,0);
+        StaticMethod.populateData(comboGiornoAppuntamento_modifica,comboMeseAppuntamento_modifica,comboAnnoAppuntamento_modifca,5,0);
+
 
         StaticMethod.popolaComboProgetti(comboProgetti);
         StaticMethod.popolaComboProgetti(comboProgetti_modifica);
@@ -206,6 +218,8 @@ public class Gestisci {
         StaticMethod.popolaComboSequenze(comboSequenze);
         StaticMethod.popolaComboSequenze(comboSequenze_modifica);
         comboProgetti_modifica.setEnabled(false);
+
+
 
 
     }
@@ -287,10 +301,24 @@ public class Gestisci {
     }
 
     public void popolaAppuntamenti(){
-        String col[]={"Tipo","Data","Ora"};
+        String col[]={"Tipo","Data","Ora","Luogo","Verbale"};
 
         CustomTable t = new CustomTable(col,0);
+        GruppoAppuntamenti appuntamenti = new GruppoAppuntamenti();
 
+        for(Incontro appoggio: appuntamenti.getStato()){
+
+            String tipo     = appoggio.getTipo();
+            String data     = appoggio.getData();
+            String ora      = appoggio.getOra();
+            String luogo    = appoggio.getLuogo();
+            String verbale  = appoggio.getVerbale();
+
+            Object[] dati = {tipo,data,ora,luogo,verbale};
+            t.addRow(dati);
+        }
+
+        tableApuntamenti.setModel(t);
 
     }
 
@@ -332,6 +360,16 @@ public class Gestisci {
         a.setDatafineprevista(comboAnnoFineAttivita.getSelectedItem().toString() + "-" + comboMeseFineAttivita.getSelectedItem().toString() + "-" + comboGiornoFineAttivita.getSelectedItem().toString());
         return a;
     }
+
+    public Incontro getParametriCreaIncontro(){
+        Incontro i = new Incontro();
+        i.setTipo(comboTipoAppuntamento.getSelectedItem().toString());
+        i.setLuogo(fieldLuogoAppuntamento.getText());
+        i.setOra(comboOraAppuntamento.getSelectedItem().toString() + ":" + comboMinutiAppuntamento.getSelectedItem().toString() + ":00");
+        i.setData(comboAnnoAppuntamento.getSelectedItem().toString() + "-" + comboMeseAppuntamento.getSelectedItem().toString() + "-" + comboGiornoAppuntamento.getSelectedItem().toString());
+        return i;
+    }
+
 
     public JButton getButtonCreaProgetto() {
         return buttonCreaProgetto;
@@ -557,8 +595,8 @@ public class Gestisci {
         return textField17;
     }
 
-    public JButton getCreaAppuntamento() {
-        return creaAppuntamento;
+    public JButton getButtonCreaAppuntamento() {
+        return buttonCreaAppuntamento;
     }
 
     public JTextField getTextField18() {
@@ -862,4 +900,6 @@ public class Gestisci {
     public JRadioButton getDirettivoRadioButton() {
         return direttivoRadioButton;
     }
+
+
 }

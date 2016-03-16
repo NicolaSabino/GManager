@@ -64,4 +64,10 @@ public class HomeController {
     public MessaggiController getMessaggiController() {
         return messaggiController;
     }
+
+    public void aggiornoAppuntamenti(){
+        TabellaIncontri t2= new TabellaIncontri();
+        t2.setModelTabella(utilizzatore.getAppuntamenti());
+        home.setScrollEventi(t2.getPannelloPrincipale());
+    }
 }

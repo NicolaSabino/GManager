@@ -77,9 +77,7 @@ abstract public class Model {
             stmt.executeUpdate(sql);
             result = true;
         } catch (SQLException se) {
-
-            JOptionPane.showMessageDialog(new JFrame("errore"),"inserire una data compatibile con la deadline!");
-
+            se.printStackTrace();
         }
 
         return result;
