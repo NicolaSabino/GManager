@@ -9,6 +9,8 @@ import Model.Sequenza;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 /**
@@ -139,9 +141,23 @@ public class Gestisci {
     private JTable table2;
     private JButton button1;
     private JButton button2;
-    private JTable table3;
+    private JTable tableUtenti;
     private JTabbedPane tabbedPane1;
     private JRadioButton direttivoRadioButton;
+    private JButton buttonCreaUtente;
+    private JTextField fieldMatricolaUtente;
+    private JComboBox comboRuoloUtente;
+    private JTextField textField2;
+    private JButton buttonModificaUtente;
+    private JComboBox comboRuoloUtente_modifica;
+    private JTextField fieldNomeUtente;
+    private JTextField fieldNomeUtente_modifica;
+    private JTextField fieldCognomeUtente_modifica;
+    private JTextField fieldCognomeUtente;
+    private JTextField fieldMailUtente_modifica;
+    private JTextField fieldMailUtente;
+    private JTextField fieldTelefonoUtente;
+    private JTextField fieldTelefonoUtente_modifica;
     private JComboBox comboGiornoInizioSequenza;
     private JComboBox comboMeseInizioSequenza;
     private JComboBox comboAnnoInizioSequenza;
@@ -220,7 +236,9 @@ public class Gestisci {
         comboProgetti_modifica.setEnabled(false);
 
 
-
+        listnerSelezioneIncontro1();
+        listnerSelezioneIncontro2();
+        listnerSelezioneIncontro3();
 
     }
 
@@ -321,6 +339,38 @@ public class Gestisci {
         tableApuntamenti.setModel(t);
 
     }
+
+    public void listnerSelezioneIncontro1(){
+        invitaTuttiRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                invitaDaUnaSequenzaRadioButton.setSelected(false);
+                direttivoRadioButton.setSelected(false);
+            }
+        });
+    }
+
+    public void listnerSelezioneIncontro2(){
+        invitaDaUnaSequenzaRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                invitaTuttiRadioButton.setSelected(false);
+                direttivoRadioButton.setSelected(false);
+            }
+        });
+
+    }
+
+    public void listnerSelezioneIncontro3(){
+        direttivoRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                invitaTuttiRadioButton.setSelected(false);
+                invitaDaUnaSequenzaRadioButton.setSelected(false);
+            }
+        });
+    }
+
 
     public void glMode(){
         tableProgetti.setEnabled(false);
@@ -889,8 +939,8 @@ public class Gestisci {
         return button2;
     }
 
-    public JTable getTable3() {
-        return table3;
+    public JTable getTableUtenti() {
+        return tableUtenti;
     }
 
     public JTabbedPane getTabbedPane1() {
