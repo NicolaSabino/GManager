@@ -230,7 +230,7 @@ public class Utente extends Model {
     public boolean invita(Utente utente,Incontro incontro){
         openConnection();
         boolean controllo=false;
-        String sql = "Insert into partecipazione values('" +
+        String sql = "Insert into partecipazione(matricola,tipo,data,ora) values('" +
                 utente.getMatricola()   + "','" +
                 incontro.getTipo()      + "','" +
                 incontro.getData()      + "','" +
