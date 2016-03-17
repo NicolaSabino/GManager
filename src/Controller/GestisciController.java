@@ -49,7 +49,6 @@ public class GestisciController {
 
         listenerCreaUtente();
 
-        //TODO */
 
         listenerSelezioneAttivita();
         listenerSelezionaAppuntamento();
@@ -122,7 +121,7 @@ public class GestisciController {
                 creaUtente();
             }
         });
-    }//TODO ok!
+    }
 
 
     protected void listenerSelezioneProgetto(){
@@ -174,21 +173,21 @@ public class GestisciController {
         });
     }
 
-    protected void listnerSelezionaUtente(){
+    protected void listenerSelezionaUtente(){
         JTable tabellaUtenti = gestisci.getTableUtenti();
         tabellaUtenti.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(statoListener){
                     popolaCampimodificaUtente(tabellaUtenti.getSelectedRow());
-                    gestisci.getLabelModificaUtenti().setVisible(false);
+                    gestisci.getLabelModificaUtente().setVisible(false);
                     gestisci.getButtonModificaUtente().setEnabled(true);
-                    gestisci.getButtonEliminaUtente().setEnabled(true);
+                    gestisci.getButtonEliminaUtente().setEnabled(false);
                     gestisci.getTabUtenti().setSelectedIndex(1);
                 }
             }
         });
-    } //TODO ok!
+    }
 
     protected void listenerSelezionaAppuntamento(){
         JTable tabellaAppuntamenti = gestisci.getTableApuntamenti();
@@ -262,7 +261,7 @@ public class GestisciController {
                 statoListener=false;
             }
         });
-    }  //TODO ok!
+    }
 
 
     protected void listenerSalvaModificheProgeto(String nomevecchioprogetto){
@@ -307,19 +306,19 @@ public class GestisciController {
         });
     }
 
-    protected void listenerSalvaModificheUtente(Utente u){
+    protected void listenerSalvaModificheUtente(String matricola){
         JButton salva = gestisci.getButtonSalvaModificheUtente();
         salva.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                salvaModificheUtente(u);
+                salvaModificheUtente(matricola);
 
                 //riabilito la possibilità di selezionare elementi dalla tabella
                 gestisci.getTableUtenti().setRowSelectionAllowed(true);
-                statoListner=true;
+                statoListener=true;
             }
         });
-    } //TODO ok!
+    }
 
 
 
@@ -617,8 +616,10 @@ public class GestisciController {
 
         //inserisco un nuovo messaggio
         MessaggioBroadcast messaggioBroadcast = new MessaggioBroadcast();
+
         messaggioBroadcast.setMessaggio(utilizzatore.getNome() + " " + utilizzatore.getCognome() +
                 " ha creato una nuovo Utente con matricola " + utente.getMatricola());
+
         messaggioBroadcast.setTipo("AUTO");
         messaggioBroadcast.setMittente("AUTO");
 
@@ -632,8 +633,9 @@ public class GestisciController {
         gestisci.popolaUtenti();
 
         //ripulisco crea
+        gestisci.getFieldMatricolaUtente().setText("");
         gestisci.getFieldMailUtente().setText("");
-        gestisci.getFieldNomeUtente().setText("0");
+        gestisci.getFieldNomeUtente().setText("");
         gestisci.getFieldCognomeUtente().setText("");
         gestisci.getComboRuoloUtente().setSelectedIndex(0);
         gestisci.getFieldTelefonoUtente().setText("");
@@ -695,17 +697,19 @@ public class GestisciController {
     }
 
     protected void abilitaModificheUtente(){
-        Utente utente = gestisci.getParametriModificaUtente();
+        JTable tabella = gestisci.getTableUtenti();
+        String matricolaUtenteSelezionato=tabella.getValueAt(tabella.getSelectedRow(),0).toString();
 
         //passo l'utente e quindi tutti campi di modifica
-        listnerSalvaModificheUtente(gestisci.getParametriModificaUtente());
+        listenerSalvaModificheUtente(matricolaUtenteSelezionato);
         gestisci.getButtonSalvaModificheUtente().setVisible(true);
-        gestisci.getButtonModificaUtente().setVisible(true);
+        gestisci.getButtonModificaUtente().setVisible(false);
 
         gestisci.disabilitaComponenti(false, gestisci.getFieldNomeUtente_modifica(),
                 gestisci.getFieldCognomeUtente_modifica(), gestisci.getFieldMailUtente_modifica(),
                 gestisci.getFieldTelefonoUtente_modifica(),gestisci.getComboRuoloUtente_modifica());
     }
+
 
     protected void salvaModificheProgetto(String nome){
 
@@ -845,9 +849,6 @@ public class GestisciController {
         String nuovoaDescrizione=gestisci.getFieldDescrizioneAttivita_modifica().getText();
         if(!a.getDescrizione().equalsIgnoreCase(nuovoaDescrizione)){
 
-            //TODO b è inutile
-            //Attivita b = new Attivita(id);
-
             a.updateIntoSQL("descrizione",nuovoaDescrizione);
 
 
@@ -962,10 +963,8 @@ public class GestisciController {
         StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheAttivita());
     }
 
-    protected void salvaModificheUtente(Utente u){
-
-        //TODO passaggio oggetto != passaggio matricola
-        //Utente u = new Utente(matricola);
+    protected void salvaModificheUtente(String matricola){
+        Utente u = new Utente(matricola);
         MessaggioBroadcast m = new MessaggioBroadcast();
         m.setMittente("AUTO");
         m.setTipo("AUTO");
@@ -980,15 +979,11 @@ public class GestisciController {
 
         String nuovoCognome = gestisci.getFieldCognomeUtente_modifica().getText();
         if(!u.getCognome().equalsIgnoreCase(nuovoCognome)) {
-
-            //Utente d = new Utente(matricola);
             u.updateIntoSQL("cognome", nuovoCognome);
         }
 
         String nuovoTelefono = gestisci.getFieldTelefonoUtente_modifica().getText();
         if(!u.getTelefono().equalsIgnoreCase(nuovoTelefono)) {
-
-            //Utente d = new Utente(matricola);
             u.updateIntoSQL("telefono", nuovoTelefono);
         }
 
@@ -1004,6 +999,8 @@ public class GestisciController {
             u.updateIntoSQL("ruolo", nuovoRuolo);
 
             //associo ad ogni ruolo un indice (lo stesso indice che nella combobox è associato a ciascun ruolo)
+
+            //todo ERRORE QUESTO SI FA CON LE MAPPE!!!!!!!!!!
             int ind=0;
             String r="";
             switch (r){
@@ -1044,9 +1041,11 @@ public class GestisciController {
                 gestisci.getComboMeseFineAttivita_modifica(),gestisci.getComboAnnoFineAttivita_modifica(),gestisci.getComboAnnoInizioAttivita_modifica(),
                 gestisci.getComboSequenze_modifica());
 
+
         //infine rimuovo il listner di salvamodifiche
             StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheUtente());
     }
+
 
     protected void eliminaProgetto(){
         String nomeProgetto = gestisci.getFieldNomeProgetto_modifica().getText();
@@ -1152,6 +1151,7 @@ public class GestisciController {
         }
     }
 
+
     protected void popolaCampiModificaProgetto(int riga){
         JTable tabellaProgetti = gestisci.getTableProgetti();
         gestisci.getFieldNomeProgetto_modifica().setText(tabellaProgetti.getValueAt(riga,0).toString());
@@ -1207,16 +1207,28 @@ public class GestisciController {
         }
     }
 
-    protected void popolaCampimodificaUtente(int riga){
+    protected void popolaCampimodificaUtente(int riga) {
         JTable tabellaUtenti = gestisci.getTableUtenti();
-        Utente utente = new Utente(tabellaUtenti.getValueAt(riga,0).toString());
+
+        Utente utente = new Utente(tabellaUtenti.getValueAt(riga, 0).toString());
+
         gestisci.getFieldMatricolaUtente_modifica().setText(utente.getMatricola());
         gestisci.getFieldNomeUtente_modifica().setText(utente.getNome());
         gestisci.getFieldCognomeUtente_modifica().setText(utente.getCognome());
         gestisci.getFieldMailUtente_modifica().setText(utente.getMail());
         gestisci.getFieldTelefonoUtente_modifica().setText(utente.getTelefono());
-    //TODO
-        protected void popolaCampiModificaAppuntamento(int riga){
+
+        //caso per caso l'indice della c0mbobox in base ruolo utente da visualizzare
+        int i=0;
+        if(utente.getRuolo().equals("US")) i=0;
+        else if(utente.getRuolo().equals("GL"))i=1;
+        else if (utente.getRuolo().equals("TL"))i=2;
+        //else i=0;
+        gestisci.getComboRuoloUtente_modifica().setSelectedIndex(i);
+
+    }
+
+    protected void popolaCampiModificaAppuntamento(int riga){
         JTable tabellaAppuntamenti=gestisci.getTableApuntamenti();
 
         String tipo     = tabellaAppuntamenti.getValueAt(riga,0).toString();
@@ -1244,32 +1256,6 @@ public class GestisciController {
         StaticMethod.setData(gestisci.getComboGiornoAppuntamento_modifica(), gestisci.getComboMeseAppuntamento_modifica(), gestisci.getComboAnnoAppuntamento_modifca(), data);
         StaticMethod.setOra(gestisci.getComboOraAppuntamento_modifica(),gestisci.getComboMinutiAppuntamento_modifica(),ora);
         System.out.println(ora.substring(0,2)+ " " + ora.substring(3,5));
-
-        //caso per caso l'indice della c0mbobox in base ruolo utente da visualizzare
-        int i=0;
-        if(utente.getRuolo().equals("US")) i=0;
-        else if(utente.getRuolo().equals("GL"))i=1;
-        else if (utente.getRuolo().equals("TL"))i=2;
-        //else i=0;
-        gestisci.getComboRuoloUtente_modifica().setSelectedIndex(i);
-
-        //attivo i campi rendendoli modificabili
-        gestisci.disabilitaComponenti(false, gestisci.getFieldMatricolaUtente_modifica(),gestisci.getFieldNomeUtente_modifica(),
-                gestisci.getFieldCognomeUtente_modifica(),gestisci.getFieldMailUtente_modifica(),
-                gestisci.getFieldTelefonoUtente_modifica(),gestisci.getComboRuoloUtente_modifica());
-        gestisci.getButtonSalvaModificheUtente().setVisible(true);
-
-
-        //reimposto l'interfaccia grafica
-
-        gestisci.getButtonSalvaModificheProgetto().setVisible(false);
-
-        gestisci.getButtonModificaProgetto().setVisible(true);
-
-        gestisci.getButtonEliminaProgetto().setEnabled(false);
-
-
-
 
     }
 

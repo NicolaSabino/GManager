@@ -143,7 +143,7 @@ public class Gestisci {
     private JButton button1;
     private JButton button2;
     private JTable tableUtenti;
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane tabUtenti;
     private JRadioButton direttivoRadioButton;
     private JButton modificaUtenteButton;
     private JTextField textField1;
@@ -164,6 +164,9 @@ public class Gestisci {
     private JTextField fieldMailUtente;
     private JTextField fieldTelefonoUtente;
     private JTextField fieldTelefonoUtente_modifica;
+    private JLabel labelModificaUtente;
+    private JButton buttonSalvaModificheUtente;
+    private JButton buttonEliminaUtente;
     private JComboBox comboGiornoInizioSequenza;
     private JComboBox comboMeseInizioSequenza;
     private JComboBox comboAnnoInizioSequenza;
@@ -178,6 +181,7 @@ public class Gestisci {
         labelModificaSequenza.setText("<html><b>...Seleziona la sequenza da modificare...</b></html>");
         labelModificaAttivita.setText("<html><b>...Seleziona l'attività da modificare...</b></html>");
         labelModificaAppuntamento.setText("<html><b>...Seleziona l'Appuntamento da modificare...</b></html>");
+        labelModificaUtente.setText("<html><b>...Seleziona l'utente da modificare...</b></html>");
 
 
         //popolo le tabelle
@@ -218,6 +222,15 @@ public class Gestisci {
         buttonModifcaAppuntamento.setEnabled(false);
         buttonSalvaAppuntamento.setVisible(false);
         buttonEliminaAppuntamento.setEnabled(false);
+
+        disabilitaComponenti(true,fieldMatricolaUtente_modifica,fieldNomeUtente_modifica,fieldCognomeUtente_modifica,
+                comboRuoloUtente_modifica,fieldMailUtente_modifica,fieldTelefonoUtente_modifica);
+
+        buttonModificaUtente.setEnabled(false);
+        buttonSalvaModificheUtente.setVisible(false);
+        buttonEliminaUtente.setEnabled(false);
+
+
 
 
 
@@ -1006,8 +1019,8 @@ public class Gestisci {
         return tableUtenti;
     }
 
-    public JTabbedPane getTabbedPane1() {
-        return tabbedPane1;
+    public JTabbedPane getTabUtenti() {
+        return tabUtenti;
     }
 
     public JRadioButton getDirettivoRadioButton() {
@@ -1084,5 +1097,17 @@ public class Gestisci {
 
     public JTextField getTextField2() {
         return textField2;
+    }
+
+    public JLabel getLabelModificaUtente() {
+        return labelModificaUtente;
+    }
+
+    public JButton getButtonSalvaModificheUtente() {
+        return buttonSalvaModificheUtente;
+    }
+
+    public JButton getButtonEliminaUtente() {
+        return buttonEliminaUtente;
     }
 }
