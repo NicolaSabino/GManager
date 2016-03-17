@@ -120,7 +120,7 @@ public class Gestisci {
     private JComboBox comboSequenze;
     private JComboBox comboSequenze_modifica;
     private JComboBox comboTipoAppuntamento;
-    private JTable tableApuntamenti;
+    private JTable tableAppuntamenti;
     private JComboBox comboGiornoAppuntamento;
     private JComboBox comboMeseAppuntamento;
     private JComboBox comboAnnoAppuntamento;
@@ -423,7 +423,7 @@ public class Gestisci {
             t.addRow(dati);
         }
 
-        tableApuntamenti.setModel(t);
+        tableAppuntamenti.setModel(t);
 
     }
 
@@ -950,8 +950,8 @@ public class Gestisci {
         return comboTipoAppuntamento;
     }
 
-    public JTable getTableApuntamenti() {
-        return tableApuntamenti;
+    public JTable getTableAppuntamenti() {
+        return tableAppuntamenti;
     }
 
     public JComboBox getComboGiornoAppuntamento() {

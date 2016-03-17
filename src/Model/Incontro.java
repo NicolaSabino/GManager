@@ -14,7 +14,6 @@ public class Incontro extends Model {
     private String luogo;
     private String tipo;
     private String verbale;
-    private ArrayList<String> partecipazione;
 
     /**
      * Costruttore vuoto
@@ -47,7 +46,6 @@ public class Incontro extends Model {
         }finally {
             closeConnection();
         }
-        this.partecipazione= generaPartecipazione();
         return;
 
     }
@@ -101,45 +99,8 @@ public class Incontro extends Model {
 
     }
 
-    /**
-     * Metodo che genera in automatico da sql l'elenco partecipazione
-     * @return
-     */
-    protected ArrayList<String> generaPartecipazione(){
-        ArrayList<String> appoggio= new ArrayList<String>();
-        openConnection();
 
-        String sql ="select matricola from partecipazione where tipo='"+ getTipo()+"' and data='"+ getData() + "' and ora='" + getOra() + "'";
-        ResultSet query= selectQuery(sql);
 
-        try{
-            while (query.next()) {
-                appoggio.add(appoggio.size(), query.getString("matricola"));
-            }
-
-        }catch(SQLException se){
-            se.printStackTrace();
-        }finally {
-            closeConnection();
-        }
-        return appoggio;
-
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Incontro incontro = (Incontro) o;
-
-        if (data != null ? !data.equals(incontro.data) : incontro.data != null) return false;
-        if (ora != null ? !ora.equals(incontro.ora) : incontro.ora != null) return false;
-        if (luogo != null ? !luogo.equals(incontro.luogo) : incontro.luogo != null) return false;
-        if (tipo != null ? !tipo.equals(incontro.tipo) : incontro.tipo != null) return false;
-        return partecipazione != null ? partecipazione.equals(incontro.partecipazione) : incontro.partecipazione == null;
-
-    }
 
 
 
@@ -186,13 +147,6 @@ public class Incontro extends Model {
         this.verbale = verbale;
     }
 
-    public ArrayList<String> getPartecipazione() {
-        return partecipazione;
-    }
-
-    public void setPartecipazione(ArrayList<String> partecipazione) {
-        this.partecipazione = partecipazione;
-    }
 
     public int getId() {
         return id;

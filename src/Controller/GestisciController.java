@@ -9,8 +9,6 @@ import View.RootFrame;
 import View.StaticMethod;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +58,7 @@ public class GestisciController {
         listenerModificaSequenza();
         listenerModificaAttivita();
         listenerModificaUtente();
+        listenerModificaAppuntamento();
 
         listenerEliminaProgetto();
         listenerEliminaSequenza();
@@ -195,7 +194,7 @@ public class GestisciController {
     }
 
     protected void listenerSelezionaAppuntamento(){
-        JTable tabellaAppuntamenti = gestisci.getTableApuntamenti();
+        JTable tabellaAppuntamenti = gestisci.getTableAppuntamenti();
         tabellaAppuntamenti.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -254,7 +253,7 @@ public class GestisciController {
         });
     }
 
-     protected void listenerModificaUtente(){
+    protected void listenerModificaUtente(){
         JButton modifica = gestisci.getButtonModificaUtente();
         modifica.addActionListener(new ActionListener() {
             @Override
@@ -267,6 +266,22 @@ public class GestisciController {
             }
         });
     }
+
+    protected void listenerModificaAppuntamento(){
+        JButton modifica = gestisci.getButtonModifcaAppuntamento();
+        modifica.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                abilitaModificheAppuntamento();
+
+                //disabilito la possibilità di selezionare elementi dalla tabella
+                gestisci.getTableAppuntamenti().setRowSelectionAllowed(false);
+                statoListener=false;
+            }
+        });
+    }
+
+
 
 
     protected void listenerSalvaModificheProgeto(String nomevecchioprogetto){
@@ -297,12 +312,12 @@ public class GestisciController {
         });
     }
 
-    protected void listenerSalvaModificheAttivita(int idattivita){
+    protected void listenerSalvaModificheAttivita(int id_attivita){
         JButton salva = gestisci.getButtonSalvaModificheAttivita();
         salva.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                salvaModificheAttivita(idattivita);
+                salvaModificheAttivita(id_attivita);
 
                 //riabilito la possibilità di selezionare elementi dalla tabella
                 gestisci.getTableAttivita().setRowSelectionAllowed(true);
@@ -320,6 +335,20 @@ public class GestisciController {
 
                 //riabilito la possibilità di selezionare elementi dalla tabella
                 gestisci.getTableUtenti().setRowSelectionAllowed(true);
+                statoListener=true;
+            }
+        });
+    }
+
+    protected void listenerSalvaModificheAppuntamento(int id_Appuntamento){
+        JButton salva = gestisci.getButtonSalvaAppuntamento();
+        salva.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                salvaModificheAppuntamento(id_Appuntamento);
+
+                //riabilito la possibilità di selezionare elementi dalla tabella
+                gestisci.getTableAppuntamenti().setRowSelectionAllowed(true);
                 statoListener=true;
             }
         });
@@ -379,7 +408,7 @@ public class GestisciController {
             }
         });
     }
-    
+
 
 
     protected void creaProgetto(){
@@ -729,13 +758,36 @@ public class GestisciController {
         String matricolaUtenteSelezionato=tabella.getValueAt(tabella.getSelectedRow(),0).toString();
 
         //passo l'utente e quindi tutti campi di modifica
+
         listenerSalvaModificheUtente(matricolaUtenteSelezionato);
+
         gestisci.getButtonSalvaModificheUtente().setVisible(true);
         gestisci.getButtonModificaUtente().setVisible(false);
 
         gestisci.disabilitaComponenti(false, gestisci.getFieldNomeUtente_modifica(),
                 gestisci.getFieldCognomeUtente_modifica(), gestisci.getFieldMailUtente_modifica(),
                 gestisci.getFieldTelefonoUtente_modifica(),gestisci.getComboRuoloUtente_modifica());
+    }
+
+    protected void abilitaModificheAppuntamento(){
+        JTable tabella    = gestisci.getTableAppuntamenti();
+        int id            =(Integer) tabella.getValueAt(tabella.getSelectedRow(),0);
+        Incontro incontro = new Incontro(id);
+
+        //creo il listener di salvataggio
+        listenerSalvaModificheAppuntamento(id);
+
+        //modifico lo stato dell'interfaccia grafica
+        gestisci.getButtonSalvaAppuntamento().setVisible(true);
+        gestisci.getButtonModifcaAppuntamento().setVisible(false);
+        gestisci.getButtonEliminaAppuntamento().setEnabled(true);
+
+        gestisci.disabilitaComponenti(false,gestisci.getComboTipoAppuntamento_modifica(),gestisci.getFieldLuogoAppuntamento_modifica(),
+                                        gestisci.getComboGiornoAppuntamento_modifica(),gestisci.getComboMeseAppuntamento_modifica(),
+                                        gestisci.getComboAnnoAppuntamento_modifca(),gestisci.getComboOraAppuntamento_modifica(),
+                                        gestisci.getComboMinutiAppuntamento_modifica(),gestisci.getAreaVerbaleAppuntamento());
+
+
     }
 
 
@@ -1047,9 +1099,12 @@ public class GestisciController {
 
             m.insertIntoSQL();
 
-            //aggiorno i messaggi nella home
-            homeController.getMessaggiController().aggiorna();
+
         }
+
+        //aggiorno i messaggi nella home
+        homeController.getMessaggiController().aggiorna();
+
         gestisci.popolaUtenti();
 
 
@@ -1072,6 +1127,78 @@ public class GestisciController {
 
         //infine rimuovo il listner di salvamodifiche
             StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheUtente());
+    }
+
+    protected void salvaModificheAppuntamento(int id){
+        Incontro incontro = new Incontro(id);
+        MessaggioBroadcast m = new MessaggioBroadcast();
+        m.setMittente("AUTO");
+        m.setTipo("AUTO");
+
+        String nuovoTipo=gestisci.getComboTipoAppuntamento_modifica().getSelectedItem().toString();
+        if(!incontro.getTipo().equalsIgnoreCase(nuovoTipo)){
+            incontro.updateIntoSQL("tipo",nuovoTipo);
+        }
+
+        String nuovoLuogo = gestisci.getFieldLuogoAppuntamento_modifica().getText();
+        if(!incontro.getLuogo().equalsIgnoreCase(nuovoLuogo)){
+
+            incontro.updateIntoSQL("luogo",nuovoLuogo);
+
+            m.setMessaggio(utilizzatore.getNome() +" " + utilizzatore.getCognome() + " " +
+                    "ha spostato il luogo dell Appuntamento " + incontro.getId() + " del " + incontro.getData() + " in " + nuovoLuogo);
+            m.insertIntoSQL();
+        }
+
+        String nuovadata=gestisci.getComboAnnoAppuntamento_modifca().getSelectedItem().toString() + "-"
+                + gestisci.getComboMeseAppuntamento_modifica().getSelectedItem().toString() + "-"
+                + gestisci.getComboGiornoAppuntamento_modifica().getSelectedItem().toString();
+        if(!incontro.getData().equals(nuovadata)){
+
+            incontro.updateIntoSQL("data",nuovadata);
+
+            m.setMessaggio(utilizzatore.getNome() +" " + utilizzatore.getCognome() + " " +
+                    "ha spostato l Appuntamento " + incontro.getId() + " del " + incontro.getData() + " al " + nuovadata);
+            m.insertIntoSQL();
+        }
+
+        String nuovaora=gestisci.getComboOraAppuntamento_modifica().getSelectedItem().toString() + ":" + gestisci.getComboMinutiAppuntamento_modifica().getSelectedItem().toString() + ":00";
+        if(!incontro.getOra().equals(nuovaora)){
+
+            incontro.updateIntoSQL("ora",nuovaora);
+
+            m.setMessaggio(utilizzatore.getNome() +" " + utilizzatore.getCognome() + " " +
+                    "ha spostato  l Appuntamento " + incontro.getId() + " del " + incontro.getData() + " alle ore " + nuovaora);
+            m.insertIntoSQL();
+        }
+
+        String nuovoverbale=gestisci.getAreaVerbaleAppuntamento().getText();
+        if(!incontro.getVerbale().equalsIgnoreCase(nuovoverbale)){
+            incontro.updateIntoSQL("verbale",nuovoverbale);
+        }
+
+
+        //reimposto l'interfaccia grafica
+
+        gestisci.getButtonSalvaAppuntamento().setVisible(false);
+        gestisci.getButtonModifcaAppuntamento().setVisible(true);
+        gestisci.getButtonEliminaAppuntamento().setEnabled(false);
+
+
+
+        gestisci.disabilitaComponenti(true,gestisci.getComboTipoAppuntamento_modifica(),gestisci.getFieldLuogoAppuntamento_modifica(),
+                gestisci.getComboGiornoAppuntamento_modifica(),gestisci.getComboMeseAppuntamento_modifica(),
+                gestisci.getComboAnnoAppuntamento_modifca(),gestisci.getComboOraAppuntamento_modifica(),
+                gestisci.getComboMinutiAppuntamento_modifica(),gestisci.getAreaVerbaleAppuntamento());
+
+        gestisci.popolaAppuntamenti();
+
+
+        //infine rimuovo il listner di salvamodifiche
+        StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheProgetto());
+
+        //aggiorno i messaggi nella home
+        homeController.getMessaggiController().aggiorna();
     }
 
 
@@ -1257,7 +1384,7 @@ public class GestisciController {
     }
 
     protected void popolaCampiModificaAppuntamento(int riga){
-        JTable tabellaAppuntamenti=gestisci.getTableApuntamenti();
+        JTable tabellaAppuntamenti=gestisci.getTableAppuntamenti();
         Incontro i = new Incontro((Integer)tabellaAppuntamenti.getValueAt(riga,0));
 
         String tipo     = i.getTipo();

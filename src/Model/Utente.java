@@ -205,7 +205,7 @@ public class Utente extends Model {
         openConnection();
         this.appuntamenti=new ArrayList<Incontro>();
         String sql="select i.tipo,i.data,i.ora,i.luogo,i.verbale from incontro i join partecipazione p " +
-                "on i.tipo=p.tipo and i.data=p.data and i.ora=p.ora " +
+                "on i.id=p.id " +
                 "where p.matricola='" + this.getMatricola() + "'";
         ResultSet query= selectQuery(sql);
         try {
