@@ -47,18 +47,18 @@ public class GestisciController {
         listenerCreaAttivita();
         listenerCreaAppuntamento();
 
-        //TODO fatto da edo
-
         listenerCreaUtente();
 
         //TODO */
 
         listenerSelezioneAttivita();
         listenerSelezionaAppuntamento();
+        listenerSelezionaUtente();
 
         listenerModificaProgetto();
         listenerModificaSequenza();
         listenerModificaAttivita();
+        listenerModificaUtente();
 
         listenerEliminaProgetto();
         listenerEliminaSequenza();
@@ -114,6 +114,16 @@ public class GestisciController {
         });
     }
 
+    protected void listenerCreaUtente(){
+        JButton crea=gestisci.getButtonCreaUtente();
+        crea.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                creaUtente();
+            }
+        });
+    }//TODO ok!
+
 
     protected void listenerSelezioneProgetto(){
         JTable tabellaProgetti = gestisci.getTableProgetti();
@@ -163,6 +173,22 @@ public class GestisciController {
             }
         });
     }
+
+    protected void listnerSelezionaUtente(){
+        JTable tabellaUtenti = gestisci.getTableUtenti();
+        tabellaUtenti.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(statoListener){
+                    popolaCampimodificaUtente(tabellaUtenti.getSelectedRow());
+                    gestisci.getLabelModificaUtenti().setVisible(false);
+                    gestisci.getButtonModificaUtente().setEnabled(true);
+                    gestisci.getButtonEliminaUtente().setEnabled(true);
+                    gestisci.getTabUtenti().setSelectedIndex(1);
+                }
+            }
+        });
+    } //TODO ok!
 
     protected void listenerSelezionaAppuntamento(){
         JTable tabellaAppuntamenti = gestisci.getTableApuntamenti();
@@ -224,6 +250,20 @@ public class GestisciController {
         });
     }
 
+    protected void listenerModificaUtente(){
+        JButton modifica = gestisci.getButtonModificaUtente();
+        modifica.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                abilitaModificheUtente();
+
+                //disabilito la possibilità di selezionare elementi dalla tabella
+                gestisci.getTableUtenti().setRowSelectionAllowed(false);
+                statoListener=false;
+            }
+        });
+    }  //TODO ok!
+
 
     protected void listenerSalvaModificheProgeto(String nomevecchioprogetto){
         JButton salva = gestisci.getButtonSalvaModificheProgetto();
@@ -266,6 +306,22 @@ public class GestisciController {
             }
         });
     }
+
+    protected void listenerSalvaModificheUtente(Utente u){
+        JButton salva = gestisci.getButtonSalvaModificheUtente();
+        salva.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                salvaModificheUtente(u);
+
+                //riabilito la possibilità di selezionare elementi dalla tabella
+                gestisci.getTableUtenti().setRowSelectionAllowed(true);
+                statoListner=true;
+            }
+        });
+    } //TODO ok!
+
+
 
 
     protected void listenerEliminaProgetto(){
@@ -537,6 +593,7 @@ public class GestisciController {
         gestisci.getInvitaDaUnaSequenzaRadioButton().setSelected(false);
         gestisci.getComboSequenzeAppuntamento().setSelectedIndex(0);
 
+
         //rimuovo e ricreo l'acction listener
         StaticMethod.removeAllActionListener(gestisci.getButtonCreaAppuntamento());
         listenerCreaAppuntamento();
@@ -554,7 +611,7 @@ public class GestisciController {
             }
         }
         if(errore!=0){
-            gestisci.displayErrorMessage("Errore, crezione utente\n" + "codice erroe:" +errore, "errore!");
+            gestisci.displayErrorMessage("Errore, crezione utente\n" + "codice errore:" +errore, "errore!");
         }else utente.insertIntoSQL();
 
 
@@ -637,6 +694,18 @@ public class GestisciController {
 
     }
 
+    protected void abilitaModificheUtente(){
+        Utente utente = gestisci.getParametriModificaUtente();
+
+        //passo l'utente e quindi tutti campi di modifica
+        listnerSalvaModificheUtente(gestisci.getParametriModificaUtente());
+        gestisci.getButtonSalvaModificheUtente().setVisible(true);
+        gestisci.getButtonModificaUtente().setVisible(true);
+
+        gestisci.disabilitaComponenti(false, gestisci.getFieldNomeUtente_modifica(),
+                gestisci.getFieldCognomeUtente_modifica(), gestisci.getFieldMailUtente_modifica(),
+                gestisci.getFieldTelefonoUtente_modifica(),gestisci.getComboRuoloUtente_modifica());
+    }
 
     protected void salvaModificheProgetto(String nome){
 
@@ -776,9 +845,10 @@ public class GestisciController {
         String nuovoaDescrizione=gestisci.getFieldDescrizioneAttivita_modifica().getText();
         if(!a.getDescrizione().equalsIgnoreCase(nuovoaDescrizione)){
 
-            Attivita b = new Attivita(id);
+            //TODO b è inutile
+            //Attivita b = new Attivita(id);
 
-            b.updateIntoSQL("descrizione",nuovoaDescrizione);
+            a.updateIntoSQL("descrizione",nuovoaDescrizione);
 
 
             m.setMessaggio(utilizzatore.getNome() +" " + utilizzatore.getCognome() + " " +
@@ -890,6 +960,92 @@ public class GestisciController {
 
         //infine rimuovo il listner di salvamodifiche
         StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheAttivita());
+    }
+
+    protected void salvaModificheUtente(Utente u){
+
+        //TODO passaggio oggetto != passaggio matricola
+        //Utente u = new Utente(matricola);
+        MessaggioBroadcast m = new MessaggioBroadcast();
+        m.setMittente("AUTO");
+        m.setTipo("AUTO");
+
+
+        //controllo se nome modificato se si aggiorno se no lascio database non modificato
+
+        String nuovoNome = gestisci.getFieldNomeUtente_modifica().getText();
+        if(!u.getNome().equalsIgnoreCase(nuovoNome)){
+            u.updateIntoSQL("nome", nuovoNome);
+        }
+
+        String nuovoCognome = gestisci.getFieldCognomeUtente_modifica().getText();
+        if(!u.getCognome().equalsIgnoreCase(nuovoCognome)) {
+
+            //Utente d = new Utente(matricola);
+            u.updateIntoSQL("cognome", nuovoCognome);
+        }
+
+        String nuovoTelefono = gestisci.getFieldTelefonoUtente_modifica().getText();
+        if(!u.getTelefono().equalsIgnoreCase(nuovoTelefono)) {
+
+            //Utente d = new Utente(matricola);
+            u.updateIntoSQL("telefono", nuovoTelefono);
+        }
+
+        String nuovoMail = gestisci.getFieldMailUtente_modifica().getText();
+        if(!u.getMail().equalsIgnoreCase(nuovoMail)) {
+            u.updateIntoSQL("mail", nuovoMail);
+        }
+
+
+
+        String nuovoRuolo = gestisci.getComboRuoloUtente_modifica().getSelectedItem().toString();
+        if(!u.getRuolo().equalsIgnoreCase(nuovoRuolo)){
+            u.updateIntoSQL("ruolo", nuovoRuolo);
+
+            //associo ad ogni ruolo un indice (lo stesso indice che nella combobox è associato a ciascun ruolo)
+            int ind=0;
+            String r="";
+            switch (r){
+                case "US": ind=0;
+                    break;
+                case "GL": ind=1;
+                    break;
+                case "TL": ind=2;
+            }
+            if(ind > gestisci.getComboRuoloUtente_modifica().getSelectedIndex()) {
+                m.setMessaggio(utilizzatore.getNome() + " " + utilizzatore.getCognome() + " " +
+                        "ha promosso " + u.getMatricola() + " da " + u.getRuolo() + " a " + nuovoRuolo);
+            }else
+                m.setMessaggio(utilizzatore.getNome() + " " + utilizzatore.getCognome() + " " +
+                        "ha declassato " + u.getMatricola() + " da " + u.getRuolo() + " a " + nuovoRuolo);
+
+            m.insertIntoSQL();
+
+            //aggiorno i messaggi nella home
+            homeController.getMessaggiController().aggiorna();
+        }
+        gestisci.popolaUtenti();
+
+
+        //reimposto l'interfaccia grafica
+
+        gestisci.getButtonSalvaModificheAttivita().setVisible(false);
+
+        gestisci.getButtonModificaAttivita().setVisible(true);
+
+        gestisci.getButtonEliminaAttivita().setEnabled(false);
+
+
+
+        gestisci.disabilitaComponenti(true,gestisci.getFieldDescrizioneAttivita_modifica(),gestisci.getFieldPrecedenzaAttivita_modifica()
+                ,gestisci.getFieldCostoAttivta_modifica(),gestisci.getComboGiornoInizioAttivita_modifica(),gestisci.getComboMeseInizioAttivita_modifica(),
+                gestisci.getComboMeseInizioAttivita_modifica(),gestisci.getComboGiornoFineAttivita_modifica(),
+                gestisci.getComboMeseFineAttivita_modifica(),gestisci.getComboAnnoFineAttivita_modifica(),gestisci.getComboAnnoInizioAttivita_modifica(),
+                gestisci.getComboSequenze_modifica());
+
+        //infine rimuovo il listner di salvamodifiche
+            StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheUtente());
     }
 
     protected void eliminaProgetto(){
@@ -1051,7 +1207,16 @@ public class GestisciController {
         }
     }
 
-    protected void popolaCampiModificaAppuntamento(int riga){
+    protected void popolaCampimodificaUtente(int riga){
+        JTable tabellaUtenti = gestisci.getTableUtenti();
+        Utente utente = new Utente(tabellaUtenti.getValueAt(riga,0).toString());
+        gestisci.getFieldMatricolaUtente_modifica().setText(utente.getMatricola());
+        gestisci.getFieldNomeUtente_modifica().setText(utente.getNome());
+        gestisci.getFieldCognomeUtente_modifica().setText(utente.getCognome());
+        gestisci.getFieldMailUtente_modifica().setText(utente.getMail());
+        gestisci.getFieldTelefonoUtente_modifica().setText(utente.getTelefono());
+    //TODO
+        protected void popolaCampiModificaAppuntamento(int riga){
         JTable tabellaAppuntamenti=gestisci.getTableApuntamenti();
 
         String tipo     = tabellaAppuntamenti.getValueAt(riga,0).toString();
@@ -1080,22 +1245,37 @@ public class GestisciController {
         StaticMethod.setOra(gestisci.getComboOraAppuntamento_modifica(),gestisci.getComboMinutiAppuntamento_modifica(),ora);
         System.out.println(ora.substring(0,2)+ " " + ora.substring(3,5));
 
+        //caso per caso l'indice della c0mbobox in base ruolo utente da visualizzare
+        int i=0;
+        if(utente.getRuolo().equals("US")) i=0;
+        else if(utente.getRuolo().equals("GL"))i=1;
+        else if (utente.getRuolo().equals("TL"))i=2;
+        //else i=0;
+        gestisci.getComboRuoloUtente_modifica().setSelectedIndex(i);
+
+        //attivo i campi rendendoli modificabili
+        gestisci.disabilitaComponenti(false, gestisci.getFieldMatricolaUtente_modifica(),gestisci.getFieldNomeUtente_modifica(),
+                gestisci.getFieldCognomeUtente_modifica(),gestisci.getFieldMailUtente_modifica(),
+                gestisci.getFieldTelefonoUtente_modifica(),gestisci.getComboRuoloUtente_modifica());
+        gestisci.getButtonSalvaModificheUtente().setVisible(true);
+
+
+        //reimposto l'interfaccia grafica
+
+        gestisci.getButtonSalvaModificheProgetto().setVisible(false);
+
+        gestisci.getButtonModificaProgetto().setVisible(true);
+
+        gestisci.getButtonEliminaProgetto().setEnabled(false);
+
+
+
 
     }
 
 
-    protected void listenerCreaUtente(){
-        JButton crea=gestisci.getButtonCreaUtente();
-        crea.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                creaUtente();
-            }
-        });
+
+
+
     }
-
-
-
-
-}
 
