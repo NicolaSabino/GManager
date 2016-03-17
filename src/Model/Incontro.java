@@ -8,7 +8,7 @@ import java.util.*;
  * Created by jacopo on 08/02/2016.
  */
 public class Incontro extends Model {
-
+    private int    id;
     private String data;
     private String ora;
     private String luogo;
@@ -27,12 +27,11 @@ public class Incontro extends Model {
 
     /**
      * Costruttore da sql
-     * @param chiave_data
-     * @param chiave_tipo
+     * @param id
      */
-    public Incontro (String chiave_data, String chiave_tipo){
+    public Incontro (int id){
         openConnection();
-        String sql="select data,ora,luogo,tipo,verbale from incontro where data='"+ chiave_data +"' and tipo='"+ chiave_tipo +"'";
+        String sql="select data,ora,luogo,tipo,verbale from incontro where id='" + id + "'";
         ResultSet query= selectQuery(sql);
         try {
             if(query.next()) {
@@ -41,6 +40,7 @@ public class Incontro extends Model {
                 this.setLuogo(query.getString("luogo"));
                 this.setTipo(query.getString("tipo"));
                 this.setVerbale(query.getString("verbale"));
+                this.id=id;
             }
         }catch(SQLException se){
             se.printStackTrace();
@@ -58,9 +58,7 @@ public class Incontro extends Model {
         boolean controllo=false;
         openConnection();
         String sql="update incontro set " + var[0] + "='" + var[1]
-                + "' where data='" + this.getData()
-                + "' and tipo='"+ this.getTipo()
-                +"' and ora='" + this.getOra() + "'";
+                + "' where id='" + this.id + "'";
 
 
         if(updateQuery(sql)){
@@ -75,17 +73,18 @@ public class Incontro extends Model {
     public boolean insertIntoSQL() {
         boolean controllo=false;
         openConnection();
-        String sql="insert into incontro values('"
+        String sql="insert into incontro(tipo,data,ora,luogo,verbale) values('"
                     + this.getTipo() + "','"
                     + this.getData() + "','"
                     + this.getOra()  + "','"
                     + this.getLuogo()+ "','"
                     + this.getVerbale() + "')";
 
-        if(updateQuery(sql)){
+        if(insertQueryAutoIncrement(sql)){
             controllo=true;
         }
         closeConnection();
+        id=getId_auto_increment();
         return controllo;
     }
 
@@ -193,6 +192,10 @@ public class Incontro extends Model {
 
     public void setPartecipazione(ArrayList<String> partecipazione) {
         this.partecipazione = partecipazione;
+    }
+
+    public int getId() {
+        return id;
     }
 }
 

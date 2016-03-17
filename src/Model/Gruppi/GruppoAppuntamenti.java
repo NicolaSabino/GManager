@@ -25,7 +25,7 @@ public class GruppoAppuntamenti extends Model{
         try {
             while (query.next()) {
 
-                Incontro app = new Incontro(query.getString("data"),query.getString("tipo"));
+                Incontro app = new Incontro(query.getInt("id"));
                 stato.add(stato.size(),app);
             }
         } catch (SQLException se) {
