@@ -885,7 +885,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <tabbedpane id="f03ce" binding="tabbedPane3" default-binding="true">
+                      <tabbedpane id="f03ce" binding="tabAppuntamenti">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
                             <preferred-size width="200" height="200"/>
@@ -1016,22 +1016,7 @@
                                 <constraints>
                                   <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                                 </constraints>
-                                <properties>
-                                  <model>
-                                    <item value="0"/>
-                                    <item value="5"/>
-                                    <item value="10"/>
-                                    <item value="15"/>
-                                    <item value="20"/>
-                                    <item value="25"/>
-                                    <item value="30"/>
-                                    <item value="35"/>
-                                    <item value="40"/>
-                                    <item value="45"/>
-                                    <item value="50"/>
-                                    <item value="55"/>
-                                  </model>
-                                </properties>
+                                <properties/>
                               </component>
                               <component id="7251c" class="javax.swing.JLabel">
                                 <constraints>
@@ -1145,17 +1130,18 @@
                                   <text value="Modifica Apuntamento"/>
                                 </properties>
                               </component>
-                              <component id="9dbc3" class="javax.swing.JButton" binding="butonCancellaAppuntamento">
+                              <component id="9dbc3" class="javax.swing.JButton" binding="buttonEliminaAppuntamento">
                                 <constraints>
                                   <grid row="12" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
-                                  <text value="Cancella Appuntamento"/>
+                                  <foreground color="-1179645"/>
+                                  <text value="Elimina Appuntamento"/>
                                 </properties>
                               </component>
                               <component id="8348c" class="javax.swing.JLabel" binding="labelModificaAppuntamento">
                                 <constraints>
-                                  <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                                  <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
                                   <text value="Label"/>

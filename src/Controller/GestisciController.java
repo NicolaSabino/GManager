@@ -2,8 +2,6 @@ package Controller;
 
 import Model.*;
 import Model.Gruppi.Gruppo;
-import Model.Gruppi.Gruppo;
-import Model.Gruppi.GruppoAppuntamenti;
 import Model.Gruppi.GruppoProgetti;
 import Model.Gruppi.GruppoSequenze;
 import View.Gestisci;
@@ -126,7 +124,7 @@ public class GestisciController {
                     popolaCampiModificaProgetto(tabellaProgetti.getSelectedRow());
                     gestisci.getLabelModificaProgetto().setVisible(false);
                     gestisci.getButtonModificaProgetto().setEnabled(true);
-                    gestisci.getButtonEliminaProgetto().setEnabled(true);
+                    gestisci.getButtonEliminaProgetto().setEnabled(false);
                     gestisci.getTabProgetti().setSelectedIndex(1);
                 }
             }
@@ -143,7 +141,7 @@ public class GestisciController {
                     popolaCampiModificaSequenza(tabellaSequenze.getSelectedRow());
                     gestisci.getLabelModificaSequenza().setVisible(false);
                     gestisci.getButtonModificaSequenza().setEnabled(true);
-                    gestisci.getButtonEliminaSequenza().setEnabled(true);
+                    gestisci.getButtonEliminaSequenza().setEnabled(false);
                     gestisci.getTabSequenze().setSelectedIndex(1);
                 }
             }
@@ -159,7 +157,7 @@ public class GestisciController {
                     popolaCampimodificaAttivita(tabellaAttivita.getSelectedRow());
                     gestisci.getLabelModificaAttivita().setVisible(false);
                     gestisci.getButtonModificaAttivita().setEnabled(true);
-                    gestisci.getButtonEliminaAttivita().setEnabled(true);
+                    gestisci.getButtonEliminaAttivita().setEnabled(false);
                     gestisci.getTabAttivita().setSelectedIndex(1);
                 }
             }
@@ -173,6 +171,10 @@ public class GestisciController {
             public void mouseClicked(MouseEvent e) {
                 if(statoListner){
                     popolaCampiModificaAppuntamento(tabellaAppuntamenti.getSelectedRow());
+                    gestisci.getLabelModificaAppuntamento().setVisible(false);
+                    gestisci.getButtonModifcaAppuntamento().setEnabled(true);
+                    gestisci.getButtonEliminaAppuntamento().setEnabled(false);
+                    gestisci.getTabAppuntamenti().setSelectedIndex(1);
 
                 }
             }
@@ -540,10 +542,6 @@ public class GestisciController {
         listnerCreaAppuntamento();
     }
 
-
-
-    //TODO fatto da edo
-
     protected void creaUtente(){
         Utente utente = gestisci.getParametriCreaUtente();
         Gruppo gruppoUtenti = new Gruppo();
@@ -590,8 +588,6 @@ public class GestisciController {
 
     }
 
-
-    //TODO */
 
     protected void abilitaModificaProgetto(){
         //creo il listner del salvataggio
