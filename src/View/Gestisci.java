@@ -29,7 +29,7 @@ public class Gestisci {
     private JScrollPane scrollSequenze;
     private JTabbedPane tabSequenze;
     private JTabbedPane tabAttivita;
-    private JTabbedPane tabbedPane3;
+    private JTabbedPane tabAppuntamenti;
     private JButton buttonCreaSequenza;
     private JTextField fieldNomeSequenza_modifica;
     private JButton buttonEliminaSequenza;
@@ -61,7 +61,7 @@ public class Gestisci {
     private JTextField textField21;
     private JTextField textField22;
     private JButton buttonModifcaAppuntamento;
-    private JButton butonCancellaAppuntamento;
+    private JButton buttonEliminaAppuntamento;
     private JPanel panelProgetti;
     private JPanel panelUtenti;
     private JScrollPane scrollProgetti;
@@ -177,6 +177,7 @@ public class Gestisci {
         labelModificaProgetto.setText("<html><b>...Seleziona il progetto da modificare...</b></html>");
         labelModificaSequenza.setText("<html><b>...Seleziona la sequenza da modificare...</b></html>");
         labelModificaAttivita.setText("<html><b>...Seleziona l'attività da modificare...</b></html>");
+        labelModificaAppuntamento.setText("<html><b>...Seleziona l'Appuntamento da modificare...</b></html>");
 
 
         //popolo le tabelle
@@ -192,6 +193,9 @@ public class Gestisci {
         disabilitaComponenti(true,fieldDescrizioneAttivita_modifica,fieldPrecedenzaAttivita_modifica,fieldCostoAttivta_modifica,
                 comboSequenze_modifica,comboGiornoInizioAttivita_modifica,comboMeseInizioAttivita_modifica,comboAnnoInizioAttivita_modifica,
                 comboGiornoFineAttivita_modifica,comboMeseFineAttivita_modifica,comboAnnoFineAttivita_modifica);
+
+        disabilitaComponenti(true,comboTipoAppuntamento_modifica,fieldLuogoAppuntamento_modifica,comboGiornoAppuntamento_modifica,comboMeseAppuntamento_modifica,
+                                comboAnnoAppuntamento_modifca,comboOraAppuntamento_modifica,comboMinutiAppuntamento_modifica,areaVerbaleAppuntamento);
 
 
         buttonSalvaModificheProgetto.setVisible(false);
@@ -209,6 +213,11 @@ public class Gestisci {
         buttonSalvaModificheAttivita.setVisible(false);
         buttonEliminaAttivita.setEnabled(false);
         buttonModificaAttivita.setEnabled(false);
+
+        invitaTuttiRadioButton.setSelected(true);
+        buttonModifcaAppuntamento.setEnabled(false);
+        buttonSalvaAppuntamento.setVisible(false);
+        buttonEliminaAppuntamento.setEnabled(false);
 
 
 
@@ -244,6 +253,7 @@ public class Gestisci {
 
         StaticMethod.popolaComboSequenze(comboSequenze);
         StaticMethod.popolaComboSequenze(comboSequenze_modifica);
+        StaticMethod.popolaComboSequenze(comboSequenzeAppuntamento);
         comboProgetti_modifica.setEnabled(false);
 
 
@@ -614,8 +624,8 @@ public class Gestisci {
         return tabAttivita;
     }
 
-    public JTabbedPane getTabbedPane3() {
-        return tabbedPane3;
+    public JTabbedPane getTabAppuntamenti() {
+        return tabAppuntamenti;
     }
 
     public JTextField getFieldCostoAttivita() {
@@ -726,8 +736,8 @@ public class Gestisci {
         return buttonModifcaAppuntamento;
     }
 
-    public JButton getButonCancellaAppuntamento() {
-        return butonCancellaAppuntamento;
+    public JButton getButtonEliminaAppuntamento() {
+        return buttonEliminaAppuntamento;
     }
 
     public JPanel getPanelProgetti() {
@@ -1062,5 +1072,17 @@ public class Gestisci {
 
     public JTextField getFieldTelefonoUtente() {
         return fieldTelefonoUtente;
+    }
+
+    public JTextField getTextField1() {
+        return textField1;
+    }
+
+    public JComboBox getComboBox1() {
+        return comboBox1;
+    }
+
+    public JTextField getTextField2() {
+        return textField2;
     }
 }

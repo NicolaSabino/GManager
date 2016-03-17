@@ -2,8 +2,6 @@ package Controller;
 
 import Model.*;
 import Model.Gruppi.Gruppo;
-import Model.Gruppi.Gruppo;
-import Model.Gruppi.GruppoAppuntamenti;
 import Model.Gruppi.GruppoProgetti;
 import Model.Gruppi.GruppoSequenze;
 import View.Gestisci;
@@ -52,6 +50,7 @@ public class GestisciController {
         listnerCreaUtente();
 
         listnerSelezioneAttivita();
+        listnerSelezionaAppuntamento();
         listnerSelezionaUtente();
 
         listnerModificaProgetto();
@@ -134,7 +133,7 @@ public class GestisciController {
                     popolaCampiModificaProgetto(tabellaProgetti.getSelectedRow());
                     gestisci.getLabelModificaProgetto().setVisible(false);
                     gestisci.getButtonModificaProgetto().setEnabled(true);
-                    gestisci.getButtonEliminaProgetto().setEnabled(true);
+                    gestisci.getButtonEliminaProgetto().setEnabled(false);
                     gestisci.getTabProgetti().setSelectedIndex(1);
                 }
             }
@@ -151,7 +150,7 @@ public class GestisciController {
                     popolaCampiModificaSequenza(tabellaSequenze.getSelectedRow());
                     gestisci.getLabelModificaSequenza().setVisible(false);
                     gestisci.getButtonModificaSequenza().setEnabled(true);
-                    gestisci.getButtonEliminaSequenza().setEnabled(true);
+                    gestisci.getButtonEliminaSequenza().setEnabled(false);
                     gestisci.getTabSequenze().setSelectedIndex(1);
                 }
             }
@@ -167,7 +166,7 @@ public class GestisciController {
                     popolaCampimodificaAttivita(tabellaAttivita.getSelectedRow());
                     gestisci.getLabelModificaAttivita().setVisible(false);
                     gestisci.getButtonModificaAttivita().setEnabled(true);
-                    gestisci.getButtonEliminaAttivita().setEnabled(true);
+                    gestisci.getButtonEliminaAttivita().setEnabled(false);
                     gestisci.getTabAttivita().setSelectedIndex(1);
                 }
             }
@@ -189,6 +188,23 @@ public class GestisciController {
             }
         });
     } //TODO ok!
+
+    protected void listnerSelezionaAppuntamento(){
+        JTable tabellaAppuntamenti = gestisci.getTableApuntamenti();
+        tabellaAppuntamenti.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(statoListner){
+                    popolaCampiModificaAppuntamento(tabellaAppuntamenti.getSelectedRow());
+                    gestisci.getLabelModificaAppuntamento().setVisible(false);
+                    gestisci.getButtonModifcaAppuntamento().setEnabled(true);
+                    gestisci.getButtonEliminaAppuntamento().setEnabled(false);
+                    gestisci.getTabAppuntamenti().setSelectedIndex(1);
+
+                }
+            }
+        });
+    }
 
 
     protected void listnerModificaProgetto(){
@@ -381,6 +397,10 @@ public class GestisciController {
             //aggiorno il pannello gestisci sequenze
             StaticMethod.popolaComboProgetti(gestisci.getComboProgetti());
             StaticMethod.popolaComboProgetti(gestisci.getComboProgetti_modifica());
+
+            //rimuovo e ricreo l'acction listener
+            StaticMethod.removeAllActionListener(gestisci.getButtonCreaProgetto());
+            listnerCreaProgetto();
         }
 
     }
@@ -423,6 +443,10 @@ public class GestisciController {
 
             StaticMethod.popolaComboSequenze(gestisci.getComboSequenze());
             StaticMethod.popolaComboSequenze(gestisci.getComboSequenze_modifica());
+
+            //rimuovo e ricreo l'acction listener
+            StaticMethod.removeAllActionListener(gestisci.getButtonCreaSequenza());
+            listnerCreaSequenza();
         }
     }
 
@@ -507,6 +531,10 @@ public class GestisciController {
                 gestisci.getComboSequenze().setSelectedIndex(0);
 
         }
+
+        //rimuovo e ricreo l'acction listener
+        StaticMethod.removeAllActionListener(gestisci.getButtonCreaAttivita());
+        listnerCreaAttivita();
     }
 
     protected void creaAppuntamento(){
@@ -517,20 +545,61 @@ public class GestisciController {
         //inserisco un nuovo messaggio
         MessaggioBroadcast messaggioBroadcast = new MessaggioBroadcast();
         messaggioBroadcast.setMessaggio(utilizzatore.getNome() + " " + utilizzatore.getCognome() +
-                " ha creato un nuovo incontro: " + incontro.getLuogo() + " @ "  + incontro.getData() + " " + incontro.getOra());
+                " ha creato un nuovo incontro: " + incontro.getLuogo() + " alle "  + incontro.getOra() + " del " + incontro.getData());
         messaggioBroadcast.setTipo("AUTO");
         messaggioBroadcast.setMittente("AUTO");
         messaggioBroadcast.insertIntoSQL();
+
+
+
+        Gruppo gruppo = new Gruppo();
+
+        if(gestisci.getInvitaTuttiRadioButton().isSelected()){
+
+            //invito tutti
+            gruppo.createFrom("utenti");
+
+        }else if(gestisci.getDirettivoRadioButton().isSelected()){
+
+            //invito i grouopleader e i teamleader
+            gruppo.createFrom("direttivo");
+        }else if(gestisci.getInvitaDaUnaSequenzaRadioButton().isSelected()){
+
+            String nomeSequenza=gestisci.getComboSequenzeAppuntamento().getSelectedItem().toString();
+            gruppo.createFrom("sequenza",nomeSequenza);
+        }
+
+        for(Utente appoggio: gruppo.getElenco()){
+
+            utilizzatore.invita(appoggio,incontro);
+        }
 
         //aggiorno la home e gestisci
         homeController.getMessaggiController().aggiorna();
         homeController.aggiornoAppuntamenti();
         gestisci.popolaAppuntamenti();
-    }
 
+        //resetto l'interfaccia
+        gestisci.getComboTipoAppuntamento().setSelectedIndex(0);
+        gestisci.getFieldLuogoAppuntamento().setText("");
+        gestisci.getComboGiornoAppuntamento().setSelectedIndex(0);
+        gestisci.getComboMeseAppuntamento().setSelectedIndex(0);
+        gestisci.getComboAnnoAppuntamento().setSelectedIndex(0);
+        gestisci.getComboOraAppuntamento().setSelectedIndex(0);
+        gestisci.getComboMinutiAppuntamento().setSelectedIndex(0);
+        gestisci.getInvitaTuttiRadioButton().setSelected(true);
+        gestisci.getDirettivoRadioButton().setSelected(false);
+        gestisci.getInvitaDaUnaSequenzaRadioButton().setSelected(false);
+        gestisci.getComboSequenzeAppuntamento().setSelectedIndex(0);
 
 
     protected void creaUtente(){ //TODO modifica tuttti i ruoli
+        //rimuovo e ricreo l'acction listener
+        StaticMethod.removeAllActionListener(gestisci.getButtonCreaAppuntamento());
+        listnerCreaAppuntamento();
+    }
+
+    protected void creaUtente(){
         Utente utente = gestisci.getParametriCreaUtente();
         Gruppo gruppoUtenti = new Gruppo();
         int errore=0;
@@ -569,6 +638,10 @@ public class GestisciController {
         gestisci.getComboRuoloUtente().setSelectedIndex(0);
         gestisci.getFieldTelefonoUtente().setText("");
         gestisci.getFieldMailUtente().setText("");
+
+        //rimuovo e ricreo l'acction listener
+        StaticMethod.removeAllActionListener(gestisci.getButtonCreaUtente());
+        listnerCreaUtente();
 
     }
 
@@ -1082,9 +1155,7 @@ public class GestisciController {
     protected void popolaCampiModificaProgetto(int riga){
         JTable tabellaProgetti = gestisci.getTableProgetti();
         gestisci.getFieldNomeProgetto_modifica().setText(tabellaProgetti.getValueAt(riga,0).toString());
-        Map data = new HashMap<>();
-        data.put("data", tabellaProgetti.getValueAt(riga,1).toString());
-        StaticMethod.setOldData(gestisci.getComboGiornoProgetto_modifica(), gestisci.getComboMeseProgetto_modifica(), gestisci.getComboAnnoProgetto_modifica(), data, "data");
+        StaticMethod.setData(gestisci.getComboGiornoProgetto_modifica(), gestisci.getComboMeseProgetto_modifica(), gestisci.getComboAnnoProgetto_modifica(),tabellaProgetti.getValueAt(riga,1).toString());
     }
 
     protected void popolaCampiModificaSequenza(int riga){
@@ -1122,10 +1193,10 @@ public class GestisciController {
 
         try {
             Map data = new HashMap<>();
-            data.put("datainizio", tabellaAttivita.getValueAt(riga, 4).toString());
-            data.put("datafineprevista", tabellaAttivita.getValueAt(riga, 5).toString());
-            StaticMethod.setOldData(gestisci.getComboGiornoInizioAttivita_modifica(), gestisci.getComboMeseInizioAttivita_modifica(), gestisci.getComboAnnoInizioAttivita_modifica(), data, "datainizio");
-            StaticMethod.setOldData(gestisci.getComboGiornoFineAttivita_modifica(), gestisci.getComboMeseFineAttivita_modifica(), gestisci.getComboAnnoFineAttivita_modifica(), data, "datafineprevista");
+            String datainizio=tabellaAttivita.getValueAt(riga, 4).toString();
+            String datafineprevista= tabellaAttivita.getValueAt(riga, 5).toString();
+            StaticMethod.setData(gestisci.getComboGiornoInizioAttivita_modifica(), gestisci.getComboMeseInizioAttivita_modifica(), gestisci.getComboAnnoInizioAttivita_modifica(),datainizio);
+            StaticMethod.setData(gestisci.getComboGiornoFineAttivita_modifica(), gestisci.getComboMeseFineAttivita_modifica(), gestisci.getComboAnnoFineAttivita_modifica(), datafineprevista);
         }catch (Exception e){
             gestisci.getComboGiornoInizioAttivita_modifica().setSelectedIndex(0);
             gestisci.getComboMeseInizioAttivita_modifica().setSelectedIndex(0);
@@ -1144,6 +1215,39 @@ public class GestisciController {
         gestisci.getFieldCognomeUtente_modifica().setText(utente.getCognome());
         gestisci.getFieldMailUtente_modifica().setText(utente.getMail());
         gestisci.getFieldTelefonoUtente_modifica().setText(utente.getTelefono());
+    //TODO
+        protected void popolaCampiModificaAppuntamento(int riga){
+        JTable tabellaAppuntamenti=gestisci.getTableApuntamenti();
+
+        String tipo     = tabellaAppuntamenti.getValueAt(riga,0).toString();
+        String luogo    = tabellaAppuntamenti.getValueAt(riga,3).toString();
+        String data     = tabellaAppuntamenti.getValueAt(riga,1).toString();
+        String ora      = tabellaAppuntamenti.getValueAt(riga,2).toString();
+        String verbale  = tabellaAppuntamenti.getValueAt(riga,4).toString();
+
+        switch (tipo){
+
+            case "milestone":{
+                gestisci.getComboTipoAppuntamento_modifica().setSelectedIndex(0);
+                break;
+            }
+
+            case "checkpoint":{
+                gestisci.getComboTipoAppuntamento_modifica().setSelectedIndex(1);
+                break;
+            }
+        }
+
+        gestisci.getFieldLuogoAppuntamento_modifica().setText(luogo);
+        gestisci.getAreaVerbaleAppuntamento().setText(verbale);
+
+        StaticMethod.setData(gestisci.getComboGiornoAppuntamento_modifica(), gestisci.getComboMeseAppuntamento_modifica(), gestisci.getComboAnnoAppuntamento_modifca(), data);
+        StaticMethod.setOra(gestisci.getComboOraAppuntamento_modifica(),gestisci.getComboMinutiAppuntamento_modifica(),ora);
+        System.out.println(ora.substring(0,2)+ " " + ora.substring(3,5));
+
+
+    }
+
 
         //caso per caso l'indice della c0mbobox in base ruolo utente da visualizzare
         int i=0;

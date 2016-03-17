@@ -33,7 +33,7 @@ public class Gruppo extends Model{
         String sql;
         if(var[0]=="sequenza"){
             sql="select a.matricola,a.nome,a.cognome,a.telefono,a.mail,z.ruolo from datianagrafici a join incarichi i join attività c join datilavorativi z" +
-                    "on a.matricola=i.matricola and c.id=i.id  and z.matricola=a.matricola where  c.nomesequenza='" + var[1] + "'";
+                    " on a.matricola=i.matricola and c.id=i.id  and z.matricola=a.matricola where  c.nomesequenza='" + var[1] + "' group by z.matricola";
 
         }else if(var[0]=="progetto"){
             sql="select a.matricola,a.nome,a.cognome,a.telefono,a.mail,z.ruolo from datianagrafici a join incarichi i join attività c join sequenza s join datilavorativi z" +
@@ -46,6 +46,9 @@ public class Gruppo extends Model{
         }else if(var[0]=="nome+cognome"){
             sql="select a.matricola,a.nome,a.cognome,a.telefono,a.mail,z.ruolo from datianagrafici a join datilavorativi z " +
                     "on a.matricola=z.matricola where a.nome like '" + var[1] + "%' and a.cognome like '" + var[2] + "%'";
+        }else if(var[0]=="direttivo"){
+            sql="select a.matricola,a.nome,a.cognome,a.telefono,a.mail,z.ruolo from datianagrafici a join datilavorativi z " +
+                    "on a.matricola=z.matricola where z.ruolo='GL' or z.ruolo='TL'";
         }else{
             sql="";
             controllo=false;

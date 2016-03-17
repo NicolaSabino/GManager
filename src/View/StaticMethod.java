@@ -25,7 +25,7 @@ public class StaticMethod {
      * @param mese   JComboBox da popolare con i mesi
      * @param anno   JComboBox da popolare con gli anni
      */
-    public static void populateDataEmissione(JComboBox giorno, JComboBox mese, JComboBox anno) {
+    public static void populateData1(JComboBox giorno, JComboBox mese, JComboBox anno) {
         Integer i;
 
         int annoCorrente = Calendar.getInstance().get(Calendar.YEAR);
@@ -89,22 +89,22 @@ public class StaticMethod {
      * @param pos       anno da selezionare di default (0 = posizione anno più lontano, max = interval -1)
      */
     public static void populateData(JComboBox giorno, JComboBox mese, JComboBox anno, int interval, int pos){
-        populateDataEmissione(giorno, mese, null);
-
+        populateData1(giorno,mese,anno);
         Integer i;
-        Vector<Integer> anniNascita = new Vector<>();
+        Vector<Integer> anni = new Vector<>();
         Integer annoCorrente = Calendar.getInstance().get(Calendar.YEAR);
         int j = 0;
         for (i = interval; i >= 0; i--){
-            anniNascita.add(j, annoCorrente + i);
+            anni.add(j, annoCorrente + i);
         }
 
-        anno.setModel(new DefaultComboBoxModel<Integer>(anniNascita));
+        anno.setModel(new DefaultComboBoxModel<Integer>(anni));
 
         giorno.setSelectedIndex(0);
         mese.setSelectedIndex(0);
         anno.setSelectedIndex(pos);
     }
+
 
 
 
@@ -172,15 +172,14 @@ public class StaticMethod {
      * @param giorno       JComboBox contenenti i giorni
      * @param mese         JComboBox contenenti i mesi
      * @param anno         JComboBox contenenti gli anni
-     * @param datiOld      Map nella quale è contenuta la data
-     * @param dataKeyValue chiave della mappa dove c'è la data
+     * @param data         Stringa contentente la data da rappresentare
      */
-    public static void setOldData(JComboBox giorno, JComboBox mese, JComboBox anno, Map datiOld, String dataKeyValue) {
+    public static void setData(JComboBox giorno, JComboBox mese, JComboBox anno,String data) {
         String aa, month, gg;
 
-        aa = datiOld.get(dataKeyValue).toString().substring(0, 4);
-        month = datiOld.get(dataKeyValue).toString().substring(5, 7);
-        gg = datiOld.get(dataKeyValue).toString().substring(8, 10);
+        aa = data.substring(0, 4);
+        month = data.substring(5, 7);
+        gg = data.substring(8, 10);
 
         for (int i = 0; i < anno.getItemCount(); i++) {
             if (anno.getItemAt(i).toString().equalsIgnoreCase(aa)) {
@@ -197,6 +196,28 @@ public class StaticMethod {
         for (int i = 0; i < giorno.getItemCount(); i++) {
             if (giorno.getItemAt(i).toString().equalsIgnoreCase(gg)) {
                 giorno.setSelectedIndex(i);
+            }
+        }
+    }
+    /**
+     * Metodo che setta l'ora passata come parametro, come elementi selezionati
+     *
+     */
+    public static  void setOra(JComboBox ora,JComboBox minuti,String orario){
+        int oo,mm;
+
+        oo=Integer.parseInt(orario.substring(0,2));
+        mm=Integer.parseInt(orario.substring(3,5));
+
+        for (int i=0;i<ora.getItemCount();i++){
+            if(Integer.parseInt(ora.getItemAt(i).toString())==oo){
+                ora.setSelectedIndex(i);
+            }
+        }
+
+        for (int i=0;i<minuti.getItemCount();i++){
+            if(Integer.parseInt(minuti.getItemAt(i).toString())==mm){
+                minuti.setSelectedIndex(i);
             }
         }
     }
