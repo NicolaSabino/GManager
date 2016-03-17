@@ -21,7 +21,7 @@ public class GestisciController {
     private Gestisci gestisci;
     private Utente utilizzatore;
     private HomeController homeController;
-    private boolean statoListner;
+    private boolean statoListener;
 
 
     public GestisciController(RootFrame rootFrame, Utente utente,HomeController home) {
@@ -29,7 +29,7 @@ public class GestisciController {
         this.gestisci= new Gestisci();
         this.utilizzatore=utente;
         this.homeController=home;
-        this.statoListner=true; //da qui in poi i listner di selezione sulle tabelle sono abilitati
+        this.statoListener=true; //da qui in poi i listener di selezione sulle tabelle sono abilitati
 
         //verranno disabilitati quando si entra in modalità modifica
 
@@ -37,32 +37,32 @@ public class GestisciController {
         if(utilizzatore.getRuolo().equals("GL")) {
             gestisci.glMode();
         }else{
-            listnerSelezioneProgetto();
-            listnerSelezioneSequenza();
+            listenerSelezioneProgetto();
+            listenerSelezioneSequenza();
         }
 
-        //listner
-        listnerCreaProgetto();
-        listnerCreaSequenza();
-        listnerCreaAttivita();
-        listnerCreaAppuntamento();
+        //listener
+        listenerCreaProgetto();
+        listenerCreaSequenza();
+        listenerCreaAttivita();
+        listenerCreaAppuntamento();
 
         //TODO fatto da edo
 
-        listnerCreaUtente();
+        listenerCreaUtente();
 
         //TODO */
 
-        listnerSelezioneAttivita();
-        listnerSelezionaAppuntamento();
+        listenerSelezioneAttivita();
+        listenerSelezionaAppuntamento();
 
-        listnerModificaProgetto();
-        listnerModificaSequenza();
-        listnerModificaAttivita();
+        listenerModificaProgetto();
+        listenerModificaSequenza();
+        listenerModificaAttivita();
 
-        listnerEliminaProgetto();
-        listnerEliminaSequenza();
-        listnerEliminaAttivita();
+        listenerEliminaProgetto();
+        listenerEliminaSequenza();
+        listenerEliminaAttivita();
 
     }
 
@@ -70,7 +70,7 @@ public class GestisciController {
         rootFrame.setMainScrollPane(gestisci.getPanelloPrincipale());
     }
 
-    protected void listnerCreaProgetto(){
+    protected void listenerCreaProgetto(){
         JButton crea = gestisci.getButtonCreaProgetto();
         crea.addActionListener(new ActionListener() {
             @Override
@@ -80,7 +80,7 @@ public class GestisciController {
         });
     }
 
-    protected void listnerCreaSequenza(){
+    protected void listenerCreaSequenza(){
         JButton crea = gestisci.getButtonCreaSequenza();
         crea.addActionListener(new ActionListener() {
             @Override
@@ -90,7 +90,7 @@ public class GestisciController {
         });
     }
 
-    protected void listnerCreaAttivita(){
+    protected void listenerCreaAttivita(){
         JButton crea = gestisci.getButtonCreaAttivita();
         crea.addActionListener(new ActionListener() {
             @Override
@@ -104,7 +104,7 @@ public class GestisciController {
         });
     }
 
-    protected void listnerCreaAppuntamento(){
+    protected void listenerCreaAppuntamento(){
         JButton crea = gestisci.getButtonCreaAppuntamento();
         crea.addActionListener(new ActionListener() {
             @Override
@@ -115,12 +115,12 @@ public class GestisciController {
     }
 
 
-    protected void listnerSelezioneProgetto(){
+    protected void listenerSelezioneProgetto(){
         JTable tabellaProgetti = gestisci.getTableProgetti();
         tabellaProgetti.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(statoListner) {
+                if(statoListener) {
                     popolaCampiModificaProgetto(tabellaProgetti.getSelectedRow());
                     gestisci.getLabelModificaProgetto().setVisible(false);
                     gestisci.getButtonModificaProgetto().setEnabled(true);
@@ -132,12 +132,12 @@ public class GestisciController {
         });
     }
 
-    protected void listnerSelezioneSequenza(){
+    protected void listenerSelezioneSequenza(){
         JTable tabellaSequenze = gestisci.getTableSequenze();
         tabellaSequenze.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(statoListner) {
+                if(statoListener) {
                     popolaCampiModificaSequenza(tabellaSequenze.getSelectedRow());
                     gestisci.getLabelModificaSequenza().setVisible(false);
                     gestisci.getButtonModificaSequenza().setEnabled(true);
@@ -148,12 +148,12 @@ public class GestisciController {
         });
     }
 
-    protected void listnerSelezioneAttivita(){
+    protected void listenerSelezioneAttivita(){
         JTable tabellaAttivita = gestisci.getTableAttivita();
         tabellaAttivita.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(statoListner) {
+                if(statoListener) {
                     popolaCampimodificaAttivita(tabellaAttivita.getSelectedRow());
                     gestisci.getLabelModificaAttivita().setVisible(false);
                     gestisci.getButtonModificaAttivita().setEnabled(true);
@@ -164,12 +164,12 @@ public class GestisciController {
         });
     }
 
-    protected void listnerSelezionaAppuntamento(){
+    protected void listenerSelezionaAppuntamento(){
         JTable tabellaAppuntamenti = gestisci.getTableApuntamenti();
         tabellaAppuntamenti.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(statoListner){
+                if(statoListener){
                     popolaCampiModificaAppuntamento(tabellaAppuntamenti.getSelectedRow());
                     gestisci.getLabelModificaAppuntamento().setVisible(false);
                     gestisci.getButtonModifcaAppuntamento().setEnabled(true);
@@ -182,7 +182,7 @@ public class GestisciController {
     }
 
 
-    protected void listnerModificaProgetto(){
+    protected void listenerModificaProgetto(){
         JButton modifica=gestisci.getButtonModificaProgetto();
         modifica.addActionListener(new ActionListener() {
             @Override
@@ -191,12 +191,12 @@ public class GestisciController {
 
                 //disabilito la possibilità di selezionare elementi dalla tabella
                 gestisci.getTableProgetti().setRowSelectionAllowed(false);
-                statoListner=false;
+                statoListener=false;
             }
         });
     }
 
-    protected void listnerModificaSequenza(){
+    protected void listenerModificaSequenza(){
         JButton modifica=gestisci.getButtonModificaSequenza();
         modifica.addActionListener(new ActionListener() {
             @Override
@@ -205,12 +205,12 @@ public class GestisciController {
 
                 //disabilito la possibilità di selezionare elementi dalla tabella
                 gestisci.getTableSequenze().setRowSelectionAllowed(false);
-                statoListner=false;
+                statoListener=false;
             }
         });
     }
 
-    protected void listnerModificaAttivita(){
+    protected void listenerModificaAttivita(){
         JButton modifica=gestisci.getButtonModificaAttivita();
         modifica.addActionListener(new ActionListener() {
             @Override
@@ -219,13 +219,13 @@ public class GestisciController {
 
                 //disabilito la possibilità di selezionare elementi dalla tabella
                 gestisci.getTableAttivita().setRowSelectionAllowed(false);
-                statoListner=false;
+                statoListener=false;
             }
         });
     }
 
 
-    protected void listnerSalvaModificheProgeto(String nomevecchioprogetto){
+    protected void listenerSalvaModificheProgeto(String nomevecchioprogetto){
         JButton salva = gestisci.getButtonSalvaModificheProgetto();
         salva.addActionListener(new ActionListener() {
             @Override
@@ -234,12 +234,12 @@ public class GestisciController {
 
                 //riabilito la possibilità di selezionare elementi dalla tabella
                 gestisci.getTableProgetti().setRowSelectionAllowed(true);
-                statoListner=true;
+                statoListener=true;
             }
         });
     }
 
-    protected void listnerSalvaModificheSequenza(String nomevecchiasequenza){
+    protected void listenerSalvaModificheSequenza(String nomevecchiasequenza){
         JButton salva = gestisci.getButtonSalvaModificheSequenza();
         salva.addActionListener(new ActionListener() {
             @Override
@@ -248,12 +248,12 @@ public class GestisciController {
 
                 //riabilito la possibilità di selezionare elementi dalla tabella
                 gestisci.getTableSequenze().setRowSelectionAllowed(true);
-                statoListner=true;
+                statoListener=true;
             }
         });
     }
 
-    protected void listnerSalvaModificheAttivita(int idattivita){
+    protected void listenerSalvaModificheAttivita(int idattivita){
         JButton salva = gestisci.getButtonSalvaModificheAttivita();
         salva.addActionListener(new ActionListener() {
             @Override
@@ -262,13 +262,13 @@ public class GestisciController {
 
                 //riabilito la possibilità di selezionare elementi dalla tabella
                 gestisci.getTableAttivita().setRowSelectionAllowed(true);
-                statoListner=true;
+                statoListener=true;
             }
         });
     }
 
 
-    protected void listnerEliminaProgetto(){
+    protected void listenerEliminaProgetto(){
         JButton elimina=gestisci.getButtonEliminaProgetto();
         elimina.addActionListener(new ActionListener() {
             @Override
@@ -278,7 +278,7 @@ public class GestisciController {
         });
     }
 
-    protected void listnerEliminaSequenza(){
+    protected void listenerEliminaSequenza(){
         JButton elimina=gestisci.getButtonEliminaSequenza();
         elimina.addActionListener(new ActionListener() {
             @Override
@@ -288,7 +288,7 @@ public class GestisciController {
         });
     }
 
-    protected void listnerEliminaAttivita(){
+    protected void listenerEliminaAttivita(){
         JButton elimina=gestisci.getButtonEliminaAttivita();
         elimina.addActionListener(new ActionListener() {
             @Override
@@ -345,7 +345,7 @@ public class GestisciController {
 
             //rimuovo e ricreo l'acction listener
             StaticMethod.removeAllActionListener(gestisci.getButtonCreaProgetto());
-            listnerCreaProgetto();
+            listenerCreaProgetto();
         }
 
     }
@@ -391,7 +391,7 @@ public class GestisciController {
 
             //rimuovo e ricreo l'acction listener
             StaticMethod.removeAllActionListener(gestisci.getButtonCreaSequenza());
-            listnerCreaSequenza();
+            listenerCreaSequenza();
         }
     }
 
@@ -479,7 +479,7 @@ public class GestisciController {
 
         //rimuovo e ricreo l'acction listener
         StaticMethod.removeAllActionListener(gestisci.getButtonCreaAttivita());
-        listnerCreaAttivita();
+        listenerCreaAttivita();
     }
 
     protected void creaAppuntamento(){
@@ -539,7 +539,7 @@ public class GestisciController {
 
         //rimuovo e ricreo l'acction listener
         StaticMethod.removeAllActionListener(gestisci.getButtonCreaAppuntamento());
-        listnerCreaAppuntamento();
+        listenerCreaAppuntamento();
     }
 
     protected void creaUtente(){
@@ -584,14 +584,14 @@ public class GestisciController {
 
         //rimuovo e ricreo l'acction listener
         StaticMethod.removeAllActionListener(gestisci.getButtonCreaUtente());
-        listnerCreaUtente();
+        listenerCreaUtente();
 
     }
 
 
     protected void abilitaModificaProgetto(){
         //creo il listner del salvataggio
-        listnerSalvaModificheProgeto(gestisci.getFieldNomeProgetto_modifica().getText());
+        listenerSalvaModificheProgeto(gestisci.getFieldNomeProgetto_modifica().getText());
 
         //modifico lo stato dell'interfaccia grafica
         gestisci.getButtonSalvaModificheProgetto().setVisible(true);
@@ -605,7 +605,7 @@ public class GestisciController {
     protected void abilitaModificaSequenza(){
 
         //creo il listner del salvataggio
-        listnerSalvaModificheSequenza(gestisci.getFieldNomeSequenza_modifica().getText());
+        listenerSalvaModificheSequenza(gestisci.getFieldNomeSequenza_modifica().getText());
 
         //modifico lo stato dell'interfaccia grafica
         gestisci.getButtonSalvaModificheSequenza().setVisible(true);
@@ -623,7 +623,7 @@ public class GestisciController {
         int id=Integer.parseInt(gestisci.getTableAttivita().getValueAt(row,0).toString());
 
         //creo il listner di salvataggio
-        listnerSalvaModificheAttivita(id);
+        listenerSalvaModificheAttivita(id);
 
         //modifico lo stato dell'interfaccia grafica
         gestisci.getButtonSalvaModificheAttivita().setVisible(true);
@@ -1084,7 +1084,7 @@ public class GestisciController {
     }
 
 
-    protected void listnerCreaUtente(){
+    protected void listenerCreaUtente(){
         JButton crea=gestisci.getButtonCreaUtente();
         crea.addActionListener(new ActionListener() {
             @Override
