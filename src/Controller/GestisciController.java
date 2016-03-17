@@ -9,6 +9,8 @@ import View.RootFrame;
 import View.StaticMethod;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,6 +64,9 @@ public class GestisciController {
         listenerEliminaProgetto();
         listenerEliminaSequenza();
         listenerEliminaAttivita();
+
+        listenerMostraInvitati();
+        listenerNascondiInvitati();
 
     }
 
@@ -249,7 +254,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerModificaUtente(){
+     protected void listenerModificaUtente(){
         JButton modifica = gestisci.getButtonModificaUtente();
         modifica.addActionListener(new ActionListener() {
             @Override
@@ -352,6 +357,29 @@ public class GestisciController {
             }
         });
     }
+
+
+
+    protected void listenerMostraInvitati(){
+        JButton mostra=gestisci.getButtonMostraInvitati();
+        mostra.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mostraInvitati();
+            }
+        });
+    }
+
+    protected void listenerNascondiInvitati(){
+        JButton nascondi=gestisci.getButtonNascondiInvitati();
+        nascondi.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                nascondiInvitati();
+            }
+        });
+    }
+    
 
 
     protected void creaProgetto(){
@@ -1230,12 +1258,13 @@ public class GestisciController {
 
     protected void popolaCampiModificaAppuntamento(int riga){
         JTable tabellaAppuntamenti=gestisci.getTableApuntamenti();
+        Incontro i = new Incontro((Integer)tabellaAppuntamenti.getValueAt(riga,0));
 
-        String tipo     = tabellaAppuntamenti.getValueAt(riga,0).toString();
-        String luogo    = tabellaAppuntamenti.getValueAt(riga,3).toString();
-        String data     = tabellaAppuntamenti.getValueAt(riga,1).toString();
-        String ora      = tabellaAppuntamenti.getValueAt(riga,2).toString();
-        String verbale  = tabellaAppuntamenti.getValueAt(riga,4).toString();
+        String tipo     = i.getTipo();
+        String luogo    = i.getLuogo();
+        String data     = i.getData();
+        String ora      = i.getOra();
+        String verbale  = i.getVerbale();
 
         switch (tipo){
 
@@ -1252,11 +1281,29 @@ public class GestisciController {
 
         gestisci.getFieldLuogoAppuntamento_modifica().setText(luogo);
         gestisci.getAreaVerbaleAppuntamento().setText(verbale);
+        gestisci.getButtonMostraInvitati().setEnabled(true);
 
         StaticMethod.setData(gestisci.getComboGiornoAppuntamento_modifica(), gestisci.getComboMeseAppuntamento_modifica(), gestisci.getComboAnnoAppuntamento_modifca(), data);
         StaticMethod.setOra(gestisci.getComboOraAppuntamento_modifica(),gestisci.getComboMinutiAppuntamento_modifica(),ora);
-        System.out.println(ora.substring(0,2)+ " " + ora.substring(3,5));
 
+        Gruppo invitati = new Gruppo();
+        Integer id=i.getId();
+        invitati.createFrom("incontro",id.toString());
+
+        gestisci.popolaInvitati(invitati);
+
+    }
+
+    protected void mostraInvitati(){
+        gestisci.getPanelInvitati().setVisible(true);
+        gestisci.getButtonMostraInvitati().setVisible(false);
+        gestisci.getButtonNascondiInvitati().setVisible(true);
+    }
+
+    protected void nascondiInvitati(){
+        gestisci.getPanelInvitati().setVisible(false);
+        gestisci.getButtonMostraInvitati().setVisible(true);
+        gestisci.getButtonNascondiInvitati().setVisible(false);
     }
 
 

@@ -136,7 +136,7 @@ public class Gestisci {
     private JComboBox comboMinutiAppuntamento_modifica;
     private JRadioButton invitaTuttiRadioButton;
     private JRadioButton invitaDaUnaSequenzaRadioButton;
-    private JButton buttonInvitati;
+    private JButton buttonMostraInvitati;
     private JComboBox comboSequenzeAppuntamento;
     private JTable table1;
     private JTable table2;
@@ -167,6 +167,10 @@ public class Gestisci {
     private JLabel labelModificaUtente;
     private JButton buttonSalvaModificheUtente;
     private JButton buttonEliminaUtente;
+    private JButton buttonNascondiInvitati;
+    private JTable tableInvitati;
+    private JScrollPane scrollTabbella;
+    private JPanel panelInvitati;
     private JComboBox comboGiornoInizioSequenza;
     private JComboBox comboMeseInizioSequenza;
     private JComboBox comboAnnoInizioSequenza;
@@ -229,6 +233,9 @@ public class Gestisci {
         buttonModificaUtente.setEnabled(false);
         buttonSalvaModificheUtente.setVisible(false);
         buttonEliminaUtente.setEnabled(false);
+        buttonMostraInvitati.setEnabled(false);
+        buttonNascondiInvitati.setVisible(false);
+        panelInvitati.setVisible(false);
 
 
 
@@ -259,6 +266,7 @@ public class Gestisci {
         StaticMethod.populateData(comboGiornoFineAttivita_modifica,comboMeseFineAttivita_modifica,comboAnnoFineAttivita_modifica,5,0);
         StaticMethod.populateData(comboGiornoAppuntamento,comboMeseAppuntamento,comboAnnoAppuntamento,5,0);
         StaticMethod.populateData(comboGiornoAppuntamento_modifica,comboMeseAppuntamento_modifica,comboAnnoAppuntamento_modifca,5,0);
+
 
 
         StaticMethod.popolaComboProgetti(comboProgetti);
@@ -370,9 +378,24 @@ public class Gestisci {
         }
         tableUtenti.setModel(t);
 
-        //TODO static method + popola apertura
 
+    }
 
+    public void popolaInvitati(Gruppo gruppo){
+        String col[]={"Matricola" , "Nome" , "Cognome" , "Ruolo" , "indirizzo e-mail" , "telefono"};
+        CustomTable t = new CustomTable(col,0);
+
+        for(Utente appoggio:gruppo.getElenco()){
+            String matricola = appoggio.getMatricola();
+            String nome = appoggio.getNome();
+            String cognome = appoggio.getCognome();
+            String mail = appoggio.getMail();
+            String telefono = appoggio.getTelefono();
+            String ruolo = appoggio.getRuolo();
+            Object[] data = {matricola, nome, cognome, ruolo, mail, telefono};
+            t.addRow(data);
+        }
+        tableInvitati.setModel(t);
     }
 
     public void displayErrorMessage(String errorMessage,String errorTitle){
@@ -383,20 +406,20 @@ public class Gestisci {
     }
 
     public void popolaAppuntamenti(){
-        String col[]={"Tipo","Data","Ora","Luogo","Verbale"};
+        String col[]={"Id","Tipo","Data","Ora","Luogo","Verbale"};
 
         CustomTable t = new CustomTable(col,0);
         GruppoAppuntamenti appuntamenti = new GruppoAppuntamenti();
 
         for(Incontro appoggio: appuntamenti.getStato()){
-
+            int    id       = appoggio.getId();
             String tipo     = appoggio.getTipo();
             String data     = appoggio.getData();
             String ora      = appoggio.getOra();
             String luogo    = appoggio.getLuogo();
             String verbale  = appoggio.getVerbale();
 
-            Object[] dati = {tipo,data,ora,luogo,verbale};
+            Object[] dati = {id,tipo,data,ora,luogo,verbale};
             t.addRow(dati);
         }
 
@@ -991,8 +1014,8 @@ public class Gestisci {
         return invitaDaUnaSequenzaRadioButton;
     }
 
-    public JButton getButtonInvitati() {
-        return buttonInvitati;
+    public JButton getButtonMostraInvitati() {
+        return buttonMostraInvitati;
     }
 
     public JComboBox getComboSequenzeAppuntamento() {
@@ -1109,5 +1132,21 @@ public class Gestisci {
 
     public JButton getButtonEliminaUtente() {
         return buttonEliminaUtente;
+    }
+
+    public JButton getButtonNascondiInvitati() {
+        return buttonNascondiInvitati;
+    }
+
+    public JTable getTableInvitati() {
+        return tableInvitati;
+    }
+
+    public JScrollPane getScrollTabbella() {
+        return scrollTabbella;
+    }
+
+    public JPanel getPanelInvitati() {
+        return panelInvitati;
     }
 }

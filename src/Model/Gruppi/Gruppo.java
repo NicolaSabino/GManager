@@ -40,9 +40,9 @@ public class Gruppo extends Model{
                     "on a.matricola=i.matricola and c.id=i.id and  s.nome=c.nomesequenza and a.matricola=z.matricola where  s.nomeprogetto='" + var[1] +"'";
         }else if(var[0]=="utenti"){
             sql="select a.matricola,a.nome,a.cognome,a.telefono,a.mail,z.ruolo from datianagrafici a join datilavorativi z on a.matricola=z.matricola";
-        }else if(var[0]=="Incontro"){
+        }else if(var[0]=="incontro"){
             sql="select a.matricola,a.nome,a.cognome,a.telefono,a.mail,z.ruolo from datianagrafici a join partecipazione p join datilavorativi z " +
-                    "on a.matricola=p.matricola and z.matricola=a.matricola where p.tipo='" + var[1] + "' and p.data='" + var[2] + "'";
+                    "on a.matricola=p.matricola and z.matricola=a.matricola where p.id='" + var[1] + "'";
         }else if(var[0]=="nome+cognome"){
             sql="select a.matricola,a.nome,a.cognome,a.telefono,a.mail,z.ruolo from datianagrafici a join datilavorativi z " +
                     "on a.matricola=z.matricola where a.nome like '" + var[1] + "%' and a.cognome like '" + var[2] + "%'";
