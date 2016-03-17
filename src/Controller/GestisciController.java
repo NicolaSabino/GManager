@@ -63,6 +63,7 @@ public class GestisciController {
         listenerEliminaProgetto();
         listenerEliminaSequenza();
         listenerEliminaAttivita();
+        listenerEliminaUtente();
 
         listenerMostraInvitati();
         listenerNascondiInvitati();
@@ -101,7 +102,7 @@ public class GestisciController {
                 try {
                     creaAttivita();
                 }catch (Exception ex){
-                  ex.printStackTrace();
+                    ex.printStackTrace();
                 }
             }
         });
@@ -387,6 +388,16 @@ public class GestisciController {
         });
     }
 
+    protected void listenerEliminaUtente(){
+        JButton elimina=gestisci.getButtonEliminaUtente();
+        elimina.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eliminaUtente();
+            }
+        });
+    } //TODO ok!
+
 
 
     protected void listenerMostraInvitati(){
@@ -530,62 +541,62 @@ public class GestisciController {
         }else {
 
 
-                //se l'utente non inserisce alcun valore nel campo costo il try catch inserisce di defaut 0
-                try {
-                    a.setCosto(Double.parseDouble(gestisci.getFieldCostoAttivita().getText()));
-                }catch (NumberFormatException e){
-                    a.setCosto(0);
-                }
+            //se l'utente non inserisce alcun valore nel campo costo il try catch inserisce di defaut 0
+            try {
+                a.setCosto(Double.parseDouble(gestisci.getFieldCostoAttivita().getText()));
+            }catch (NumberFormatException e){
+                a.setCosto(0);
+            }
 
 
 
 
-                    //se ho la precedenza faccio un inserimento altrimenti ne faccio un altro
+            //se ho la precedenza faccio un inserimento altrimenti ne faccio un altro
 
-                    //se inserisco delle date scorrette ottengo un sql exception
+            //se inserisco delle date scorrette ottengo un sql exception
 
-                    if (!gestisci.getFieldPrecedenzaAttivita().getText().equals("")) {
-                        String precedenza = gestisci.getFieldPrecedenzaAttivita().getText();
+            if (!gestisci.getFieldPrecedenzaAttivita().getText().equals("")) {
+                String precedenza = gestisci.getFieldPrecedenzaAttivita().getText();
 
-                        a.insertIntoSQL(precedenza);
+                a.insertIntoSQL(precedenza);
 
-                    } else {
-                        a.insertIntoSQL();
-
-
-                    }
+            } else {
+                a.insertIntoSQL();
 
 
-
-                //inserisco un nuovo messaggio
-                MessaggioBroadcast messaggioBroadcast = new MessaggioBroadcast();
-                messaggioBroadcast.setMessaggio(utilizzatore.getNome() + " " + utilizzatore.getCognome() +
-                        " ha creato una nuova Attività in " + a.getNomesequenza() + ": " + a.getDescrizione());
-                messaggioBroadcast.setTipo("AUTO");
-                messaggioBroadcast.setMittente("AUTO");
-
-                messaggioBroadcast.insertIntoSQL();
-
-                //aggionro i messaggi
-                homeController.getMessaggiController().aggiorna();
-
-
-                //aggionro la fine della sequenza
-                Sequenza s = new Sequenza(a.getNomesequenza());
-                s.updateIntoSQL("fine", s.getFine());
+            }
 
 
 
-                //aggiorno l'elenco delle Attività
-                gestisci.popolaAttivita();
-                gestisci.popolaSequenze();
-                gestisci.popolaProgetti();
+            //inserisco un nuovo messaggio
+            MessaggioBroadcast messaggioBroadcast = new MessaggioBroadcast();
+            messaggioBroadcast.setMessaggio(utilizzatore.getNome() + " " + utilizzatore.getCognome() +
+                    " ha creato una nuova Attività in " + a.getNomesequenza() + ": " + a.getDescrizione());
+            messaggioBroadcast.setTipo("AUTO");
+            messaggioBroadcast.setMittente("AUTO");
 
-                //ripulisco crea
-                gestisci.getFieldDescrizioneAttivtia().setText("");
-                gestisci.getFieldCostoAttivita().setText("0");
-                gestisci.getFieldPrecedenzaAttivita().setText("");
-                gestisci.getComboSequenze().setSelectedIndex(0);
+            messaggioBroadcast.insertIntoSQL();
+
+            //aggionro i messaggi
+            homeController.getMessaggiController().aggiorna();
+
+
+            //aggionro la fine della sequenza
+            Sequenza s = new Sequenza(a.getNomesequenza());
+            s.updateIntoSQL("fine", s.getFine());
+
+
+
+            //aggiorno l'elenco delle Attività
+            gestisci.popolaAttivita();
+            gestisci.popolaSequenze();
+            gestisci.popolaProgetti();
+
+            //ripulisco crea
+            gestisci.getFieldDescrizioneAttivtia().setText("");
+            gestisci.getFieldCostoAttivita().setText("0");
+            gestisci.getFieldPrecedenzaAttivita().setText("");
+            gestisci.getComboSequenze().setSelectedIndex(0);
 
         }
 
@@ -698,7 +709,7 @@ public class GestisciController {
         gestisci.getFieldTelefonoUtente().setText("");
         gestisci.getFieldMailUtente().setText("");
 
-        //rimuovo e ricreo l'acction listener
+        //rimuovo e ricreo l'action listener
         StaticMethod.removeAllActionListener(gestisci.getButtonCreaUtente());
         listenerCreaUtente();
 
@@ -755,6 +766,8 @@ public class GestisciController {
 
     protected void abilitaModificheUtente(){
         JTable tabella = gestisci.getTableUtenti();
+
+        //prendo la riga selezionata dall'utente nella tabella
         String matricolaUtenteSelezionato=tabella.getValueAt(tabella.getSelectedRow(),0).toString();
 
         //passo l'utente e quindi tutti campi di modifica
@@ -763,11 +776,13 @@ public class GestisciController {
 
         gestisci.getButtonSalvaModificheUtente().setVisible(true);
         gestisci.getButtonModificaUtente().setVisible(false);
+        gestisci.getButtonEliminaUtente().setVisible(true);
 
+        //abilito la modifica di tutti i campi
         gestisci.disabilitaComponenti(false, gestisci.getFieldNomeUtente_modifica(),
                 gestisci.getFieldCognomeUtente_modifica(), gestisci.getFieldMailUtente_modifica(),
                 gestisci.getFieldTelefonoUtente_modifica(),gestisci.getComboRuoloUtente_modifica());
-    }
+    } //TODO dovrebbe essere ok
 
     protected void abilitaModificheAppuntamento(){
         JTable tabella    = gestisci.getTableAppuntamenti();
@@ -798,8 +813,8 @@ public class GestisciController {
         String nuovoNome=gestisci.getFieldNomeProgetto_modifica().getText();
 
         String data=    gestisci.getComboAnnoProgetto_modifica().getSelectedItem().toString() + "-" +
-                        gestisci.getComboMeseProgetto_modifica().getSelectedItem().toString() + "-" +
-                        gestisci.getComboGiornoProgetto_modifica().getSelectedItem().toString();
+                gestisci.getComboMeseProgetto_modifica().getSelectedItem().toString() + "-" +
+                gestisci.getComboGiornoProgetto_modifica().getSelectedItem().toString();
 
 
         if(!data.equals(p.getDeadline())){
@@ -978,12 +993,12 @@ public class GestisciController {
         }
 
         String inizio = gestisci.getComboAnnoInizioAttivita_modifica().getSelectedItem().toString() + "-" +
-                        gestisci.getComboMeseInizioAttivita_modifica().getSelectedItem().toString() + "-" +
-                        gestisci.getComboGiornoInizioAttivita_modifica().getSelectedItem().toString();
+                gestisci.getComboMeseInizioAttivita_modifica().getSelectedItem().toString() + "-" +
+                gestisci.getComboGiornoInizioAttivita_modifica().getSelectedItem().toString();
 
         String fineprevista =   gestisci.getComboAnnoFineAttivita_modifica().getSelectedItem().toString() + "-" +
-                                gestisci.getComboMeseFineAttivita_modifica().getSelectedItem().toString() + "-" +
-                                gestisci.getComboGiornoFineAttivita_modifica().getSelectedItem().toString();
+                gestisci.getComboMeseFineAttivita_modifica().getSelectedItem().toString() + "-" +
+                gestisci.getComboGiornoFineAttivita_modifica().getSelectedItem().toString();
 
         if(!inizio.equals(a.getDatainizio())){
             a.setId(id);
@@ -1044,6 +1059,7 @@ public class GestisciController {
     }
 
     protected void salvaModificheUtente(String matricola){
+
         Utente u = new Utente(matricola);
         MessaggioBroadcast m = new MessaggioBroadcast();
         m.setMittente("AUTO");
@@ -1053,44 +1069,40 @@ public class GestisciController {
         //controllo se nome modificato se si aggiorno se no lascio database non modificato
 
         String nuovoNome = gestisci.getFieldNomeUtente_modifica().getText();
-        if(!u.getNome().equalsIgnoreCase(nuovoNome)){
+        if(!u.getNome().equalsIgnoreCase(nuovoNome) && !nuovoNome.isEmpty()){
             u.updateIntoSQL("nome", nuovoNome);
         }
 
         String nuovoCognome = gestisci.getFieldCognomeUtente_modifica().getText();
-        if(!u.getCognome().equalsIgnoreCase(nuovoCognome)) {
+        if(!u.getCognome().equalsIgnoreCase(nuovoCognome) && !nuovoCognome.isEmpty()) {
             u.updateIntoSQL("cognome", nuovoCognome);
         }
 
         String nuovoTelefono = gestisci.getFieldTelefonoUtente_modifica().getText();
-        if(!u.getTelefono().equalsIgnoreCase(nuovoTelefono)) {
+        if(!u.getTelefono().equalsIgnoreCase(nuovoTelefono) && !nuovoTelefono.isEmpty()) {
             u.updateIntoSQL("telefono", nuovoTelefono);
         }
 
         String nuovoMail = gestisci.getFieldMailUtente_modifica().getText();
-        if(!u.getMail().equalsIgnoreCase(nuovoMail)) {
+        if(!u.getMail().equalsIgnoreCase(nuovoMail) && !nuovoMail.isEmpty()) {
             u.updateIntoSQL("mail", nuovoMail);
         }
 
 
 
+
         String nuovoRuolo = gestisci.getComboRuoloUtente_modifica().getSelectedItem().toString();
-        if(!u.getRuolo().equalsIgnoreCase(nuovoRuolo)){
-            u.updateIntoSQL("ruolo", nuovoRuolo);
+        if(!u.getRuolo().equalsIgnoreCase(nuovoRuolo)/*&& !nuovoRuolo.isEmpty()*/){
 
             //associo ad ogni ruolo un indice (lo stesso indice che nella combobox è associato a ciascun ruolo)
+            HashMap<String, Integer> map = new HashMap<String, Integer>();
+            map.put("US", 0);
+            map.put("GL", 1);
+            map.put("TL", 2);
 
-            //todo ERRORE QUESTO SI FA CON LE MAPPE!!!!!!!!!!
-            int ind=0;
-            String r="";
-            switch (r){
-                case "US": ind=0;
-                    break;
-                case "GL": ind=1;
-                    break;
-                case "TL": ind=2;
-            }
-            if(ind > gestisci.getComboRuoloUtente_modifica().getSelectedIndex()) {
+            int ind =map.get(u.getRuolo()); //intValue
+
+            if(ind < gestisci.getComboRuoloUtente_modifica().getSelectedIndex()) {
                 m.setMessaggio(utilizzatore.getNome() + " " + utilizzatore.getCognome() + " " +
                         "ha promosso " + u.getMatricola() + " da " + u.getRuolo() + " a " + nuovoRuolo);
             }else
@@ -1098,6 +1110,7 @@ public class GestisciController {
                         "ha declassato " + u.getMatricola() + " da " + u.getRuolo() + " a " + nuovoRuolo);
 
             m.insertIntoSQL();
+            u.updateIntoSQL("ruolo", nuovoRuolo);
 
 
         }
@@ -1109,6 +1122,7 @@ public class GestisciController {
 
 
         //reimposto l'interfaccia grafica
+        //TODO problema
 
         gestisci.getButtonSalvaModificheAttivita().setVisible(false);
 
@@ -1126,7 +1140,7 @@ public class GestisciController {
 
 
         //infine rimuovo il listner di salvamodifiche
-            StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheUtente());
+        StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheUtente());
     }
 
     protected void salvaModificheAppuntamento(int id){
@@ -1205,7 +1219,7 @@ public class GestisciController {
     protected void eliminaProgetto(){
         String nomeProgetto = gestisci.getFieldNomeProgetto_modifica().getText();
         int response=JOptionPane.showConfirmDialog(null,"vuoi veramente eliminare il progetto " + nomeProgetto + "? \n" +
-                "[VERRANNO ELIMINATE TUTTE LE SOTTOSEQUENZE E SOTTOATTIVITÀ COLLEGATE]","Cancellazione di " + nomeProgetto,
+                        "[VERRANNO ELIMINATE TUTTE LE SOTTOSEQUENZE E SOTTOATTIVITÀ COLLEGATE]","Cancellazione di " + nomeProgetto,
                 JOptionPane.WARNING_MESSAGE);
 
         if (response == JOptionPane.YES_OPTION){
@@ -1306,6 +1320,10 @@ public class GestisciController {
         }
     }
 
+    protected void eliminaUtente(){
+
+    }//TODO da fare!
+
 
     protected void popolaCampiModificaProgetto(int riga){
         JTable tabellaProgetti = gestisci.getTableProgetti();
@@ -1381,7 +1399,7 @@ public class GestisciController {
         //else i=0;
         gestisci.getComboRuoloUtente_modifica().setSelectedIndex(i);
 
-    }
+    } //TODO dovrebbe esssere ok!
 
     protected void popolaCampiModificaAppuntamento(int riga){
         JTable tabellaAppuntamenti=gestisci.getTableAppuntamenti();
@@ -1435,7 +1453,5 @@ public class GestisciController {
 
 
 
-
-
-    }
+}
 

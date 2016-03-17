@@ -268,7 +268,6 @@ public class Gestisci {
         StaticMethod.populateData(comboGiornoAppuntamento_modifica,comboMeseAppuntamento_modifica,comboAnnoAppuntamento_modifca,5,0);
 
 
-
         StaticMethod.popolaComboProgetti(comboProgetti);
         StaticMethod.popolaComboProgetti(comboProgetti_modifica);
 
@@ -373,6 +372,7 @@ public class Gestisci {
             String mail = appoggio.getMail();
             String telefono = appoggio.getTelefono();
             String ruolo = appoggio.getRuolo();
+
             Object[] data = {matricola, nome, cognome, ruolo, mail, telefono};
             t.addRow(data);
         }
@@ -1014,8 +1014,8 @@ public class Gestisci {
         return invitaDaUnaSequenzaRadioButton;
     }
 
-    public JButton getButtonMostraInvitati() {
-        return buttonMostraInvitati;
+    public JButton getButtonInvitati() {
+        return buttonInvitati;
     }
 
     public JComboBox getComboSequenzeAppuntamento() {
