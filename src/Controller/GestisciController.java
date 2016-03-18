@@ -1138,7 +1138,7 @@ public class GestisciController {
 
         //mando messaggio diverso caso per caso
         if(mod){
-            MessaggioBroadcast m = new MessaggioBroadcast();
+            //MessaggioBroadcast m = new MessaggioBroadcast();
             m.setMittente("AUTO");
             m.setTipo("AUTO");
 
