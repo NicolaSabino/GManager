@@ -3,6 +3,7 @@ package View;
 import Model.*;
 import Model.Gruppi.Gruppo;
 import Model.Gruppi.GruppoAppuntamenti;
+import Model.Gruppi.GruppoOrdini;
 import Model.Gruppi.GruppoProgetti;
 import Model.Incontro;
 import Model.Progetto;
@@ -12,6 +13,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -138,10 +141,10 @@ public class Gestisci {
     private JRadioButton invitaDaUnaSequenzaRadioButton;
     private JButton buttonMostraInvitati;
     private JComboBox comboSequenzeAppuntamento;
-    private JTable table1;
-    private JTable table2;
-    private JButton button1;
-    private JButton button2;
+    private JTable tableOrdini;
+    private JTable tableVoti;
+    private JButton buttonApprova;
+    private JButton buttonNonApprova;
     private JTable tableUtenti;
     private JTabbedPane tabUtenti;
     private JRadioButton direttivoRadioButton;
@@ -171,6 +174,9 @@ public class Gestisci {
     private JTable tableInvitati;
     private JScrollPane scrollTabbella;
     private JPanel panelInvitati;
+    private JScrollPane scrollOrdini;
+    private JLabel labelApprovaOrdini;
+    private JPanel panelApprovazioni;
     private JComboBox comboGiornoInizioSequenza;
     private JComboBox comboMeseInizioSequenza;
     private JComboBox comboAnnoInizioSequenza;
@@ -194,6 +200,7 @@ public class Gestisci {
         popolaAttivita();
         popolaAppuntamenti();
         popolaUtenti();
+        popolaOrdini();
 
 
         disabilitaComponenti(true,fieldNomeProgetto_modifica, comboGiornoProgetto_modifica, comboMeseProgetto_modifica, comboAnnoProgetto_modifica);
@@ -280,6 +287,10 @@ public class Gestisci {
         listnerSelezioneIncontro1();
         listnerSelezioneIncontro2();
         listnerSelezioneIncontro3();
+
+        panelApprovazioni.setVisible(false);
+        buttonApprova.setEnabled(false);
+        buttonNonApprova.setEnabled(false);
 
     }
 
@@ -425,6 +436,69 @@ public class Gestisci {
 
         tableAppuntamenti.setModel(t);
 
+    }
+
+    public void popolaOrdini(){
+
+        String col[] = {"Id","Descrizione","Quantità","Prezzo","Data","Attività","Approvazione",};
+        GruppoOrdini ordini = new GruppoOrdini();
+        CustomTable tableModel = new CustomTable(col, 0);
+
+        //trasformo gli incarichi per generare il modello per la tabella
+        for(Ordine appoggio:ordini.getStato()) {
+            int id =appoggio.getId();
+            String descrizione = appoggio.getDescrizione();
+            int quantita = appoggio.getQuantita();
+            float prezzo = appoggio.getPrezzo();
+            String data = appoggio.getDataOrdine();
+            int attivita = appoggio.getAttivita();
+            String approvazione;
+
+            if (appoggio.getApprovazione().compareTo("Approvato")==0) {
+                approvazione="<html><font color=green>Approvato</font></html>";
+            } else if(appoggio.getApprovazione().compareTo("Da Approvare")==0){
+                approvazione="<html><font color=orange>Da Approvare</font></html>";
+            }else if(appoggio.getApprovazione().compareTo("Non Approvato")==0){
+                approvazione="<html><font color=red>Non Approvato</font></html>";
+            }else{
+                approvazione="null";
+            }
+
+
+
+            Object[] objects = {id,descrizione,quantita,prezzo,data,attivita,approvazione};
+
+            tableModel.addRow(objects);
+        }
+
+        tableOrdini.setModel(tableModel);
+    }
+
+    public void popolaTabellaApprovazioni(int riga){
+        int id= (Integer) tableOrdini.getValueAt(riga,0);
+        Ordine ordine = new Ordine(id);
+
+        String col[]={"Nome" , "Cognome" , "Matricola" , "Voto"};
+        CustomTable tableModel = new CustomTable(col,0);
+
+        for(Map appoggio :ordine.getVotazione()){
+
+            Utente utente= new Utente(appoggio.get("matricola").toString());
+            String v="";
+
+            if( appoggio.get("voto").toString().equalsIgnoreCase("Da Approvare")){
+                v="<html><font color=orange>In attesa</font></html>";
+            }else if(appoggio.get("voto").toString().equalsIgnoreCase("Approvato")){
+                v="<html><font color=green>Approvato</font></html>";
+            }else if(appoggio.get("voto").toString().equalsIgnoreCase("Non Approvato")){
+                v="<html><font color=red>Non Approvato</font></html>";
+            }
+
+            Object[] objects={utente.getNome(),utente.getCognome(),utente.getMatricola(),v};
+
+            tableModel.addRow(objects);
+        }
+        tableVoti.setModel(tableModel);
     }
 
     public void listnerSelezioneIncontro1(){
@@ -1018,20 +1092,20 @@ public class Gestisci {
         return comboSequenzeAppuntamento;
     }
 
-    public JTable getTable1() {
-        return table1;
+    public JTable getTableOrdini() {
+        return tableOrdini;
     }
 
-    public JTable getTable2() {
-        return table2;
+    public JTable getTableVoti() {
+        return tableVoti;
     }
 
-    public JButton getButton1() {
-        return button1;
+    public JButton getButtonApprova() {
+        return buttonApprova;
     }
 
-    public JButton getButton2() {
-        return button2;
+    public JButton getButtonNonApprova() {
+        return buttonNonApprova;
     }
 
     public JTable getTableUtenti() {
@@ -1149,4 +1223,18 @@ public class Gestisci {
     public JButton getButtonMostraInvitati() {
         return buttonMostraInvitati;
     }
+
+    public JScrollPane getScrollOrdini() {
+        return scrollOrdini;
+    }
+
+    public JLabel getLabelApprovaOrdini() {
+        return labelApprovaOrdini;
+    }
+
+    public JPanel getPanelApprovazioni() {
+        return panelApprovazioni;
+    }
+
+
 }

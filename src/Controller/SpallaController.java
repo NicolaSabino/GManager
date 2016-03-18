@@ -48,7 +48,7 @@ public class SpallaController {
 
         }
 
-        //todo ipotetica implementazione mediante metodi statici
+
         //faccio partire i controller delle varie schede
 
         this.homeController         = new HomeController(permesso,rootFrame,mat_utilizzatore);  //di default quando creo HomeControlle si imposta automaticamente sul mainScrollpane
@@ -56,7 +56,9 @@ public class SpallaController {
         this.impostazioniController = new ImpostazioniController(rootFrame,utilizzatore);
         this.gestisciControler      = new GestisciController(rootFrame,utilizzatore,homeController);
         this.ordiniController       = new OrdiniController(rootFrame,utilizzatore,this.homeController);
-        //GestisciController    gestisciController     = new GestisciController();
+
+        //passo al controler di ordini la view gestisci cosi da poterla aggiornare ogni qualvolta viene creato un nuovo ordine
+        this.ordiniController.setGestisci(this.gestisciControler.getGestisci());
 
 
         //creo i listner

@@ -53,6 +53,7 @@ public class GestisciController {
         listenerSelezioneAttivita();
         listenerSelezionaAppuntamento();
         listenerSelezionaUtente();
+        listenerSelezionaOrdine();
 
         listenerModificaProgetto();
         listenerModificaSequenza();
@@ -207,6 +208,19 @@ public class GestisciController {
                     gestisci.getButtonEliminaAppuntamento().setEnabled(false);
                     gestisci.getTabAppuntamenti().setSelectedIndex(1);
 
+                }
+            }
+        });
+    }
+
+    protected void listenerSelezionaOrdine(){
+        JTable tabellaOrdini = gestisci.getTableOrdini();
+        tabellaOrdini.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(statoListener){
+                    gestisci.popolaTabellaApprovazioni(tabellaOrdini.getSelectedRow());
+                    gestisci.getPanelApprovazioni().setVisible(true);
                 }
             }
         });
@@ -1518,7 +1532,8 @@ public class GestisciController {
         gestisci.getButtonNascondiInvitati().setVisible(false);
     }
 
-
-
+    public Gestisci getGestisci() {
+        return gestisci;
+    }
 }
 

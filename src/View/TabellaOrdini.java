@@ -26,7 +26,7 @@ public class TabellaOrdini {
 
         CustomTable tableModel = new CustomTable(col, 0);
 
-        //trasformo gli incarichi per generare il modello per la tabellsa
+        //trasformo gli incarichi per generare il modello per la tabella
         for(Ordine appoggio:elenco) {
 
             String descrizione;

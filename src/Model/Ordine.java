@@ -1,8 +1,13 @@
 package Model;
 
+import Model.Gruppi.Gruppo;
+
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by nicola on 10/02/16.
@@ -16,6 +21,7 @@ public class Ordine extends Model {
     private String Approvazione;
     private String Descrizione;
     private int Quantita;
+    private ArrayList<Map> votazione;
 
 
     /**
@@ -50,6 +56,44 @@ public class Ordine extends Model {
         }finally {
             closeConnection();
         }
+
+        this.popolaVotazione();
+
+        return;
+    }
+
+    public void popolaVotazione(){
+        openConnection();
+        votazione=new ArrayList<>();
+        String sql="select * from approvazioneordine where id_ordine='" + this.getId() + "'";
+        ResultSet query= selectQuery(sql);
+        try {
+            while (query.next()){
+                String matricola=query.getString("matricola");
+                int id=query.getInt("id_ordine");
+                String voto=query.getString("voto");
+
+                Map map = new HashMap<>();
+                map.put("matricola",matricola);
+                map.put("id_ordine",id);
+                map.put("voto",voto);
+
+                votazione.add(votazione.size(),map);
+            }
+        }catch (SQLException se){
+            se.printStackTrace();
+        }
+    }
+
+    public void predisponiVotazioni(Gruppo g){
+        openConnection();
+        String sql;
+        for (Utente appoggio:g.getElenco()){
+            sql="insert into approvazioneordine values('" + appoggio.getMatricola() + "','" + this.getId() + "','Da Approvare')";
+            updateQuery(sql);
+        }
+
+        closeConnection();
         return;
     }
 
@@ -80,9 +124,10 @@ public class Ordine extends Model {
                 +   this.getDescrizione()   +"','"
                 +   this.getQuantita()      + "')";
 
-        if(updateQuery(sql)){
+        if(insertQueryAutoIncrement(sql)){
             controllo=true;
         }
+        setId(getId_auto_increment());
         closeConnection();
         return controllo;
     }
@@ -178,5 +223,9 @@ public class Ordine extends Model {
 
     public void setQuantita(int quantita) {
         Quantita = quantita;
+    }
+
+    public ArrayList<Map> getVotazione() {
+        return votazione;
     }
 }

@@ -2,10 +2,12 @@ package Controller;
 
 
 import Model.Attivita;
+import Model.Gruppi.Gruppo;
 import Model.Gruppi.GruppoOrdini;
 import Model.MessaggioBroadcast;
 import Model.Utente;
 import Model.Ordine;
+import View.Gestisci;
 import View.Ordini;
 import View.RootFrame;
 import View.TabellaOrdini;
@@ -21,6 +23,7 @@ public class OrdiniController {
     private RootFrame rootFrame;
     private Ordini ordini;
     private Utente utilizzatore;
+    private Gestisci gestisci;
     private HomeController homeController;
 
     public OrdiniController(RootFrame rootFrame, Utente utilizzatore,HomeController homeController) {
@@ -58,6 +61,13 @@ public class OrdiniController {
             JOptionPane.showMessageDialog(new JFrame("errore"),"Errore nell'inserimento dell'ordine");
         }
 
+        //predispongo le votazioni
+        Gruppo g =new Gruppo();
+        g.createFrom("direttivo");
+        o.predisponiVotazioni(g);
+
+
+
         //aggiorno la tabella
         GruppoOrdini a = new GruppoOrdini();
         TabellaOrdini t = new TabellaOrdini(utilizzatore.getMatricola());
@@ -73,11 +83,17 @@ public class OrdiniController {
         messaggio.insertIntoSQL();
         //aggiorno la home
         this.homeController.getMessaggiController().aggiorna();
+        //aggiorno gestisci
+        gestisci.popolaOrdini();
 
         //ripulisco ordini
         ordini.clean();
     }
     public void apriOrdini(){
         rootFrame.setMainScrollPane(ordini.getPannelloPrincipale());
+    }
+
+    public void setGestisci(Gestisci gestisci){
+        this.gestisci=gestisci;
     }
 }
