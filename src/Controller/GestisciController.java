@@ -64,6 +64,7 @@ public class GestisciController {
         listenerEliminaSequenza();
         listenerEliminaAttivita();
         listenerEliminaUtente();
+        listenerEliminaAppuntamento();
 
         listenerMostraInvitati();
         listenerNascondiInvitati();
@@ -397,6 +398,16 @@ public class GestisciController {
             }
         });
     } //TODO ok!
+
+    protected void listenerEliminaAppuntamento(){
+        JButton elimina=gestisci.getButtonEliminaAppuntamento();
+        elimina.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eliminaAppuntamento();
+            }
+        });
+    }
 
 
 
@@ -1322,7 +1333,57 @@ public class GestisciController {
 
     protected void eliminaUtente(){
 
-    }//TODO da fare!
+    }//todo da fare
+
+    protected void eliminaAppuntamento(){
+        int id = Integer.parseInt(gestisci.getTableAppuntamenti().getValueAt(gestisci.getTableAppuntamenti().getSelectedRow()   ,0).toString());
+        int response=JOptionPane.showConfirmDialog(null,"vuoi veramente eliminare l appuntamento "+ id + "?","Cancellazione di " + id,
+                JOptionPane.WARNING_MESSAGE);
+
+        if (response == JOptionPane.YES_OPTION) {
+            Incontro a = new Incontro(id);
+            a.deleteIntoSQL();
+
+            MessaggioBroadcast m = new MessaggioBroadcast();
+            m.setTipo("AUTO");
+            m.setMittente("AUTO");
+            m.setMessaggio(utilizzatore.getNome() + utilizzatore.getCognome() + " ha eliminato l appuntamento" + id);
+            m.insertIntoSQL();
+
+            //aggionro
+            homeController.getMessaggiController().aggiorna();
+            homeController.aggiornoAppuntamenti();
+            gestisci.popolaAppuntamenti();
+
+            nascondiInvitati();
+            gestisci.getButtonNascondiInvitati().setVisible(false);
+            gestisci.getButtonMostraInvitati().setVisible(true);
+            gestisci.getButtonMostraInvitati().setEnabled(false);
+
+            gestisci.getLabelModificaAppuntamento().setVisible(true);
+            gestisci.getButtonSalvaAppuntamento().setVisible(false);
+            gestisci.getButtonModifcaAppuntamento().setVisible(true);
+            gestisci.getButtonEliminaAppuntamento().setEnabled(false);
+
+            gestisci.disabilitaComponenti(true,gestisci.getComboTipoAppuntamento_modifica(),gestisci.getFieldLuogoAppuntamento_modifica(),
+                    gestisci.getComboGiornoAppuntamento_modifica(),gestisci.getComboMeseAppuntamento_modifica(),
+                    gestisci.getComboAnnoAppuntamento_modifca(),gestisci.getComboOraAppuntamento_modifica(),
+                    gestisci.getComboMinutiAppuntamento_modifica(),gestisci.getAreaVerbaleAppuntamento());
+
+            gestisci.getComboTipoAppuntamento_modifica().setSelectedIndex(0);
+            gestisci.getFieldLuogoAppuntamento_modifica().setText("");
+            gestisci.getComboAnnoAppuntamento_modifca().setSelectedIndex(0);
+            gestisci.getComboMeseAppuntamento_modifica().setSelectedIndex(0);
+            gestisci.getComboGiornoAppuntamento_modifica().setSelectedIndex(0);
+            gestisci.getComboOraAppuntamento_modifica().setSelectedIndex(0);
+            gestisci.getComboMinutiAppuntamento_modifica().setSelectedIndex(0);
+            gestisci.getAreaVerbaleAppuntamento().setText("");
+
+            //riabilito il listener
+            gestisci.getTableAppuntamenti().setRowSelectionAllowed(true);
+            statoListener=true;
+        }
+    }
 
 
     protected void popolaCampiModificaProgetto(int riga){
@@ -1365,7 +1426,6 @@ public class GestisciController {
         }
 
         try {
-            Map data = new HashMap<>();
             String datainizio=tabellaAttivita.getValueAt(riga, 4).toString();
             String datafineprevista= tabellaAttivita.getValueAt(riga, 5).toString();
             StaticMethod.setData(gestisci.getComboGiornoInizioAttivita_modifica(), gestisci.getComboMeseInizioAttivita_modifica(), gestisci.getComboAnnoInizioAttivita_modifica(),datainizio);
@@ -1402,6 +1462,13 @@ public class GestisciController {
     } //TODO dovrebbe esssere ok!
 
     protected void popolaCampiModificaAppuntamento(int riga){
+
+        //fix sull'interfaccia grafica
+        gestisci.getButtonModifcaAppuntamento().setVisible(true);
+        gestisci.getButtonSalvaAppuntamento().setVisible(false);
+        gestisci.getButtonEliminaAppuntamento().setEnabled(false);
+
+
         JTable tabellaAppuntamenti=gestisci.getTableAppuntamenti();
         Incontro i = new Incontro((Integer)tabellaAppuntamenti.getValueAt(riga,0));
 
