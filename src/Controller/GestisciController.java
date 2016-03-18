@@ -409,9 +409,11 @@ public class GestisciController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 eliminaUtente();
+                //TODO
+                statoListener= false;
             }
         });
-    } //TODO ok!
+    }
 
     protected void listenerEliminaAppuntamento(){
         JButton elimina=gestisci.getButtonEliminaAppuntamento();
@@ -798,10 +800,13 @@ public class GestisciController {
         //passo l'utente e quindi tutti campi di modifica
 
         listenerSalvaModificheUtente(matricolaUtenteSelezionato);
+        listenerEliminaUtente();
 
         gestisci.getButtonSalvaModificheUtente().setVisible(true);
         gestisci.getButtonModificaUtente().setVisible(false);
-        gestisci.getButtonEliminaUtente().setVisible(true);
+        //TODO
+        //gestisci.getButtonEliminaUtente().setVisible(true);
+        gestisci.getButtonEliminaUtente().setEnabled(true);
 
         //abilito la modifica di tutti i campi
         gestisci.disabilitaComponenti(false, gestisci.getFieldNomeUtente_modifica(),
@@ -1086,59 +1091,71 @@ public class GestisciController {
     protected void salvaModificheUtente(String matricola){
 
         Utente u = new Utente(matricola);
-        MessaggioBroadcast m = new MessaggioBroadcast();
-        m.setMittente("AUTO");
-        m.setTipo("AUTO");
 
+        boolean mod=false;
 
-        //controllo se nome modificato se si aggiorno se no lascio database non modificato
-
-        String nuovoNome = gestisci.getFieldNomeUtente_modifica().getText();
-        if(!u.getNome().equalsIgnoreCase(nuovoNome) && !nuovoNome.isEmpty()){
-            u.updateIntoSQL("nome", nuovoNome);
+        //controllo se il campo del telefono è vuoto o non modificato
+        if (!gestisci.getFieldTelefonoUtente_modifica().getText().equalsIgnoreCase(u.getTelefono()) || !gestisci.getFieldTelefonoUtente_modifica().getText().isEmpty()){
+            u.updateIntoSQL("telefono", gestisci.getFieldTelefonoUtente_modifica().getText());
+            mod=true;
         }
 
-        String nuovoCognome = gestisci.getFieldCognomeUtente_modifica().getText();
-        if(!u.getCognome().equalsIgnoreCase(nuovoCognome) && !nuovoCognome.isEmpty()) {
-            u.updateIntoSQL("cognome", nuovoCognome);
+        //controllo se il campo del nome è vuoto o non modificato
+        if (!gestisci.getFieldNomeUtente_modifica().getText().equalsIgnoreCase(u.getNome()) || !gestisci.getFieldNomeUtente_modifica().getText().isEmpty()){
+            u.updateIntoSQL("Nome", gestisci.getFieldNomeUtente_modifica().getText());
+            mod=true;
         }
 
-        String nuovoTelefono = gestisci.getFieldTelefonoUtente_modifica().getText();
-        if(!u.getTelefono().equalsIgnoreCase(nuovoTelefono) && !nuovoTelefono.isEmpty()) {
-            u.updateIntoSQL("telefono", nuovoTelefono);
+        //controllo se il campo del cognome è vuoto o non modificato
+        if (!gestisci.getFieldCognomeUtente_modifica().getText().equalsIgnoreCase(u.getCognome()) || !gestisci.getFieldCognomeUtente_modifica().getText().isEmpty()){
+            u.updateIntoSQL("cognome", gestisci.getFieldCognomeUtente_modifica().getText());
+            mod=true;
         }
 
-        String nuovoMail = gestisci.getFieldMailUtente_modifica().getText();
-        if(!u.getMail().equalsIgnoreCase(nuovoMail) && !nuovoMail.isEmpty()) {
-            u.updateIntoSQL("mail", nuovoMail);
+        //controllo se il campo del indirizzo e-mail è vuoto o non modificato
+        if (!gestisci.getFieldMailUtente_modifica().getText().equalsIgnoreCase(u.getMail()) || !gestisci.getFieldMailUtente_modifica().getText().isEmpty()){
+            u.updateIntoSQL("mail",gestisci.getFieldMailUtente_modifica().getText());
+            mod=true;
+        }
+
+        //controllo se la combobox del ruolo è stata modificata
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        map.put("US", 0);
+        map.put("GL", 1);
+        map.put("TL", 2);
+
+        int ind =map.get(u.getRuolo()); //intValue
+
+        if (ind!=gestisci.getComboRuoloUtente_modifica().getSelectedIndex()){
+            u.updateIntoSQL("ruolo", gestisci.getComboRuoloUtente_modifica().getSelectedItem().toString());
+            mod=true;
         }
 
 
+        //mando messaggio diverso caso per caso
+        if(mod){
+            MessaggioBroadcast m = new MessaggioBroadcast();
+            m.setMittente("AUTO");
+            m.setTipo("AUTO");
 
-
-        String nuovoRuolo = gestisci.getComboRuoloUtente_modifica().getSelectedItem().toString();
-        if(!u.getRuolo().equalsIgnoreCase(nuovoRuolo)/*&& !nuovoRuolo.isEmpty()*/){
-
-            //associo ad ogni ruolo un indice (lo stesso indice che nella combobox è associato a ciascun ruolo)
-            HashMap<String, Integer> map = new HashMap<String, Integer>();
-            map.put("US", 0);
-            map.put("GL", 1);
-            map.put("TL", 2);
-
-            int ind =map.get(u.getRuolo()); //intValue
+            String nuovoRuolo = gestisci.getComboRuoloUtente_modifica().getSelectedItem().toString();
 
             if(ind < gestisci.getComboRuoloUtente_modifica().getSelectedIndex()) {
                 m.setMessaggio(utilizzatore.getNome() + " " + utilizzatore.getCognome() + " " +
                         "ha promosso " + u.getMatricola() + " da " + u.getRuolo() + " a " + nuovoRuolo);
             }else
+            if(ind > gestisci.getComboRuoloUtente_modifica().getSelectedIndex()) {
                 m.setMessaggio(utilizzatore.getNome() + " " + utilizzatore.getCognome() + " " +
                         "ha declassato " + u.getMatricola() + " da " + u.getRuolo() + " a " + nuovoRuolo);
-
+            }else
+                m.setMessaggio(utilizzatore.getNome() +" " + utilizzatore.getCognome() + " " +
+                        "ha modificato l'utente " + u.getMatricola());
             m.insertIntoSQL();
-            u.updateIntoSQL("ruolo", nuovoRuolo);
-
-
         }
+
+
+        //aggiorno i messaggi nella home
+        homeController.getMessaggiController().aggiorna();
 
         //aggiorno i messaggi nella home
         homeController.getMessaggiController().aggiorna();
@@ -1149,24 +1166,23 @@ public class GestisciController {
         //reimposto l'interfaccia grafica
         //TODO problema
 
-        gestisci.getButtonSalvaModificheAttivita().setVisible(false);
+        gestisci.getButtonSalvaModificheUtente().setVisible(false);
 
-        gestisci.getButtonModificaAttivita().setVisible(true);
+        gestisci.getButtonModificaUtente().setVisible(true);
 
-        gestisci.getButtonEliminaAttivita().setEnabled(false);
+        gestisci.getButtonEliminaUtente().setEnabled(false);
 
 
 
-        gestisci.disabilitaComponenti(true,gestisci.getFieldDescrizioneAttivita_modifica(),gestisci.getFieldPrecedenzaAttivita_modifica()
-                ,gestisci.getFieldCostoAttivta_modifica(),gestisci.getComboGiornoInizioAttivita_modifica(),gestisci.getComboMeseInizioAttivita_modifica(),
-                gestisci.getComboMeseInizioAttivita_modifica(),gestisci.getComboGiornoFineAttivita_modifica(),
-                gestisci.getComboMeseFineAttivita_modifica(),gestisci.getComboAnnoFineAttivita_modifica(),gestisci.getComboAnnoInizioAttivita_modifica(),
-                gestisci.getComboSequenze_modifica());
+        gestisci.disabilitaComponenti(true,gestisci.getFieldNomeUtente_modifica(),gestisci.getFieldCognomeUtente_modifica()
+                ,gestisci.getFieldTelefonoUtente_modifica(),gestisci.getComboRuoloUtente_modifica()
+                ,gestisci.getFieldMailUtente_modifica());
 
 
         //infine rimuovo il listner di salvamodifiche
         StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheUtente());
-    }
+
+    }//TODO dovrebbe essere ok!
 
     protected void salvaModificheAppuntamento(int id){
         Incontro incontro = new Incontro(id);
@@ -1347,7 +1363,45 @@ public class GestisciController {
 
     protected void eliminaUtente(){
 
-    }//todo da fare
+        String matricola = gestisci.getFieldMatricolaUtente_modifica().getText();
+
+        int response=JOptionPane.showConfirmDialog(null,"vuoi veramente eliminare l' utente "+ matricola + "?","Cancellazione di " + matricola,
+                JOptionPane.WARNING_MESSAGE);
+
+        if (response == JOptionPane.YES_OPTION) {
+            Utente u = new Utente(matricola);
+            u.deleteIntoSQL();
+
+            MessaggioBroadcast m = new MessaggioBroadcast();
+
+            m.setTipo("AUTO");
+            m.setMittente("AUTO");
+            m.setMessaggio(utilizzatore.getNome() + utilizzatore.getCognome() + " ha eliminato " + matricola);
+            m.insertIntoSQL();
+
+            //aggiorno i messaggi
+            homeController.getMessaggiController().aggiorna();
+
+            //aggirno la tabella
+            gestisci.popolaUtenti();
+
+            //annullo tutti i campi di modifica
+            gestisci.getFieldMailUtente_modifica().setText("");
+            gestisci.getFieldNomeUtente_modifica().setText("");
+            gestisci.getFieldCognomeUtente_modifica().setText("");
+            gestisci.getComboRuoloUtente_modifica().setSelectedIndex(0);
+            gestisci.getFieldTelefonoUtente_modifica().setText("");
+            gestisci.getFieldMatricolaUtente_modifica().setText("");
+
+            //TODO come dovrei fare?
+            gestisci.getButtonEliminaUtente().setEnabled(false);
+            gestisci.getButtonEliminaUtente().setVisible(false);
+
+            //TODO serve?
+            StaticMethod.removeAllActionListener(gestisci.getButtonEliminaUtente());
+            listenerEliminaUtente();
+        }
+    }
 
     protected void eliminaAppuntamento(){
         int id = Integer.parseInt(gestisci.getTableAppuntamenti().getValueAt(gestisci.getTableAppuntamenti().getSelectedRow()   ,0).toString());
