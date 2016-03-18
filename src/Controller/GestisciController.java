@@ -220,7 +220,10 @@ public class GestisciController {
             public void mouseClicked(MouseEvent e) {
                 if(statoListener){
                     gestisci.popolaTabellaApprovazioni(tabellaOrdini.getSelectedRow());
+                    gestisci.getLabelApprovaOrdini().setVisible(false);
                     gestisci.getPanelApprovazioni().setVisible(true);
+                    gestisci.getButtonApprova().setVisible(true);
+                    gestisci.getButtonNonApprova().setVisible(true);
                 }
             }
         });
@@ -813,7 +816,7 @@ public class GestisciController {
         gestisci.disabilitaComponenti(false, gestisci.getFieldNomeUtente_modifica(),
                 gestisci.getFieldCognomeUtente_modifica(), gestisci.getFieldMailUtente_modifica(),
                 gestisci.getFieldTelefonoUtente_modifica(),gestisci.getComboRuoloUtente_modifica());
-    } //TODO dovrebbe essere ok
+    }
 
     protected void abilitaModificheAppuntamento(){
         JTable tabella    = gestisci.getTableAppuntamenti();
@@ -1189,7 +1192,7 @@ public class GestisciController {
         //infine rimuovo il listner di salvamodifiche
         StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheUtente());
 
-    }//TODO dovrebbe essere ok!
+    }
 
     protected void salvaModificheAppuntamento(int id){
         Incontro incontro = new Incontro(id);
@@ -1534,7 +1537,7 @@ public class GestisciController {
         //else i=0;
         gestisci.getComboRuoloUtente_modifica().setSelectedIndex(i);
 
-    } //TODO dovrebbe esssere ok!
+    }
 
     protected void popolaCampiModificaAppuntamento(int riga){
 

@@ -192,6 +192,7 @@ public class Gestisci {
         labelModificaAttivita.setText("<html><b>...Seleziona l'attività da modificare...</b></html>");
         labelModificaAppuntamento.setText("<html><b>...Seleziona l'Appuntamento da modificare...</b></html>");
         labelModificaUtente.setText("<html><b>...Seleziona l'utente da modificare...</b></html>");
+        getLabelApprovaOrdini().setText("<html><b>...Seleziona un ordine...</b></html>");
 
 
         //popolo le tabelle
@@ -288,9 +289,10 @@ public class Gestisci {
         listnerSelezioneIncontro2();
         listnerSelezioneIncontro3();
 
+        labelApprovaOrdini.setVisible(true);
         panelApprovazioni.setVisible(false);
-        buttonApprova.setEnabled(false);
-        buttonNonApprova.setEnabled(false);
+        buttonApprova.setVisible(false);
+        buttonNonApprova.setVisible(false);
 
     }
 
