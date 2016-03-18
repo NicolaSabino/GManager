@@ -89,13 +89,20 @@ public class Incontro extends Model {
     @Override
     public boolean deleteIntoSQL (){
         boolean controllo= false;
+        boolean controllo2=false;
         openConnection();
-        String sql="delete from incontro where data='"+ this.getData()+ "' and tipo='"+ this.getTipo()+"'";
+        String sql="delete from incontro where id='" + this.getId() + "'";
+        String sql2="delete from partecipazione where id='" + this.getId() + "'";
+
         if (updateQuery(sql)){
             controllo= true;
         }
+
+        if(updateQuery(sql2)){
+            controllo2=true;
+        }
         closeConnection();
-        return controllo;
+        return controllo && controllo2;
 
     }
 

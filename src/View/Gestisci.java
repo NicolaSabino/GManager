@@ -1014,10 +1014,6 @@ public class Gestisci {
         return invitaDaUnaSequenzaRadioButton;
     }
 
-    public JButton getButtonInvitati() {
-        return buttonInvitati;
-    }
-
     public JComboBox getComboSequenzeAppuntamento() {
         return comboSequenzeAppuntamento;
     }
@@ -1148,5 +1144,9 @@ public class Gestisci {
 
     public JPanel getPanelInvitati() {
         return panelInvitati;
+    }
+
+    public JButton getButtonMostraInvitati() {
+        return buttonMostraInvitati;
     }
 }
