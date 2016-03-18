@@ -743,6 +743,7 @@ public class GestisciController {
     }
 
 
+
     protected void abilitaModificaProgetto(){
         //creo il listner del salvataggio
         listenerSalvaModificheProgeto(gestisci.getFieldNomeProgetto_modifica().getText());
@@ -1091,6 +1092,9 @@ public class GestisciController {
     protected void salvaModificheUtente(String matricola){
 
         Utente u = new Utente(matricola);
+        MessaggioBroadcast m = new MessaggioBroadcast();
+        m.setMittente("AUTO");
+        m.setTipo("AUTO");
 
         boolean mod=false;
 
@@ -1151,6 +1155,9 @@ public class GestisciController {
                 m.setMessaggio(utilizzatore.getNome() +" " + utilizzatore.getCognome() + " " +
                         "ha modificato l'utente " + u.getMatricola());
             m.insertIntoSQL();
+            u.updateIntoSQL("ruolo", nuovoRuolo);
+
+
         }
 
 
@@ -1342,7 +1349,7 @@ public class GestisciController {
             m.setMessaggio(utilizzatore.getNome() + utilizzatore.getCognome() + " ha eliminato " + id);
             m.insertIntoSQL();
 
-            //aggionro i messaggi
+            //aggiorno i messaggi
             homeController.getMessaggiController().aggiorna();
 
             gestisci.popolaAttivita();
