@@ -177,6 +177,7 @@ public class Gestisci {
     private JScrollPane scrollOrdini;
     private JLabel labelApprovaOrdini;
     private JPanel panelApprovazioni;
+    private JPanel panelBottoni;
     private JComboBox comboGiornoInizioSequenza;
     private JComboBox comboMeseInizioSequenza;
     private JComboBox comboAnnoInizioSequenza;
@@ -291,8 +292,7 @@ public class Gestisci {
 
         labelApprovaOrdini.setVisible(true);
         panelApprovazioni.setVisible(false);
-        buttonApprova.setVisible(false);
-        buttonNonApprova.setVisible(false);
+        panelBottoni.setVisible(false);
 
     }
 
@@ -1238,5 +1238,7 @@ public class Gestisci {
         return panelApprovazioni;
     }
 
-
+    public JPanel getPanelBottoni() {
+        return panelBottoni;
+    }
 }

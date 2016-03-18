@@ -222,8 +222,11 @@ public class GestisciController {
                     gestisci.popolaTabellaApprovazioni(tabellaOrdini.getSelectedRow());
                     gestisci.getLabelApprovaOrdini().setVisible(false);
                     gestisci.getPanelApprovazioni().setVisible(true);
-                    gestisci.getButtonApprova().setVisible(true);
-                    gestisci.getButtonNonApprova().setVisible(true);
+                    gestisci.getPanelBottoni().setVisible(true);
+
+                    //creo il listener di approvazione e di non approvazione
+                    listenerApprovaOrdine();
+                    listenerNonApprovareOrdine();
                 }
             }
         });
@@ -446,6 +449,28 @@ public class GestisciController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 nascondiInvitati();
+            }
+        });
+    }
+
+    protected void listenerApprovaOrdine(){
+        JTable tabellaOrdini=gestisci.getTableOrdini();
+        JButton approva=gestisci.getButtonApprova();
+        approva.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aggiornaVotazioneOrdine(tabellaOrdini.getSelectedRow(),"Approvato");
+            }
+        });
+    }
+
+    protected void listenerNonApprovareOrdine(){
+        JTable tabellaOrdini=gestisci.getTableOrdini();
+        JButton nonApprova=gestisci.getButtonNonApprova();
+        nonApprova.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aggiornaVotazioneOrdine(tabellaOrdini.getSelectedRow(),"Non Approvato");
             }
         });
     }
@@ -1594,6 +1619,12 @@ public class GestisciController {
         gestisci.getPanelInvitati().setVisible(false);
         gestisci.getButtonMostraInvitati().setVisible(true);
         gestisci.getButtonNascondiInvitati().setVisible(false);
+    }
+
+    protected void aggiornaVotazioneOrdine(int riga,String voto){
+        Ordine ordine = new Ordine((Integer) gestisci.getTableOrdini().getValueAt(riga,0));
+        ordine.aggiornaVotazione(voto,utilizzatore.getMatricola());
+        gestisci.popolaTabellaApprovazioni(riga);
     }
 
     public Gestisci getGestisci() {
