@@ -1118,6 +1118,8 @@ public class GestisciController {
             mod=true;
         }
 
+
+        //mando messaggio diverso caso per caso
         if(mod){
             MessaggioBroadcast m = new MessaggioBroadcast();
             m.setMittente("AUTO");
@@ -1136,7 +1138,6 @@ public class GestisciController {
                 m.setMessaggio(utilizzatore.getNome() +" " + utilizzatore.getCognome() + " " +
                         "ha modificato l'utente " + u.getMatricola());
             m.insertIntoSQL();
-            //TODO u.ruolo sql
         }
 
 
