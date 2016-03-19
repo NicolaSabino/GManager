@@ -10,9 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Jacopo on 26/12/14.
+ * Classe abstract padre di tutte le classi del model
  * <p>
- * Classe abstract padre di tutte le classi del model (ovvero della gestione del database) <br>
  * contiene i metodi basi per usare una tabella del DB
  */
 abstract public class Model {

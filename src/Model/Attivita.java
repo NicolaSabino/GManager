@@ -87,7 +87,8 @@ public class Attivita extends Model {
      * @param precedenza
      * @return
      */
-    public boolean insertIntoSQL(String precedenza){//TODO override?
+
+    public boolean insertIntoSQL(String precedenza){
         openConnection();
         boolean controllo=false;
         //id è auto-incrementante quindi non va inserito

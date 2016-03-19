@@ -5,7 +5,8 @@ import java.sql.Date;
 import java.util.*;
 
 /**
- * Created by jacopo on 08/02/2016.
+ * Classe che raoppresenta la struttura dati degli incontri
+ *
  */
 public class Incontro extends Model {
     private int    id;

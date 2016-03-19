@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Classe che permette di creare rguppi di appuntamenti
+ * Classe che permette di creare gruppi di appuntamenti
  *
  */
 public class GruppoAppuntamenti extends Model{
