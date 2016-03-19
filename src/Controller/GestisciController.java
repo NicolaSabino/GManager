@@ -39,6 +39,7 @@ public class GestisciController {
         }else{
             listenerSelezioneProgetto();
             listenerSelezioneSequenza();
+            listenerRendiDefinitivo();
         }
 
         //listener
@@ -471,6 +472,17 @@ public class GestisciController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 aggiornaVotazioneOrdine(tabellaOrdini.getSelectedRow(),"Non Approvato");
+            }
+        });
+    }
+
+    protected void listenerRendiDefinitivo(){
+        JButton rendiDefinitivo=gestisci.getRendiDefinitivoButton();
+        JTable tabellaVoti=gestisci.getTableVoti();
+        rendiDefinitivo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rendiOrdineDefinitivo(tabellaVoti);
             }
         });
     }
@@ -1625,6 +1637,48 @@ public class GestisciController {
         Ordine ordine = new Ordine((Integer) gestisci.getTableOrdini().getValueAt(riga,0));
         ordine.aggiornaVotazione(voto,utilizzatore.getMatricola());
         gestisci.popolaTabellaApprovazioni(riga);
+    }
+
+    protected void rendiOrdineDefinitivo(JTable tabellaVoti){
+        int approvato=0,nonapprovato=0,inAttesa=0;
+
+        for(int i=0;i<tabellaVoti.getModel().getRowCount();i++){
+            if(tabellaVoti.getValueAt(i,3).toString().equalsIgnoreCase("<html><font color=orange>In attesa</font></html>")){
+                inAttesa++;
+            }else if(tabellaVoti.getValueAt(i,3).toString().equalsIgnoreCase("<html><font color=red>Non Approvato</font></html>")){
+                nonapprovato++;
+            }else if(tabellaVoti.getValueAt(i,3).toString().equalsIgnoreCase("<html><font color=green>Approvato</font></html>")){
+                approvato++;
+            }
+        }
+
+        if(inAttesa==0){
+            JTable tabellaOrdini = gestisci.getTableOrdini();
+            Ordine o = new Ordine((Integer) tabellaOrdini.getValueAt(tabellaOrdini.getSelectedRow(),0));
+            MessaggioBroadcast messaggioBroadcast = new MessaggioBroadcast();
+            messaggioBroadcast.setMittente("AUTO");
+            messaggioBroadcast.setTipo("AUTO");
+
+            if(approvato>nonapprovato){
+                Attivita a =new Attivita(o.getAttivita());
+                Double nuovoCostoAttivita = a.getCosto()+o.getPrezzo();
+                o.updateIntoSQL("approvazione","Approvato");
+                a.updateIntoSQL("costo",nuovoCostoAttivita.toString());
+                messaggioBroadcast.setMessaggio("l ordine " + o.getId() + " (" + o.getDescrizione() + ") è stato approvato, il prezzo di " + a.getId() + " è stato aggiornato");
+            }else{
+                o.updateIntoSQL("approvazione","Non Approvato");
+                messaggioBroadcast.setMessaggio("l ordine" + o.getId() + " (" + o.getDescrizione() + ") non è stato approvato");
+            }
+
+            messaggioBroadcast.insertIntoSQL();
+        }else{
+            gestisci.displayErrorMessage("Non tutti hanno espresso il proprio voto!","Errore");
+        }
+
+        //ricarico la tabella ordini
+        gestisci.popolaOrdini();
+        //aggiorno i messaggi sulla home
+        homeController.getMessaggiController().aggiorna();
     }
 
     public Gestisci getGestisci() {

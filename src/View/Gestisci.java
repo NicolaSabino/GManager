@@ -178,6 +178,8 @@ public class Gestisci {
     private JLabel labelApprovaOrdini;
     private JPanel panelApprovazioni;
     private JPanel panelBottoni;
+    private JButton rendiDefinitivoButton;
+    private JButton rifiutatoDalRettoratoButton;
     private JComboBox comboGiornoInizioSequenza;
     private JComboBox comboMeseInizioSequenza;
     private JComboBox comboAnnoInizioSequenza;
@@ -461,7 +463,7 @@ public class Gestisci {
             } else if(appoggio.getApprovazione().compareTo("Da Approvare")==0){
                 approvazione="<html><font color=orange>Da Approvare</font></html>";
             }else if(appoggio.getApprovazione().compareTo("Non Approvato")==0){
-                approvazione="<html><font color=red>Non Approvato</font></html>";
+                approvazione="<html><font color=red>NonApprovato</font></html>";
             }else{
                 approvazione="null";
             }
@@ -543,6 +545,8 @@ public class Gestisci {
         comboMeseProgetto.setEnabled(false);
         comboGiornoProgetto.setEnabled(false);
         labelModificaProgetto.setVisible(false);
+        rendiDefinitivoButton.setVisible(false);
+        rifiutatoDalRettoratoButton.setVisible(false);
     }
 
     /* getter */
@@ -1241,4 +1245,13 @@ public class Gestisci {
     public JPanel getPanelBottoni() {
         return panelBottoni;
     }
+
+    public JButton getRendiDefinitivoButton() {
+        return rendiDefinitivoButton;
+    }
+
+    public JButton getRifiutatoDalRettoratoButton() {
+        return rifiutatoDalRettoratoButton;
+    }
+
 }
