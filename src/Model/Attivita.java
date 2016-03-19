@@ -81,11 +81,18 @@ public class Attivita extends Model {
     }
 
 
-    public boolean insertIntoSQL(String precedenza){
+    /**
+     * Metodi che permette di inserire valori nel db
+     *
+     * @param precedenza
+     * @return
+     */
+    public boolean insertIntoSQL(String precedenza){//TODO override?
         openConnection();
         boolean controllo=false;
         //id è auto-incrementante quindi non va inserito
-        String sql="Insert into attività(nomesequenza,descrizione,datainizio,datafineprevista,precedenza,costo) values('"
+        String sql="Insert into attività(nomesequenza,descrizione,datainizio," +
+                "datafineprevista,precedenza,costo) values('"
                 +   this.getNomesequenza()  + "','"
                 +   this.getDescrizione()   + "','"
                 +   this.getDatainizio()    + "','"

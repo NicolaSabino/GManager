@@ -14,7 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by nicola on 02/03/16.
+ * Controller della schermata gestisci
+ *
  */
 public class GestisciController {
     private RootFrame rootFrame;
@@ -24,6 +25,13 @@ public class GestisciController {
     private boolean statoListener;
 
 
+    /**
+     * Costruttore
+     *
+     * @param rootFrame
+     * @param utente
+     * @param home
+     */
     public GestisciController(RootFrame rootFrame, Utente utente,HomeController home) {
         this.rootFrame=rootFrame;
         this.gestisci= new Gestisci();

@@ -18,7 +18,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * Created by nicola on 16/02/16.
+ * Controller della schermata home
+ *
  */
 public class HomeController {
     RootFrame rootFrame;
@@ -30,6 +31,7 @@ public class HomeController {
 
     /**
      * Costruttore di home controller
+     *
      * @param p
      * @param r frame principale dove settare le viste
      * @param mat matricola dell'utilizzatore
@@ -66,11 +68,15 @@ public class HomeController {
     }
 
 
+    /**
+     * listener doppio click sulla tabella attività
+     *
+     */
     protected void listenerSelezionaAttivita(){
         this.tabellaAttivita.getTabella().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
+                if (e.getClickCount() == 2) { // doppio click
                     approvaFineAttivita(tabellaAttivita.getTabella().getSelectedRow());
                 }
 
@@ -79,6 +85,11 @@ public class HomeController {
 
     }
 
+    /**
+     * Metodo che imposta la data corrente come data finale dell'attività
+     *
+     * @param riga
+     */
 
     protected void approvaFineAttivita(int riga){
         JTable tabellaAttivitaHome = tabellaAttivita.getTabella();
@@ -94,10 +105,10 @@ public class HomeController {
             //GregorianCalendar calendar = new GregorianCalendar();
 
             int annoCorrente = Calendar.getInstance().get(Calendar.YEAR);
-            int meseCorrente = Calendar.getInstance().get(Calendar.MONTH) +1;
+            int meseCorrente = Calendar.getInstance().get(Calendar.MONTH) +1; //il conteggio dei mesi parte da 0
             int giornoCorrente = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
             //se l'utente approva l'ultimazione dell'attività
-            attivita.updateIntoSQL("datafine", annoCorrente + "-" + meseCorrente + "-" //TODO mese sbagliato
+            attivita.updateIntoSQL("datafine", annoCorrente + "-" + meseCorrente + "-"
                     + giornoCorrente);
 
             //riaggiorno la tabella nella home
@@ -107,14 +118,22 @@ public class HomeController {
 
     }
 
+
     public void apriHome(){
         rootFrame.setMainScrollPane(home.getPannelloPrincipale());
     }
+
+
+    //getter
 
     public MessaggiController getMessaggiController() {
         return messaggiController;
     }
 
+    /**
+     * Metodo che aggiorna la tabella degli appuntamenti nella home
+     *
+     */
     public void aggiornoAppuntamenti(){
         utilizzatore.popolaAppuntamenti();
         TabellaIncontri t2= new TabellaIncontri();

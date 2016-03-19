@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.Queue;
 
 /**
- * Created by nicola on 09/02/16.
+ * Classe che perlette di creare gruppi di utenti
+ *
  */
 public class Gruppo extends Model{
     ArrayList<Utente> elenco;

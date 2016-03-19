@@ -294,6 +294,11 @@ public class Gestisci {
 
     }
 
+    /**
+     *
+     * @param b
+     * @param elementi
+     */
     public void disabilitaComponenti(boolean b,Component ...elementi){
         for(Component appoggio:elementi){
             appoggio.setEnabled(!b);
@@ -301,6 +306,10 @@ public class Gestisci {
     }
 
 
+    /**
+     * Metodo che riempie la tabella dei progetti
+     *
+     */
     public void popolaProgetti(){
         String col[] = {"Nome Progetto" , "Deadline" , "Costo"};
 
@@ -323,6 +332,10 @@ public class Gestisci {
 
     }
 
+    /**
+     * Metodo che riempie la tabella delle sequenze
+     *
+     */
     public void popolaSequenze(){
         String col[]={"Nome Sequenza" , "Nome Progetto" , "Fine" , "Costo"};
         CustomTable t = new CustomTable(col,0);
@@ -343,6 +356,11 @@ public class Gestisci {
         }
         tableSequenze.setModel(t);
     }
+
+    /**
+     * Metodo che riempie la tabella delle sequenze
+     *
+     */
 
     public void popolaAttivita(){
         String col[]={"Id","Descrizione","Precedenza","Nome Sequenza","Inizio","Fine Prevista","Fine","Costo"};
@@ -370,6 +388,10 @@ public class Gestisci {
         tableAttivita.setModel(t);
     }
 
+    /**
+     * Metodo che riempie la tabella degli utenti
+     *
+     */
     public void popolaUtenti(){
         String col[]={"Matricola" , "Nome" , "Cognome" , "Ruolo" , "indirizzo e-mail" , "telefono"};
         CustomTable t = new CustomTable(col,0);
@@ -392,6 +414,11 @@ public class Gestisci {
 
     }
 
+    /**
+     * Metodo che riempie la tabella degli invitati
+     *
+     * @param gruppo gruppo di utenti
+     */
     public void popolaInvitati(Gruppo gruppo){
         String col[]={"Matricola" , "Nome" , "Cognome" , "Ruolo" , "indirizzo e-mail" , "telefono"};
         CustomTable t = new CustomTable(col,0);
@@ -409,12 +436,23 @@ public class Gestisci {
         tableInvitati.setModel(t);
     }
 
+    /**
+     * Dialog per la segnalazione di errori
+     *
+     * @param errorMessage
+     * @param errorTitle
+     */
     public void displayErrorMessage(String errorMessage,String errorTitle){
         JOptionPane messaggioErrore = new JOptionPane(errorMessage,JOptionPane.ERROR_MESSAGE  );
         JDialog dialog = messaggioErrore.createDialog(errorTitle);
         dialog.setAlwaysOnTop(true);
         dialog.setVisible(true);
     }
+
+    /**
+     * Metodo che riempie la tabella degli appuntamenti
+     *
+     */
 
     public void popolaAppuntamenti(){
         String col[]={"Id","Tipo","Data","Ora","Luogo","Verbale"};
@@ -437,6 +475,11 @@ public class Gestisci {
         tableAppuntamenti.setModel(t);
 
     }
+
+    /**
+     * Metodo che riempie la tabella degli ordini
+     *
+     */
 
     public void popolaOrdini(){
 
@@ -474,6 +517,13 @@ public class Gestisci {
         tableOrdini.setModel(tableModel);
     }
 
+    /**
+     * Metodo che riempie la tabella delle approvazioni con
+     * nome, cognome , matricola e voto per ogni utente che ha
+     * il diritto di votazione
+     *
+     * @param riga
+     */
     public void popolaTabellaApprovazioni(int riga){
         int id= (Integer) tableOrdini.getValueAt(riga,0);
         Ordine ordine = new Ordine(id);
