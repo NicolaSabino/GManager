@@ -13,7 +13,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -63,7 +62,7 @@ public class Gestisci {
     private JTextField fieldLuogoAppuntamento_modifica;
     private JTextField textField21;
     private JTextField textField22;
-    private JButton buttonModifcaAppuntamento;
+    private JButton buttonModificaAppuntamento;
     private JButton buttonEliminaAppuntamento;
     private JPanel panelProgetti;
     private JPanel panelUtenti;
@@ -235,7 +234,7 @@ public class Gestisci {
         buttonModificaAttivita.setEnabled(false);
 
         invitaTuttiRadioButton.setSelected(true);
-        buttonModifcaAppuntamento.setEnabled(false);
+        buttonModificaAppuntamento.setEnabled(false);
         buttonSalvaAppuntamento.setVisible(false);
         buttonEliminaAppuntamento.setEnabled(false);
 
@@ -849,8 +848,8 @@ public class Gestisci {
         return textField22;
     }
 
-    public JButton getButtonModifcaAppuntamento() {
-        return buttonModifcaAppuntamento;
+    public JButton getButtonModificaAppuntamento() {
+        return buttonModificaAppuntamento;
     }
 
     public JButton getButtonEliminaAppuntamento() {

@@ -9,7 +9,6 @@ import View.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by nicola on 02/03/16.
@@ -206,7 +205,7 @@ public class GestisciController {
                 if(statoListener){
                     popolaCampiModificaAppuntamento(tabellaAppuntamenti.getSelectedRow());
                     gestisci.getLabelModificaAppuntamento().setVisible(false);
-                    gestisci.getButtonModifcaAppuntamento().setEnabled(true);
+                    gestisci.getButtonModificaAppuntamento().setEnabled(true);
                     gestisci.getButtonEliminaAppuntamento().setEnabled(false);
                     gestisci.getTabAppuntamenti().setSelectedIndex(1);
 
@@ -225,6 +224,7 @@ public class GestisciController {
                     gestisci.getLabelApprovaOrdini().setVisible(false);
                     gestisci.getPanelApprovazioni().setVisible(true);
                     gestisci.getPanelBottoni().setVisible(true);
+                    gestisci.getEliminaOrdineButton().setEnabled(true);
 
                     //creo il listener di approvazione e di non approvazione
                     listenerApprovaOrdine();
@@ -241,6 +241,7 @@ public class GestisciController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 abilitaModificaProgetto();
+                gestisci.getButtonEliminaProgetto().setEnabled(true);
 
                 //disabilito la possibilità di selezionare elementi dalla tabella
                 gestisci.getTableProgetti().setRowSelectionAllowed(false);
@@ -255,6 +256,7 @@ public class GestisciController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 abilitaModificaSequenza();
+                gestisci.getButtonEliminaSequenza().setEnabled(true);
 
                 //disabilito la possibilità di selezionare elementi dalla tabella
                 gestisci.getTableSequenze().setRowSelectionAllowed(false);
@@ -269,6 +271,7 @@ public class GestisciController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 abilitaModificheAttività();
+                gestisci.getButtonEliminaAttivita().setEnabled(true);
 
                 //disabilito la possibilità di selezionare elementi dalla tabella
                 gestisci.getTableAttivita().setRowSelectionAllowed(false);
@@ -283,6 +286,7 @@ public class GestisciController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 abilitaModificheUtente();
+                gestisci.getButtonEliminaUtente().setEnabled(true);
 
                 //disabilito la possibilità di selezionare elementi dalla tabella
                 gestisci.getTableUtenti().setRowSelectionAllowed(false);
@@ -292,11 +296,12 @@ public class GestisciController {
     }
 
     protected void listenerModificaAppuntamento(){
-        JButton modifica = gestisci.getButtonModifcaAppuntamento();
+        JButton modifica = gestisci.getButtonModificaAppuntamento();
         modifica.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 abilitaModificheAppuntamento();
+                gestisci.getButtonEliminaAppuntamento().setEnabled(true);
 
                 //disabilito la possibilità di selezionare elementi dalla tabella
                 gestisci.getTableAppuntamenti().setRowSelectionAllowed(false);
@@ -887,7 +892,7 @@ public class GestisciController {
 
         //modifico lo stato dell'interfaccia grafica
         gestisci.getButtonSalvaAppuntamento().setVisible(true);
-        gestisci.getButtonModifcaAppuntamento().setVisible(false);
+        gestisci.getButtonModificaAppuntamento().setVisible(false);
         gestisci.getButtonEliminaAppuntamento().setEnabled(true);
 
         gestisci.disabilitaComponenti(false,gestisci.getComboTipoAppuntamento_modifica(),gestisci.getFieldLuogoAppuntamento_modifica(),
@@ -936,8 +941,8 @@ public class GestisciController {
 
 
             //aggiorno tutte le sotto sequenze
-            for(Sequenza appofggio:p.getStato()){
-                appofggio.updateIntoSQL("nomeprogetto",nuovoNome);
+            for(Sequenza appoggio:p.getStato()){
+                appoggio.updateIntoSQL("nomeprogetto",nuovoNome);
             }
             //aggiorno le combo progetti
 
@@ -1007,6 +1012,11 @@ public class GestisciController {
 
             //aggionro i messaggi
             homeController.getMessaggiController().aggiorna();
+
+            //aggiorno tutte le sotto sequenze
+            for(Attivita appoggio:s.getStato()){
+                appoggio.updateIntoSQL("nomesequenza",nuovoNome);
+            }
         }
 
 
@@ -1023,6 +1033,7 @@ public class GestisciController {
         gestisci.disabilitaComponenti(true,gestisci.getFieldNomeSequenza_modifica(),gestisci.getComboProgetti_modifica());
 
         gestisci.popolaSequenze();
+        gestisci.popolaAttivita();
 
         //infine rimuovo il listner di salvamodifiche
         StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheSequenza());
@@ -1305,7 +1316,7 @@ public class GestisciController {
         //reimposto l'interfaccia grafica
 
         gestisci.getButtonSalvaAppuntamento().setVisible(false);
-        gestisci.getButtonModifcaAppuntamento().setVisible(true);
+        gestisci.getButtonModificaAppuntamento().setVisible(true);
         gestisci.getButtonEliminaAppuntamento().setEnabled(false);
 
 
@@ -1357,8 +1368,22 @@ public class GestisciController {
             gestisci.getLabelModificaProgetto().setVisible(true);
             gestisci.getButtonEliminaProgetto().setEnabled(false);
 
+            gestisci.getButtonModificaProgetto().setVisible(true);
+            gestisci.getButtonModificaProgetto().setEnabled(false);
+            gestisci.getButtonEliminaProgetto().setEnabled(false);
+            gestisci.getButtonSalvaModificheProgetto().setVisible(false);
+
+            gestisci.disabilitaComponenti(true,gestisci.getFieldNomeProgetto_modifica(),
+                    gestisci.getComboGiornoProgetto_modifica(),gestisci.getComboMeseProgetto_modifica(),
+                    gestisci.getComboAnnoProgetto_modifica());
+
             //aggiorno il pannello  delle sequenze
             StaticMethod.popolaComboProgetti(gestisci.getComboProgetti());
+
+
+            //riabilito la selezione
+            gestisci.getTableProgetti().setRowSelectionAllowed(true);
+            statoListener=true;
         }
 
 
@@ -1393,6 +1418,18 @@ public class GestisciController {
 
             //aggiorno il pannello  delle Attività
             StaticMethod.popolaComboSequenze(gestisci.getComboSequenze());
+
+            gestisci.getButtonModificaSequenza().setVisible(true);
+            gestisci.getButtonModificaSequenza().setEnabled(false);
+            gestisci.getButtonEliminaSequenza().setEnabled(false);
+            gestisci.getButtonSalvaModificheSequenza().setVisible(false);
+
+            gestisci.disabilitaComponenti(true,gestisci.getFieldNomeSequenza_modifica(),gestisci.getComboProgetti_modifica());
+
+            //riabilito la selezione
+            gestisci.getTableSequenze().setRowSelectionAllowed(true);
+            statoListener=true;
+
         }
     }
 
@@ -1427,6 +1464,21 @@ public class GestisciController {
             gestisci.getComboGiornoFineAttivita_modifica().setSelectedIndex(0);
             gestisci.getComboMeseFineAttivita_modifica().setSelectedIndex(0);
             gestisci.getComboAnnoFineAttivita_modifica().setSelectedIndex(0);
+
+            gestisci.getButtonModificaAttivita().setVisible(true);
+            gestisci.getButtonModificaAttivita().setEnabled(false);
+            gestisci.getButtonEliminaAttivita().setEnabled(false);
+            gestisci.getButtonSalvaModificheAttivita().setVisible(false);
+
+            gestisci.disabilitaComponenti(true,gestisci.getFieldDescrizioneAttivita_modifica(),gestisci.getFieldPrecedenzaAttivita_modifica(),gestisci.getFieldCostoAttivta_modifica(),
+                    gestisci.getComboGiornoInizioAttivita_modifica(),gestisci.getComboMeseInizioAttivita_modifica(),
+                    gestisci.getComboMeseInizioAttivita_modifica(),gestisci.getComboGiornoFineAttivita_modifica(),
+                    gestisci.getComboMeseFineAttivita_modifica(),gestisci.getComboAnnoFineAttivita_modifica(),gestisci.getComboAnnoInizioAttivita_modifica(),
+                    gestisci.getComboSequenze_modifica());
+
+            //riabilito la selezione
+            gestisci.getTableAttivita().setRowSelectionAllowed(true);
+            statoListener=true;
         }
     }
 
@@ -1498,7 +1550,7 @@ public class GestisciController {
 
             gestisci.getLabelModificaAppuntamento().setVisible(true);
             gestisci.getButtonSalvaAppuntamento().setVisible(false);
-            gestisci.getButtonModifcaAppuntamento().setVisible(true);
+            gestisci.getButtonModificaAppuntamento().setVisible(true);
             gestisci.getButtonEliminaAppuntamento().setEnabled(false);
 
             gestisci.disabilitaComponenti(true,gestisci.getComboTipoAppuntamento_modifica(),gestisci.getFieldLuogoAppuntamento_modifica(),
@@ -1514,6 +1566,11 @@ public class GestisciController {
             gestisci.getComboOraAppuntamento_modifica().setSelectedIndex(0);
             gestisci.getComboMinutiAppuntamento_modifica().setSelectedIndex(0);
             gestisci.getAreaVerbaleAppuntamento().setText("");
+
+            gestisci.getButtonModificaAppuntamento().setVisible(true);
+            gestisci.getButtonModificaAppuntamento().setEnabled(false);
+            gestisci.getButtonEliminaAppuntamento().setEnabled(false);
+
 
             //riabilito il listener
             gestisci.getTableAppuntamenti().setRowSelectionAllowed(true);
@@ -1632,7 +1689,7 @@ public class GestisciController {
     protected void popolaCampiModificaAppuntamento(int riga){
 
         //fix sull'interfaccia grafica
-        gestisci.getButtonModifcaAppuntamento().setVisible(true);
+        gestisci.getButtonModificaAppuntamento().setVisible(true);
         gestisci.getButtonSalvaAppuntamento().setVisible(false);
         gestisci.getButtonEliminaAppuntamento().setEnabled(false);
 
