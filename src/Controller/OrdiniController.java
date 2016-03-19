@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by edoardo on 06/03/16.
+ * Gestisce la scehrmata degli ordini
  */
 public class OrdiniController {
     private RootFrame rootFrame;
@@ -44,7 +44,9 @@ public class OrdiniController {
 
     }
 
-
+    /**
+     * Action per creare un nuovo ordine
+     */
     public void listnerNuovoOrdine(){
         JButton nuovo = ordini.getAggiungiOrdineButton();
         nuovo.addActionListener(new ActionListener() {
@@ -89,6 +91,10 @@ public class OrdiniController {
         //ripulisco ordini
         ordini.clean();
     }
+
+    /**
+     * apre la schermata degli ordini
+     */
     public void apriOrdini(){
         rootFrame.setMainScrollPane(ordini.getPannelloPrincipale());
     }

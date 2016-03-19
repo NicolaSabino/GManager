@@ -12,7 +12,7 @@ import java.awt.geom.Arc2D;
 import java.util.ArrayList;
 
 /**
- * Created by nicola on 17/02/16.
+ * Rappresenta la tabella delle attività
  */
 public class TabellaAttivita {
     private JPanel pannelloPrincipale;
@@ -50,8 +50,6 @@ public class TabellaAttivita {
 
 
     }
-
-
 
 
     public JPanel getPannelloPrincipale() {

@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by nicola on 13/02/16.
+ * Controller principale
  */
 public class MainController {
     RootFrame view; //conterrà la view
@@ -27,9 +27,5 @@ public class MainController {
 
         return;
     }
-
-
-
-
 
 }

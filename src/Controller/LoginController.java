@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by nicola on 14/02/16.
+ * Gestisce il login
  */
 public class LoginController {
     private RootFrame rootFrame;
@@ -50,7 +50,7 @@ public class LoginController {
     }
 
     /**
-     * metodo di accesso
+     * metodo che controlla che la matricola e la password sia corretti
      */
     private void loginAction(){
         loginView.getLoginValue(); //serve per leggere i due textfield

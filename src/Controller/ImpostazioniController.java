@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by nicola on 02/03/16.
+ * Controller che gestisce la schermata di ricerca
  */
 public class ImpostazioniController {
 
@@ -47,6 +47,9 @@ public class ImpostazioniController {
         rootFrame.setMainScrollPane(impostazioni.getPannelloPrincipale());
     }
 
+    /**
+     * Action che abilita la modifica dei campi
+     */
     protected void modificaListner(){
         JButton modifica = impostazioni.getButtonModifica();
         modifica.addActionListener(new ActionListener() {
@@ -57,21 +60,35 @@ public class ImpostazioniController {
         });
     }
 
+    /**
+     * metodo che abilita la modfica dei campi
+     */
     protected void modificaCampi(){
         this.impostazioni.disabilitaCampi(false);
     }
 
-
+    /**
+     * Action per il salvataggio delle modifiche
+     *
+     */
     protected void salvaListener() {
         JButton salva = impostazioni.getButtonSalva();
         salva.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                salvaCampi();
+
+                int response=JOptionPane.showConfirmDialog(null,"Sei sicuro di voler salvare le modifiche?",
+                        "apporvazione modifiche", JOptionPane.WARNING_MESSAGE);
+                if (response == JOptionPane.YES_OPTION) {
+                    salvaCampi();
+                }
             }
         });
     }
 
+    /**
+     * action per il logout dell' utilizzatore
+     */
     protected void logoutListener() {
         JButton salva = impostazioni.getButtonLogout();
         salva.addActionListener(new ActionListener() {
@@ -83,6 +100,9 @@ public class ImpostazioniController {
     }
 
 
+    /**
+     *Metodo che salva le modifiche dei campi nel db
+     */
     protected void salvaCampi(){
         if(impostazioni.getModifiche().getPwd().equals(new String(impostazioni.getCampoPasswordCheck().getPassword()))) {
             utilizzatore.updateIntoSQL("pwd", impostazioni.getModifiche().getPwd());

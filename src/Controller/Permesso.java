@@ -1,7 +1,7 @@
 package Controller;
 
 /**
- * Created by nicola on 14/02/16.
+ * tipi enumerativi del ruolo
  */
 public enum Permesso {
     TL,     // Utente con i massimi privilegi nel team corse

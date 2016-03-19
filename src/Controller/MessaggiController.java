@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * Created by nicola on 20/02/16.
+ * Gestische la schermata dei messaggi
  */
 public class MessaggiController {
 
@@ -23,7 +23,12 @@ public class MessaggiController {
     private NuovoMessaggio n;
     private Home h;
 
-
+    /**
+     * Costruttore della schermata dei messaggi nella home
+     *
+     * @param u
+     * @param home
+     */
     public MessaggiController(Utente u,Home home){
         this.utilizzatore=u;
         MessaggioBroadcast m = new MessaggioBroadcast();
@@ -46,6 +51,9 @@ public class MessaggiController {
         return listaNotifiche;
     }
 
+    /**
+     * Action per la creazione di un nuovo messaggio
+     */
     protected void NuovoMessaggioListener(){
         JButton b = listaNotifiche.getButtonNuovo();
         b.addActionListener(new ActionListener() {
@@ -59,6 +67,9 @@ public class MessaggiController {
         return;
     }
 
+    /**
+     * Metodo per creare un nuovo mmesagio
+     */
     protected void CreaMessaggioListener(){
         JButton b = n.getInviaButton();
         b.addActionListener(new ActionListener() {
@@ -83,6 +94,9 @@ public class MessaggiController {
         });
     }
 
+    /**
+     * aggiorna la schermata dei messaggi
+     */
     public void aggiorna(){
         MessaggioBroadcast m = new MessaggioBroadcast();
 

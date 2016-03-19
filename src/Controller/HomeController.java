@@ -77,10 +77,8 @@ public class HomeController {
                 if (e.getClickCount() == 2) { // doppio click
                     approvaFineAttivita(tabellaAttivita.getTabella().getSelectedRow());
                 }
-
             }
         });
-
     }
 
     /**
@@ -99,7 +97,6 @@ public class HomeController {
                 JOptionPane.WARNING_MESSAGE);
 
         if (response == JOptionPane.YES_OPTION){
-            //GregorianCalendar calendar = new GregorianCalendar();
 
             int annoCorrente = Calendar.getInstance().get(Calendar.YEAR);
             int meseCorrente = Calendar.getInstance().get(Calendar.MONTH) +1; //il conteggio dei mesi parte da 0
@@ -109,22 +106,11 @@ public class HomeController {
                     + giornoCorrente);
 
             //riaggiorno la tabella nella home
+            this.tabellaAttivita= new TabellaAttivita();
             tabellaAttivita.setModelTabella(utilizzatore.getIncarichi());
             home.setScrollCompiti(tabellaAttivita.getPannelloPrincipale());
         }
 
-    }
-
-
-    public void apriHome(){
-        rootFrame.setMainScrollPane(home.getPannelloPrincipale());
-    }
-
-
-    //getter
-
-    public MessaggiController getMessaggiController() {
-        return messaggiController;
     }
 
     /**
@@ -136,6 +122,17 @@ public class HomeController {
         TabellaIncontri t2= new TabellaIncontri();
         t2.setModelTabella(utilizzatore.getAppuntamenti());
         home.setScrollEventi(t2.getPannelloPrincipale());
+    }
+
+    public void apriHome(){
+        rootFrame.setMainScrollPane(home.getPannelloPrincipale());
+    }
+
+
+    //getter
+
+    public MessaggiController getMessaggiController() {
+        return messaggiController;
     }
 
 }
