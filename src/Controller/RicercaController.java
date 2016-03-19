@@ -14,7 +14,8 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Created by nicola on 02/03/16.
+ * Controller della schermata di ricerca
+ *
  */
 public class RicercaController {
 
@@ -39,6 +40,7 @@ public class RicercaController {
         listnerSalvaRicerca();
         return;
     }
+
 
     public void apriPannelloRicerca(){
         rootFrame.setMainScrollPane(ricerca.getPrimoPanel());
@@ -195,6 +197,12 @@ public class RicercaController {
         }
     }
 
+
+    /**
+     * Action per l'esportazione in file .csv
+     * con dialog per la scelta del path
+     *
+     */
     protected void listnerSalvaRicerca() {
         this.tabellaOttenuta = tabellaOttenuta;
         JButton salva = ricerca.getSalvaRicerca();
@@ -216,15 +224,20 @@ public class RicercaController {
                 try {
                     salvaCSV(path);
                 } catch (FileNotFoundException e1) {
-                    //ricerca.displayErrorMessage("Errore, file non creato!", "errore!");
-
-                    //todo da correggere
+                    ricerca.displayErrorMessage("Errore, file non creato!", "errore!");//messaggio in caso id errore
                 }
             }
         });
     }
 
-    protected void salvaCSV(String posizione)throws FileNotFoundException{//String del path di destinazione
+    /**
+     * Metodo per la creazione di file .csv o .txt
+     *
+     *
+     * @param posizione String del path di destinazione
+     * @throws FileNotFoundException
+     */
+    protected void salvaCSV(String posizione)throws FileNotFoundException{
 
         try {
             File file = new File(posizione);

@@ -81,13 +81,6 @@ public class Attivita extends Model {
     }
 
 
-    /**
-     * Metodi che permette di inserire valori nel db
-     *
-     * @param precedenza
-     * @return
-     */
-
     public boolean insertIntoSQL(String precedenza){
         openConnection();
         boolean controllo=false;
@@ -108,11 +101,7 @@ public class Attivita extends Model {
         return controllo;
     }
 
-    /**
-     * Metodo che permette di aggiornare dei valori nel db
-     *
-     * @return
-     */
+
     @Override
     public boolean updateIntoSQL(String... var){
 

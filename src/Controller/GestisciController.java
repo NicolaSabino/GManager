@@ -417,7 +417,6 @@ public class GestisciController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 eliminaUtente();
-                //TODO
                 statoListener= false;
             }
         });
@@ -821,7 +820,7 @@ public class GestisciController {
         gestisci.disabilitaComponenti(false, gestisci.getFieldNomeUtente_modifica(),
                 gestisci.getFieldCognomeUtente_modifica(), gestisci.getFieldMailUtente_modifica(),
                 gestisci.getFieldTelefonoUtente_modifica(),gestisci.getComboRuoloUtente_modifica());
-    } //TODO dovrebbe essere ok
+    }
 
     protected void abilitaModificheAppuntamento(){
         JTable tabella    = gestisci.getTableAppuntamenti();
@@ -1179,7 +1178,6 @@ public class GestisciController {
 
 
         //reimposto l'interfaccia grafica
-        //TODO problema
 
         gestisci.getButtonSalvaModificheUtente().setVisible(false);
 
@@ -1197,7 +1195,7 @@ public class GestisciController {
         //infine rimuovo il listner di salvamodifiche
         StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheUtente());
 
-    }//TODO dovrebbe essere ok!
+    }
 
     protected void salvaModificheAppuntamento(int id){
         Incontro incontro = new Incontro(id);
@@ -1542,7 +1540,7 @@ public class GestisciController {
         //else i=0;
         gestisci.getComboRuoloUtente_modifica().setSelectedIndex(i);
 
-    } //TODO dovrebbe esssere ok!
+    }
 
     protected void popolaCampiModificaAppuntamento(int riga){
 

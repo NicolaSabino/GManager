@@ -19,7 +19,6 @@ import java.util.GregorianCalendar;
 
 /**
  * Controller della schermata home
- *
  */
 public class HomeController {
     RootFrame rootFrame;
@@ -32,7 +31,7 @@ public class HomeController {
     /**
      * Costruttore di home controller
      *
-     * @param p
+     * @param p tipo enumerativo che rappresenta il ruolo dell'utilizzatore
      * @param r frame principale dove settare le viste
      * @param mat matricola dell'utilizzatore
      */
@@ -70,7 +69,6 @@ public class HomeController {
 
     /**
      * listener doppio click sulla tabella attività
-     *
      */
     protected void listenerSelezionaAttivita(){
         this.tabellaAttivita.getTabella().addMouseListener(new MouseAdapter() {
@@ -90,7 +88,6 @@ public class HomeController {
      *
      * @param riga
      */
-
     protected void approvaFineAttivita(int riga){
         JTable tabellaAttivitaHome = tabellaAttivita.getTabella();
         Attivita attivita = new Attivita((Integer) tabellaAttivitaHome.getValueAt(riga, 0));

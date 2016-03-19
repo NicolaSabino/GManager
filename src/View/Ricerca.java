@@ -110,8 +110,18 @@ public class Ricerca extends JPanel {
         StaticMethod.popolaComboProgetti(comboProgettiSequenze);
     }
 
-
-
+    /**
+     * Dialog per la segnalazione di errori
+     *
+     * @param errorMessage
+     * @param errorTitle
+     */
+    public void displayErrorMessage(String errorMessage,String errorTitle){
+        JOptionPane messaggioErrore = new JOptionPane(errorMessage,JOptionPane.ERROR_MESSAGE  );
+        JDialog dialog = messaggioErrore.createDialog(errorTitle);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+    }
 
 
     public JButton getSalvaRicerca() {
