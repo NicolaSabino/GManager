@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 /**
- * Created by nicola on 08/03/16.
+ * Classe tabelle custom
  */
 public class CustomTable extends DefaultTableModel{
 

@@ -17,9 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-/**
- * Created by edoardo on 02/03/16.
- */
 public class Gestisci {
     private JTabbedPane tabbedPanePrincipale;
     private JPanel panelloPrincipale;

@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by nicola on 02/03/16.
+ * Crea la spalla
  */
 public class SpallaController {
 
@@ -24,6 +24,15 @@ public class SpallaController {
     private GestisciController gestisciControler;
     private OrdiniController ordiniController;
 
+    /**
+     * Costruttore della spalla
+     *
+     * @param p enum del ruolo dell'utilizzatore
+     * @param s
+     * @param mat matricola utente
+     * @param r
+     * @param mat_utilizzatore
+     */
     public SpallaController(Permesso p, Spalla s, String mat,RootFrame r,String mat_utilizzatore) {
 
         this.permesso=p;
@@ -51,7 +60,7 @@ public class SpallaController {
 
         //faccio partire i controller delle varie schede
 
-        this.homeController         = new HomeController(permesso,rootFrame,mat_utilizzatore);  //di default quando creo HomeControlle si imposta automaticamente sul mainScrollpane
+        this.homeController         = new HomeController(permesso,rootFrame,mat_utilizzatore);  //di default quando creo HomeController si imposta automaticamente sul mainScrollpane
         this.ricercaController      = new RicercaController(rootFrame);
         this.impostazioniController = new ImpostazioniController(rootFrame,utilizzatore);
         this.gestisciControler      = new GestisciController(rootFrame,utilizzatore,homeController);

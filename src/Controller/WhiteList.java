@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Created by nicola on 14/02/16.
+ * Controlla l'accesso alle risorse in base ruolo
  */
 
 
@@ -17,13 +17,9 @@ public class WhiteList {
     // ACCESS-CONTROL-LIST
     //gli oggetti istanziati da questa classe hanno il compito di controllare l'accesso alle risorse da parte dei vari utenti
 
-
-
     private String matricola;
     private char[] passwd;
     private Permesso permesso;
-
-
 
     /**
      * Costruttore di Acl
