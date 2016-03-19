@@ -4,9 +4,7 @@ import Model.*;
 import Model.Gruppi.Gruppo;
 import Model.Gruppi.GruppoProgetti;
 import Model.Gruppi.GruppoSequenze;
-import View.Gestisci;
-import View.RootFrame;
-import View.StaticMethod;
+import View.*;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -22,6 +20,7 @@ public class GestisciController {
     private Utente utilizzatore;
     private HomeController homeController;
     private boolean statoListener;
+    private OrdiniController ordiniController;
 
 
     public GestisciController(RootFrame rootFrame, Utente utente,HomeController home) {
@@ -40,6 +39,8 @@ public class GestisciController {
             listenerSelezioneProgetto();
             listenerSelezioneSequenza();
             listenerRendiDefinitivo();
+            listenerRifiutatoDalRettorato();
+            listenerEliminaOrdine();
         }
 
         //listener
@@ -432,6 +433,16 @@ public class GestisciController {
         });
     }
 
+    protected void listenerEliminaOrdine(){
+        JButton elimina=gestisci.getEliminaOrdineButton();
+        elimina.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eliminaOrdine();
+            }
+        });
+    }
+
 
 
     protected void listenerMostraInvitati(){
@@ -485,6 +496,17 @@ public class GestisciController {
                 rendiOrdineDefinitivo(tabellaVoti);
             }
         });
+    }
+
+    protected void listenerRifiutatoDalRettorato(){
+        JButton rifiuto =gestisci.getRifiutatoDalRettoratoButton();
+        rifiuto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rifiutoRettorato();
+            }
+        });
+
     }
 
 
@@ -1440,11 +1462,10 @@ public class GestisciController {
             gestisci.getFieldTelefonoUtente_modifica().setText("");
             gestisci.getFieldMatricolaUtente_modifica().setText("");
 
-            //TODO come dovrei fare?
+
             gestisci.getButtonEliminaUtente().setEnabled(false);
             gestisci.getButtonEliminaUtente().setVisible(false);
 
-            //TODO serve?
             StaticMethod.removeAllActionListener(gestisci.getButtonEliminaUtente());
             listenerEliminaUtente();
         }
@@ -1497,6 +1518,38 @@ public class GestisciController {
             //riabilito il listener
             gestisci.getTableAppuntamenti().setRowSelectionAllowed(true);
             statoListener=true;
+        }
+    }
+
+    protected void eliminaOrdine(){
+        int id = Integer.parseInt(gestisci.getTableOrdini().getValueAt(gestisci.getTableOrdini().getSelectedRow()   ,0).toString());
+        int response=JOptionPane.showConfirmDialog(null,"vuoi veramente eliminare l ordine "+ id + "?","Cancellazione di " + id,
+                JOptionPane.WARNING_MESSAGE);
+
+        if (response == JOptionPane.YES_OPTION) {
+            Ordine o = new Ordine(id);
+            Gruppo g = new Gruppo();
+            g.createFrom("direttivo");
+            o.deleteIntoSQL();
+            g.eliminaDaVotazione(o.getId());
+            //eliminare anche le votazioni
+
+            MessaggioBroadcast m = new MessaggioBroadcast();
+            m.setTipo("AUTO");
+            m.setMittente("AUTO");
+            m.setMessaggio(utilizzatore.getNome() + utilizzatore.getCognome() + " ha eliminato l ordine" + id);
+            m.insertIntoSQL();
+
+            //aggionro
+            homeController.getMessaggiController().aggiorna();
+            ordiniController.popolaOrdini();
+            gestisci.popolaOrdini();
+
+            gestisci.getPanelApprovazioni().setVisible(false);
+            gestisci.getPanelBottoni().setVisible(false);
+            gestisci.getEliminaOrdineButton().setEnabled(false);
+            gestisci.getLabelApprovaOrdini().setVisible(true);
+
         }
     }
 
@@ -1675,14 +1728,39 @@ public class GestisciController {
             gestisci.displayErrorMessage("Non tutti hanno espresso il proprio voto!","Errore");
         }
 
-        //ricarico la tabella ordini
+        //ricarico le tabella degli ordini
         gestisci.popolaOrdini();
+        ordiniController.popolaOrdini();
         //aggiorno i messaggi sulla home
         homeController.getMessaggiController().aggiorna();
+
+    }
+
+    protected void rifiutoRettorato(){
+        JTable tabellaOrdini = gestisci.getTableOrdini();
+        Ordine o = new Ordine((Integer) tabellaOrdini.getValueAt(tabellaOrdini.getSelectedRow(),0));
+        MessaggioBroadcast messaggioBroadcast = new MessaggioBroadcast();
+        messaggioBroadcast.setMittente("AUTO");
+        messaggioBroadcast.setTipo("AUTO");
+        messaggioBroadcast.setMessaggio("l ordine " + o.getId() + " (" + o.getDescrizione() + ") non è stato approvato dal rettorato");
+        o.updateIntoSQL("approvazione","Non Approvato");
+        messaggioBroadcast.insertIntoSQL();
+
+
+        //aggiorno i messaggi sulla home
+        homeController.getMessaggiController().aggiorna();
+        //ricarico le tabella ordini
+        ordiniController.popolaOrdini();
+        gestisci.popolaOrdini();
+
     }
 
     public Gestisci getGestisci() {
         return gestisci;
+    }
+
+    public void setOrdiniController(OrdiniController controller){
+        this.ordiniController=controller;
     }
 }
 

@@ -55,10 +55,12 @@ public class SpallaController {
         this.ricercaController      = new RicercaController(rootFrame);
         this.impostazioniController = new ImpostazioniController(rootFrame,utilizzatore);
         this.gestisciControler      = new GestisciController(rootFrame,utilizzatore,homeController);
-        this.ordiniController       = new OrdiniController(rootFrame,utilizzatore,this.homeController);
+        this.ordiniController       = new OrdiniController(rootFrame,utilizzatore,homeController);
 
-        //passo al controler di ordini la view gestisci cosi da poterla aggiornare ogni qualvolta viene creato un nuovo ordine
+        //passo al controler di ordini la view gestisci così da poterla aggiornare ogni qualvolta viene creato un nuovo ordine
         this.ordiniController.setGestisci(this.gestisciControler.getGestisci());
+        //passo al controller di gestisci la view di ordini così da poterla aggiornare ogni qualvolta vine approvato o non approvato un ordine
+        this.gestisciControler.setOrdiniController(this.ordiniController);
 
 
         //creo i listner
@@ -158,7 +160,10 @@ public class SpallaController {
     protected void avviaGestisci(){
         gestisciControler.apriGestisci();
     }
+
     protected void avviaOrdini(){
         ordiniController.apriOrdini();
     }
+
+
 }

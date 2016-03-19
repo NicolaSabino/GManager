@@ -180,6 +180,7 @@ public class Gestisci {
     private JPanel panelBottoni;
     private JButton rendiDefinitivoButton;
     private JButton rifiutatoDalRettoratoButton;
+    private JButton eliminaOrdineButton;
     private JComboBox comboGiornoInizioSequenza;
     private JComboBox comboMeseInizioSequenza;
     private JComboBox comboAnnoInizioSequenza;
@@ -1254,4 +1255,7 @@ public class Gestisci {
         return rifiutatoDalRettoratoButton;
     }
 
+    public JButton getEliminaOrdineButton() {
+        return eliminaOrdineButton;
+    }
 }
