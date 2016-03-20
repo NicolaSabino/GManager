@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import Model.*;
 
 /**
- * Created by nicola on 05/03/16.
+ * Permette di creare gruppi di progetti
  */
 public class GruppoProgetti extends Model{
     private ArrayList<Progetto> stato;
@@ -45,6 +45,7 @@ public class GruppoProgetti extends Model{
         return false;
     }
 
+    //getter e setter
     public ArrayList<Progetto> getStato() {
         return stato;
     }

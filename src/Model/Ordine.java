@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by nicola on 10/02/16.
+ * Classe che rappresenta la struttura dati degli ordini
  */
 public class Ordine extends Model {
     private int Id;
@@ -33,6 +33,7 @@ public class Ordine extends Model {
 
     /**
      * Costruttore da sql
+     *
      * @param id
      */
     public Ordine (int id){
@@ -62,6 +63,9 @@ public class Ordine extends Model {
         return;
     }
 
+    /**
+     *Meotodo per acquisire dal db lo satto delle approvazioni
+     */
     public void popolaVotazione(){
         openConnection();
         votazione=new ArrayList<>();
@@ -85,11 +89,17 @@ public class Ordine extends Model {
         }
     }
 
+    /**
+     *Meotodo per predisporre l'approvazione degli ordini sulla tabella "approvazioneordine" del db
+     *
+     * @param g
+     */
     public void predisponiVotazioni(Gruppo g){
         openConnection();
         String sql;
         for (Utente appoggio:g.getElenco()){
-            sql="insert into approvazioneordine values('" + appoggio.getMatricola() + "','" + this.getId() + "','Da Approvare')";
+            sql="insert into approvazioneordine values('" + appoggio.getMatricola() + "','"
+                    + this.getId() + "','Da Approvare')";
             updateQuery(sql);
         }
 

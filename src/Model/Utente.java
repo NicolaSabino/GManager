@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by nicola on 08/02/16.
+ * Classe che rappresenta la struttura dati degli utenti sul db
  */
 public class Utente extends Model {
     //Attributi dell'utente
@@ -24,9 +24,9 @@ public class Utente extends Model {
 
     /**
      * costruttore da SQL
+     *
      * @param chiave
      */
-
     public Utente (String chiave){
         openConnection();
         String sql ="select * from datilavorativi a join datianagrafici b " +
@@ -60,13 +60,6 @@ public class Utente extends Model {
         return;
     }
 
-    /**
-     * permette mi modificare gli attributi di un
-     * utente sia su datianagrafici che su datilavorativi
-     *
-     * @param var
-     * @return
-     */
 
     @Override
     public boolean updateIntoSQL(String... var) {
@@ -92,11 +85,6 @@ public class Utente extends Model {
     }
     
 
-    /**
-     * Override del metodo equals
-     * @param o
-     * @return
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -111,7 +99,8 @@ public class Utente extends Model {
 
 
     /**
-     * Permette di aggiungere l'oggetto stesso nel db
+     * Permette di inserire nel db l'occorrenza dell'utente
+     *
      * @return
      */
     public boolean insertIntoSQL(){
@@ -134,13 +123,13 @@ public class Utente extends Model {
             }
         }
         closeConnection();
-
         return controllo;
 
     }
 
     /**
-     * Permette di eliminare l'oggetto dal db
+     * Permette di eliminare gli utenti dal db
+     *
      * @return
      */
     public boolean deleteIntoSQL(){
@@ -153,10 +142,16 @@ public class Utente extends Model {
     }
 
 
+    /**
+     * Metodo che ritorna il nome delle sequenze di appartenenza dell' utente
+     *
+     * @return String del nome della sequenza
+     */
     public String selezionaSequenzaUtente(){
         openConnection();
         String ris="Unknown";
-        String sql ="select a.nomesequenza from attività a join incarichi i on i.id=a.id where i.matricola='" + this.getMatricola() + "' limit 1";
+        String sql ="select a.nomesequenza from attività a join incarichi i on i.id=a.id where i.matricola='"
+                + this.getMatricola() + "' limit 1";
         ResultSet query = selectQuery(sql);
 
         try {
@@ -173,10 +168,14 @@ public class Utente extends Model {
 
     }
 
+    /**
+     * Metodo per acquisire all'occorrenza istanziata di utente tutti i relativi incarichi
+     */
     public void popolaIncarichi(){
         openConnection();
         this.incarichi=new ArrayList<Attivita>();
-        String sql="select  a.id,a.nomesequenza,a.precedenza,a.descrizione,a.datainizio,a.datafineprevista,a.datafine,a.costo " +
+        String sql="select  a.id,a.nomesequenza,a.precedenza,a.descrizione,a.datainizio," +
+                "a.datafineprevista,a.datafine,a.costo " +
                 "from attività a join incarichi i on i.id=a.id where i.matricola='" + this.getMatricola() + "'";
         ResultSet query = selectQuery(sql);
         try{
@@ -201,6 +200,9 @@ public class Utente extends Model {
         return;
     }
 
+    /**
+     * Metodo per acquisire all'occorrenza istanziata di utente tutti i relativi appuntamento
+     */
     public void popolaAppuntamenti(){
         openConnection();
         this.appuntamenti=new ArrayList<Incontro>();
@@ -227,6 +229,13 @@ public class Utente extends Model {
         return;
     }
 
+    /**
+     * Metodo per aggiungere una partecipazione di un utente ad un incontro
+     *
+     * @param utente occorrenza di utente da aggiungere ai partecipanti
+     * @param incontro occorrenza dell'incontro
+     * @return booleano di check del metodo
+     */
     public boolean invita(Utente utente,Incontro incontro){
         openConnection();
         boolean controllo=false;

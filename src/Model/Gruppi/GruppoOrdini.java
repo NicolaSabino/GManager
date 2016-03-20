@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by nicola on 06/03/16.
+ * Classe per creare gruppi di ordini
  */
 public class GruppoOrdini extends Model{
     private ArrayList<Ordine> stato;
@@ -45,6 +45,7 @@ public class GruppoOrdini extends Model{
         return false;
     }
 
+    //getter e setter
     public ArrayList<Ordine> getStato() {
         return stato;
     }

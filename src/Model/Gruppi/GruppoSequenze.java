@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by nicola on 07/03/16.
+ * Permette di creare gruppi di sequenze
  */
 public class GruppoSequenze extends Model{
     private ArrayList<Sequenza> stato;

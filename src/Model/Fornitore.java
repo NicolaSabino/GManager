@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.lang.*;
 
 /**
- * Classe che rappresenta la struttutra dati dei fornitori
+ * Classe che rappresenta la struttura dati dei fornitori
  */
 public class Fornitore extends Model {
     private String Nome;

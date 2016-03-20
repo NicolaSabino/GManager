@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by nicola on 08/02/16.
+ * Classe che rappresenta la struttura dati dei progetti nel db
  */
 public class Progetto extends Model {
 
@@ -27,6 +27,7 @@ public class Progetto extends Model {
 
     /**
      * Costruttore da sql
+     *
      * @param chiave
      */
     public Progetto(String chiave){
@@ -39,6 +40,7 @@ public class Progetto extends Model {
 
     /**
      * Calcola il costo di un progetto
+     *
      * @return
      */
     protected double calcola_costo(){
@@ -95,6 +97,9 @@ public class Progetto extends Model {
         return controllo;
     }
 
+    /**
+     * Meotodo per acquisire all'occorrenza istanziata di progetto tutte le relative sequenze
+     */
     public void popolaStato(){
         openConnection();
         //prelevo dal db i nomi delle sequenze collegate al progetto
@@ -127,6 +132,9 @@ public class Progetto extends Model {
         }
     }
 
+    /**
+     * Metodo che inserisce dal db la deadline
+     */
     protected void calcolaDeadline(){
         openConnection();
         String sql="select deadline from progetto where nome='" + getNome() + "'";

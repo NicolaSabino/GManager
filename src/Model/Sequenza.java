@@ -7,7 +7,7 @@ import java.sql.Struct;
 import java.util.ArrayList;
 
 /**
- * Created by nicola on 08/02/16.
+ * Classe che rappresenta la struttura dati delle sequenze  nel db
  */
 public class Sequenza extends Model{
     //lo stato dell'attività consiste in una collezione di attività che la appartengono
@@ -30,6 +30,7 @@ public class Sequenza extends Model{
 
     /**
      * Costruttore con sql
+     *
      * @return
      */
     public Sequenza(String chiave){
@@ -87,7 +88,7 @@ public class Sequenza extends Model{
     }
 
     /**
-     * metodo per creare un insieme di attività prodotte come risultato di una ricerca
+     * Costruttore di sequenza per le ricerche
      */
     public Sequenza(String...var){
 
@@ -95,7 +96,8 @@ public class Sequenza extends Model{
         openConnection();
         String sql;
         if(var[0]=="descrizione") {
-            sql = "select a.id,a.nomesequenza,a.precedenza,a.descrizione,a.datainizio,a.datafineprevista,a.datafine,a.costo from attività a " +
+            sql = "select a.id,a.nomesequenza,a.precedenza,a.descrizione,a.datainizio," +
+                    "a.datafineprevista,a.datafine,a.costo from attività a " +
                     "where a.descrizione like '%" + var[1] + "%'";
             ResultSet query = selectQuery(sql);
 
@@ -121,7 +123,8 @@ public class Sequenza extends Model{
                 closeConnection();
             }
         }else if(var[0]=="tutteLeAttivita"){
-            sql = "select a.id,a.nomesequenza,a.precedenza,a.descrizione,a.datainizio,a.datafineprevista,a.datafine,a.costo from attività a ";
+            sql = "select a.id,a.nomesequenza,a.precedenza,a.descrizione,a.datainizio,a.datafineprevista," +
+                    "a.datafine,a.costo from attività a ";
             ResultSet query = selectQuery(sql);
 
             try{
@@ -150,7 +153,8 @@ public class Sequenza extends Model{
     }
 
     /**
-     * metodo che calcola il costo di una sequenza
+     * Metodo che calcola il costo di una sequenza
+     *
      * @return
      */
     protected double calcolaCosto(){
@@ -163,6 +167,7 @@ public class Sequenza extends Model{
 
     /**
      * Metodo che calcola la fine di una sequenza
+     *
      * @return
      */
     public String calcolaFine(){
@@ -184,6 +189,7 @@ public class Sequenza extends Model{
 
     /**
      * Metodo che calcola la percentuale di completamento di una sequenza
+     *
      * @return
      */
     protected double calcolaPercentualeSequenza(){
@@ -237,11 +243,7 @@ public class Sequenza extends Model{
         return controllo;
     }
 
-    /**
-     * Metodo per comparare due oggetti sequenza
-     * @param o
-     * @return
-     */
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -258,6 +260,7 @@ public class Sequenza extends Model{
 
     /**
      * Elimina la stessa sequneza nel db
+     *
      * @return
      */
     public  boolean deleteIntoSQL(){

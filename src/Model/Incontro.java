@@ -59,11 +59,9 @@ public class Incontro extends Model {
         String sql="update incontro set " + var[0] + "='" + var[1]
                 + "' where id='" + this.id + "'";
 
-
         if(updateQuery(sql)){
             controllo=true;
         }
-
         closeConnection();
         return controllo;
     }
@@ -73,11 +71,11 @@ public class Incontro extends Model {
         boolean controllo=false;
         openConnection();
         String sql="insert into incontro(tipo,data,ora,luogo,verbale) values('"
-                    + this.getTipo() + "','"
-                    + this.getData() + "','"
-                    + this.getOra()  + "','"
-                    + this.getLuogo()+ "','"
-                    + this.getVerbale() + "')";
+                + this.getTipo() + "','"
+                + this.getData() + "','"
+                + this.getOra()  + "','"
+                + this.getLuogo()+ "','"
+                + this.getVerbale() + "')";
 
         if(insertQueryAutoIncrement(sql)){
             controllo=true;
@@ -107,13 +105,7 @@ public class Incontro extends Model {
 
     }
 
-
-
-
-
-
     //getter and setter
-
 
     public String getData() {
         return data;
@@ -154,7 +146,6 @@ public class Incontro extends Model {
     public void setVerbale(String verbale) {
         this.verbale = verbale;
     }
-
 
     public int getId() {
         return id;

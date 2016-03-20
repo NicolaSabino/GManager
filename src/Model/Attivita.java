@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 /**
- * Created by nicola on 08/02/16.
+ * Classe che rappresenta la struttura dati delle attività
  */
 public class Attivita extends Model {
     private int Id;
@@ -25,6 +25,7 @@ public class Attivita extends Model {
 
     /**
      * Costruttore da sql
+     *
      * @param chiave
      */
     public Attivita(int chiave){
@@ -80,7 +81,12 @@ public class Attivita extends Model {
         return controllo;
     }
 
-
+    /**
+     * Metodo per inserire un'attività nel db
+     *
+     * @param precedenza
+     * @return
+     */
     public boolean insertIntoSQL(String precedenza){
         openConnection();
         boolean controllo=false;

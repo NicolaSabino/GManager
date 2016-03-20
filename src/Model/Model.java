@@ -117,6 +117,7 @@ abstract public class Model {
 
     /**
      * permette di aggiornare un campo sul db
+     *
      * @param campo
      * @param valore
      * @return
@@ -124,6 +125,7 @@ abstract public class Model {
 
     /**
      * Metodo per l'aggiornamento di una tupla sul db ad argomenti a lunghezza variabile
+     *
      * @param var
      * @return
      */
@@ -131,12 +133,14 @@ abstract public class Model {
 
     /**
      * metodo astratto che permette di inserire dati nel db
+     *
      * @return
      */
     abstract public boolean insertIntoSQL()throws SQLException;
 
     /**
      * metodo astratto che permette di eliminare dati dal db
+     *
      * @return
      */
     abstract public boolean deleteIntoSQL();

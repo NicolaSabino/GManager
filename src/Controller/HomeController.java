@@ -54,7 +54,7 @@ public class HomeController {
         this.messaggiController= new MessaggiController(this.utilizzatore,this.home);
         this.notifiche=messaggiController.getListaNotifiche();
         home.setScrollNotifiche(notifiche.getPannelloPrincipale());
-        
+
     }
 
     /**

@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by nicola on 18/02/16.
+ * Rappresenta la struttura dati dei messaggi
  */
 public class MessaggioBroadcast extends Model{
     private int id;
@@ -14,7 +14,9 @@ public class MessaggioBroadcast extends Model{
     private String tipo;
     private String mittente;
 
-
+    /**
+     * Costruttore vuoto
+     */
     public MessaggioBroadcast() {
         return;
     }
@@ -72,6 +74,11 @@ public class MessaggioBroadcast extends Model{
         return s;
     }
 
+    /**
+     * Per identifiare il messaggio dal db
+     *
+     * @return
+     */
     public ArrayList<String> selezionaNotifiche(){
         openConnection();
         ArrayList<String> ris = new ArrayList<String>();
@@ -95,6 +102,9 @@ public class MessaggioBroadcast extends Model{
         }
         return ris;
     }
+
+    //getter e setter
+
     public int getId() {
         return id;
     }
