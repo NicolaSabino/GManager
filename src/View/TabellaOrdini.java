@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * Created by nicola on 06/03/16.
+ * Rappresentazione tabella ordini
  */
 public class TabellaOrdini {
     private JPanel pannelloPrincipale;
@@ -21,6 +21,7 @@ public class TabellaOrdini {
         this.Utente=matricolautente;
     }
 
+    //getter e setter
     public void setModelTabella(ArrayList<Ordine> elenco) {
         String col[] = {"Descrizione","Quantità","Prezzo","Data","Attività","Approvazione",};
 

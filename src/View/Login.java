@@ -5,7 +5,9 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * finestra del login
+ */
 public class Login {
     private JPanel pannelloPrincipale;
     private JPanel logBox;

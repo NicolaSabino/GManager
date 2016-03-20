@@ -3,7 +3,9 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
-
+/**
+ * Struttura della finestra principale
+ */
 public class RootFrame extends JFrame{
     private JPanel rootPanel;
     private JPanel bottomPanell;

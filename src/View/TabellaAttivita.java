@@ -51,7 +51,7 @@ public class TabellaAttivita {
 
     }
 
-
+    //getter
     public JPanel getPannelloPrincipale() {
         return pannelloPrincipale;
     }

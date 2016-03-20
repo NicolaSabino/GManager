@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
 /**
- * Created by nicola on 18/02/16.
+ * Rappresentazione tabella incontri
  */
 public class TabellaIncontri {
     private JPanel pannelloPrincipale;

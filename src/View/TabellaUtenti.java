@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
 /**
- * Created by nicola on 05/03/16.
+ * Rappresentazione tabella utenti
  */
 public class TabellaUtenti {
     private JPanel pannelloPrincipale;

@@ -4,7 +4,9 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-
+/**
+ * Scermata delle impostazioni
+ */
 public class Home extends JPanel {
     private JPanel pannelloPrincipale;
     private JScrollPane scrollEventi;

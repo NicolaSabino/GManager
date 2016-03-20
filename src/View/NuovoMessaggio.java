@@ -4,6 +4,9 @@ import Model.Utente;
 
 import javax.swing.*;
 
+/**
+ * Finestra per la scrittura di un nuovo messaggio
+ */
 public class NuovoMessaggio extends JFrame{
     private JPanel pannelloPrincipale;
     private JLabel nuovoM;

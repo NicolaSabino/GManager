@@ -3,7 +3,9 @@ package View;
 import javax.swing.*;
 import java.util.ArrayList;
 
-
+/**
+ * schermata delle notifiche nella home
+ */
 public class ListaNotifiche {
     private JPanel pannelloPrincipale;
 

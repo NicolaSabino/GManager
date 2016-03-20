@@ -5,7 +5,7 @@ import Model.Utente;
 import javax.swing.*;
 
 /**
- * Created by edoardo on 02/03/16.
+ * Schermata delle imppostazioni
  */
 public class Impostazioni extends JPanel{
 
