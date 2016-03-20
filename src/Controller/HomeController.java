@@ -31,27 +31,19 @@ public class HomeController {
     /**
      * Costruttore di home controller
      *
-     * @param p tipo enumerativo che rappresenta il ruolo dell'utilizzatore
      * @param r frame principale dove settare le viste
      * @param mat matricola dell'utilizzatore
      */
-    public HomeController(Permesso p,RootFrame r, String mat) {
+    public HomeController(RootFrame r, String mat) {
         this.utilizzatore= new Utente(mat);
         this.rootFrame=r;
         this.home=new Home();
 
-
-
         r.setMainScrollPane(home.getPannelloPrincipale());
-        Sequenza sequenzaDiAppartenenza = new Sequenza(utilizzatore.selezionaSequenzaUtente());
-        home.setSequenza(utilizzatore.selezionaSequenzaUtente());
-        home.setProgressBarCompl((int) sequenzaDiAppartenenza.getPercentComplSeq());
 
+        aggiornaProgressBar();
 
-        //mostro a video gli incarichi
-        this.tabellaAttivita= new TabellaAttivita();
-        tabellaAttivita.setModelTabella(utilizzatore.getIncarichi());
-        home.setScrollCompiti(tabellaAttivita.getPannelloPrincipale());
+        aggiornaTabellaAttivita();
 
         //mostro a video gli appuntamenti
         TabellaIncontri t2= new TabellaIncontri();
@@ -62,10 +54,18 @@ public class HomeController {
         this.messaggiController= new MessaggiController(this.utilizzatore,this.home);
         this.notifiche=messaggiController.getListaNotifiche();
         home.setScrollNotifiche(notifiche.getPannelloPrincipale());
-
-        listenerSelezionaAttivita();
+        
     }
 
+    /**
+     * Metodo che aggiorna la progress bar della percentuale di completamento della sequenza
+     */
+    private void aggiornaProgressBar(){
+
+        Sequenza sequenzaDiAppartenenza = new Sequenza(utilizzatore.selezionaSequenzaUtente());
+        home.setSequenza(utilizzatore.selezionaSequenzaUtente());
+        home.setProgressBarCompl((int) sequenzaDiAppartenenza.getPercentComplSeq());
+    }
 
     /**
      * listener doppio click sulla tabella attività
@@ -106,10 +106,12 @@ public class HomeController {
                     + giornoCorrente);
 
             //riaggiorno la tabella nella home
-            this.tabellaAttivita= new TabellaAttivita();
-            tabellaAttivita.setModelTabella(utilizzatore.getIncarichi());
-            home.setScrollCompiti(tabellaAttivita.getPannelloPrincipale());
+           aggiornaTabellaAttivita();
+
+            //aggiorno la progress bar
+            aggiornaProgressBar();
         }
+
 
     }
 
@@ -122,6 +124,18 @@ public class HomeController {
         TabellaIncontri t2= new TabellaIncontri();
         t2.setModelTabella(utilizzatore.getAppuntamenti());
         home.setScrollEventi(t2.getPannelloPrincipale());
+    }
+
+    /**
+     * Metodo che aggiorna la tabella delle attività
+     */
+    private void aggiornaTabellaAttivita(){
+        this.tabellaAttivita= new TabellaAttivita();
+        utilizzatore.popolaIncarichi();//aggiorno gli incarichi
+        tabellaAttivita.setModelTabella(utilizzatore.getIncarichi());
+        home.setScrollCompiti(tabellaAttivita.getPannelloPrincipale());
+        //aggiungo il listener di selezione
+        listenerSelezionaAttivita();
     }
 
     public void apriHome(){

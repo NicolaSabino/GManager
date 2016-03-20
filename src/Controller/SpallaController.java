@@ -60,7 +60,7 @@ public class SpallaController {
 
         //faccio partire i controller delle varie schede
 
-        this.homeController         = new HomeController(permesso,rootFrame,mat_utilizzatore);  //di default quando creo HomeController si imposta automaticamente sul mainScrollpane
+        this.homeController         = new HomeController(rootFrame,mat_utilizzatore);  //di default quando creo HomeController si imposta automaticamente sul mainScrollpane
         this.ricercaController      = new RicercaController(rootFrame);
         this.impostazioniController = new ImpostazioniController(rootFrame,utilizzatore);
         this.gestisciControler      = new GestisciController(rootFrame,utilizzatore,homeController);
