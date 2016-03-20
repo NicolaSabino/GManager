@@ -4,9 +4,6 @@ import Model.Utente;
 
 import javax.swing.*;
 
-/**
- * Created by nicola on 19/02/16.
- */
 public class NuovoMessaggio extends JFrame{
     private JPanel pannelloPrincipale;
     private JLabel nuovoM;
@@ -21,6 +18,7 @@ public class NuovoMessaggio extends JFrame{
         setVisible(true);
     }
 
+    //getter
     public JButton getInviaButton() {
         return inviaButton;
     }

@@ -296,7 +296,7 @@ public class Gestisci {
      * @param b
      * @param elementi
      */
-    public void disabilitaComponenti(boolean b,Component ...elementi){
+    public void disabilitaComponenti(boolean b,Component... elementi){
         for(Component appoggio:elementi){
             appoggio.setEnabled(!b);
         }

@@ -5,9 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by nicola on 13/02/16.
- */
+
 public class Login {
     private JPanel pannelloPrincipale;
     private JPanel logBox;
@@ -21,21 +19,23 @@ public class Login {
     private String log_mat;
     private char[] log_pass;
 
+    /**
+     * Costruttore vuoto
+     */
     public Login() {
         return;
     }
 
-    public JPanel getPannelloPrincipale() {
-        return pannelloPrincipale;
-    }
-
-
     //mostra una finestra di errore
-
     public void displayErrorMessage(String errorMessage){
         //da ricontrollare
         JOptionPane.showMessageDialog(new JFrame("errore"),errorMessage);
 
+    }
+
+    //getter e setter
+    public JPanel getPannelloPrincipale() {
+        return pannelloPrincipale;
     }
 
     public JButton getEntraButton(){

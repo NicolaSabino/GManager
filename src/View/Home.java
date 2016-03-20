@@ -4,9 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-/**
- * Created by edoardo on 15/02/16.
- */
+
 public class Home extends JPanel {
     private JPanel pannelloPrincipale;
     private JScrollPane scrollEventi;
@@ -22,6 +20,7 @@ public class Home extends JPanel {
 
     }
 
+    //getter e setter
     public JPanel getPannelloPrincipale() {
         return pannelloPrincipale;
     }

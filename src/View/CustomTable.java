@@ -1,6 +1,8 @@
 package View;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -12,11 +14,4 @@ public class CustomTable extends DefaultTableModel{
     public CustomTable(String[] columnNames, int rowCount) {
         super(columnNames, rowCount);
     }
-
-    @Override
-    public boolean isCellEditable(int row, int column) {
-        return false;
-    }
 }
-
-//todo eliminare la possibilità di spostare le colonne della tabella altrimenti genera degli errori con i mouse listner su gestisci

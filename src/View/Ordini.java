@@ -6,9 +6,7 @@ import Model.Utente;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by edoardo on 06/03/16.
- */
+
 public class Ordini extends JPanel{
 
     private JButton aggiungiOrdineButton;
@@ -21,6 +19,7 @@ public class Ordini extends JPanel{
     private JTextField fieldPrezzo;
     private JScrollPane scrollOrdini;
 
+
     public Ordini(){
         setVisible(true);
         StaticMethod.textFieldLimitLength(campoDescrizione,60);
@@ -28,11 +27,17 @@ public class Ordini extends JPanel{
         StaticMethod.textFieldLimitOnlyInt(campoAttivita,4);
     }
 
+    /**
+     * cancella i campi
+     */
+    public void clean(){
+        campoDescrizione.setText("");
+        campoAttivita.setText("");
+        spinnerQuantità.setValue(0);
+        fieldPrezzo.setText("");
+    }
 
-
-
-
-
+    //getter e setter
     public JPanel getPannelloPrincipale() {
         return pannelloPrincipale;
     }
@@ -51,13 +56,6 @@ public class Ordini extends JPanel{
         appoggio.setAttivita(Integer.parseInt(campoAttivita.getText()));       //Attività
 
         return appoggio;
-    }
-
-    public void clean(){
-        campoDescrizione.setText("");
-        campoAttivita.setText("");
-        spinnerQuantità.setValue(0);
-        fieldPrezzo.setText("");
     }
 
     public void setScrollOrdini(Component scrollOrdini) {

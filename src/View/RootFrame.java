@@ -3,9 +3,7 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by nicola on 13/02/16.
- */
+
 public class RootFrame extends JFrame{
     private JPanel rootPanel;
     private JPanel bottomPanell;
@@ -29,10 +27,9 @@ public class RootFrame extends JFrame{
         Image icon = Toolkit.getDefaultToolkit().getImage("immagini/Logo_GManagerpiccolo.png");
         this.setIconImage(icon);
 
-
     }
 
-
+    //setter
     public void setMainScrollPane(Component pane) {
         this.mainScrollPane.setViewportView(pane);
     }

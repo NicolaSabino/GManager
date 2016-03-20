@@ -3,9 +3,7 @@ package View;
 import javax.swing.*;
 import java.util.ArrayList;
 
-/**
- * Created by nicola on 18/02/16.
- */
+
 public class ListaNotifiche {
     private JPanel pannelloPrincipale;
 
@@ -22,6 +20,14 @@ public class ListaNotifiche {
 
     }
 
+    /**
+     * Metodo che aggiorna la view
+     */
+    public void aggiorna(){
+        this.pannelloPrincipale.repaint();
+    }
+
+    //getter e setter
     public JPanel getPannelloPrincipale() {
         return pannelloPrincipale;
     }
@@ -30,9 +36,7 @@ public class ListaNotifiche {
         return ButtonNuovo;
     }
 
-    public void aggiorna(){
-        this.pannelloPrincipale.repaint();
-    }
+
 
 }
 

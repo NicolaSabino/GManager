@@ -5,7 +5,7 @@ import Model.Utente;
 import javax.swing.*;
 
 /**
- * Created by nicola on 16/02/16.
+ * Rappresentazione della spalla
  */
 public class Spalla {
     private JPanel pannelloPrincipale;
@@ -43,6 +43,7 @@ public class Spalla {
 
     /**
      * Mostra solo i comandi disponiblili per un utente con i minimi privilegi
+     *
      * @param u
      */
     public void usMode(Utente u){
@@ -61,12 +62,11 @@ public class Spalla {
         ruoloUtente.setText(u.getRuolo());
 
 
-
-
     }
 
     /**
      * Mostra i comandi per un utente con i massimi privilegi
+     *
      * @param u
      */
     public void proMode(Utente u){
@@ -78,7 +78,6 @@ public class Spalla {
 
         gestisciButton.setVisible(true);
 
-
         //informazioni dell'utente
         InfoUtente.setVisible(true);
         nomeUtente.setText(u.getNome() + " " + u.getCognome());
@@ -88,8 +87,7 @@ public class Spalla {
 
     }
 
-
-
+    //getter
     public JPanel getPannelloPrincipale() {
         return pannelloPrincipale;
     }

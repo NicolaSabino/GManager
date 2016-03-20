@@ -16,7 +16,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Created by edoardo on 01/03/16.
+ * Rappresentazione della schermata di ricerca
  */
 public class Ricerca extends JPanel {
     private JPanel primoPanel;
@@ -33,7 +33,6 @@ public class Ricerca extends JPanel {
     private JCheckBox chechkstato;
     private JFileChooser fileChooser;
 
-
     public Ricerca(){
         setVisible(true);
         comboBoxRicerca.setSelectedIndex(0); //setto di default la ricerca su utente
@@ -42,8 +41,11 @@ public class Ricerca extends JPanel {
 
     }
 
-
-
+    /**
+     * Metodo che permette all'utente di scegliere il path dove collocare il file di esportazione
+     *
+     * @return stringa del path
+     */
     public String getFileName(){
         JFileChooser fc = new JFileChooser();
 
@@ -52,13 +54,15 @@ public class Ricerca extends JPanel {
         fc.addChoosableFileFilter(textFilter1);
         fc.addChoosableFileFilter(textFilter2);
 
-        if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
+        if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
             return fc.getSelectedFile().getPath();
-        return "";
+        }else return "";//se non approva ritorna una stringa vuota
     }
 
 
-
+    /**
+     * fa visualizzare i campi per la ricerca per Utente
+     */
     public void CercaUtente(){
         label1.setText("Nome");
         label2.setText("Cognome");
@@ -71,6 +75,9 @@ public class Ricerca extends JPanel {
 
     }
 
+    /**
+     * fa visualizzare i campi pe ricarca per Attività
+     */
     public void CercaAttivita(){
         //mostro label 1 labelcombo e nascondo label 2
         label1.setText("Descrizione");
@@ -82,6 +89,9 @@ public class Ricerca extends JPanel {
         comboProgettiSequenze.setVisible(false);
     }
 
+    /**
+     * fa visualizzare i campi pe ricarca per Sequenza
+     */
     public void CercaSequenza(){
         //nascondo label 1 e 2
         label1.setVisible(false);
@@ -96,6 +106,9 @@ public class Ricerca extends JPanel {
         StaticMethod.popolaComboSequenze(comboProgettiSequenze);
     }
 
+    /**
+     * fa visualizzare i campi pe ricarca per Progetto
+     */
     public void CercaProgetto(){
         //nascondo label 1 e 2
         label1.setVisible(false);
@@ -124,6 +137,7 @@ public class Ricerca extends JPanel {
     }
 
 
+    //getter e setter
     public JButton getSalvaRicerca() {
         return salvaRicerca;
     }
