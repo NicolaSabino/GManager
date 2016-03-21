@@ -15,6 +15,8 @@ public class ListaNotifiche {
 
     public ListaNotifiche(ArrayList<String> a) {
         JList notifiche = new JList(a.toArray());
+        //todo finire
+        notifiche.setFont(new Font("Arial"));
         notifiche.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         notifiche.setVisibleRowCount(-1);
         notifiche.setVisible(true);

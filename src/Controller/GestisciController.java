@@ -1951,6 +1951,7 @@ public class GestisciController {
     }
 
 
+
     private void rifiutoRettorato(){
         JTable tabellaOrdini = gestisci.getTableOrdini();
         Ordine o = new Ordine((Integer) tabellaOrdini.getValueAt(tabellaOrdini.getSelectedRow(),0));
