@@ -23,9 +23,9 @@ public class Utente extends Model {
     private ArrayList<Incontro> appuntamenti;
 
     /**
-     * costruttore da SQL
+     * Costruttore da SQL
      *
-     * @param chiave
+     * @param chiave matricola utente
      */
     public Utente (String chiave){
         openConnection();
@@ -101,7 +101,7 @@ public class Utente extends Model {
     /**
      * Permette di inserire nel db l'occorrenza dell'utente
      *
-     * @return
+     * @return booleano esito inserimento in db
      */
     public boolean insertIntoSQL(){
         boolean controllo=false;
@@ -130,7 +130,7 @@ public class Utente extends Model {
     /**
      * Permette di eliminare gli utenti dal db
      *
-     * @return
+     * @return booleano esito delete in db
      */
     public boolean deleteIntoSQL(){
         openConnection();
@@ -253,6 +253,12 @@ public class Utente extends Model {
         return controllo;
     }
 
+    /**
+     * Inserisce nel db nella tabella "incarichi" l'utente e l'attivita associata
+     *
+     * @param matricola matricola utente
+     * @param id id Attività
+     */
     public void assegnaUtente(String matricola,int id){
         openConnection();
         String sql = "Insert into incarichi values('" + matricola + "','" + id +"')";
@@ -260,10 +266,16 @@ public class Utente extends Model {
         closeConnection();
     }
 
+    /**
+     * select incarichi da db
+     *
+     * @return ArrayList elenco completo incarichi
+     */
     public ArrayList selezionaIncarchidalDB(){
         openConnection();
         ArrayList elenco = new ArrayList();
-        String sql="select * from incarichi i join datianagrafici l join attività a on i.matricola=l.matricola and a.id=i.id ";
+        String sql="select * from incarichi i join datianagrafici l join attività a " +
+                "on i.matricola=l.matricola and a.id=i.id ";
         ResultSet query=selectQuery(sql);
 
         try {
@@ -294,6 +306,12 @@ public class Utente extends Model {
         return elenco;
     }
 
+    /**
+     *elimina incarichi di un utente in una specifica attività
+     *
+     * @param matricola matricola utente
+     * @param id_attivita id attività
+     */
     public void eliminaIncarico(String matricola,int id_attivita){
         openConnection();
         String sql="delete from incarichi where matricola='" + matricola + "' and id='" + id_attivita + "'";
@@ -301,6 +319,11 @@ public class Utente extends Model {
         closeConnection();
     }
 
+    /**
+     * eliminazione incarichi di un utente
+     *
+     * @param matricola matricola utente
+     */
     public void eliminaIncarico(String matricola){
         openConnection();
         String sql="delete from incarichi where matricola='" + matricola + "'";
