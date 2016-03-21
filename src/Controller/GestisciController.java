@@ -887,6 +887,9 @@ public class GestisciController {
         //aggiorno incarichi
         gestisci.popolaUtenti_assegnazione();
 
+        //aggiorno non assegnati
+        gestisci.popolaElencoNonAssegnati();
+
         //rimuovo e ricreo l'action listener
         StaticMethod.removeAllActionListener(gestisci.getButtonCreaUtente());
         listenerCreaUtente();
@@ -1351,6 +1354,9 @@ public class GestisciController {
         //aggiorno incarichi
         gestisci.popolaUtenti_assegnazione();
 
+        //aggiorno non assegnati
+        gestisci.popolaElencoNonAssegnati();
+
         //infine rimuovo il listner di salvamodifiche
         StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheUtente());
 
@@ -1605,6 +1611,7 @@ public class GestisciController {
             //aggirno la tabella
             gestisci.popolaUtenti();
 
+
             //annullo tutti i campi di modifica
             gestisci.getFieldMailUtente_modifica().setText("");
             gestisci.getFieldNomeUtente_modifica().setText("");
@@ -1620,6 +1627,9 @@ public class GestisciController {
             //aggiorno Incarichi ed elimino tutti gli incarichi associati all'utente da eliminare
             utilizzatore.eliminaIncarico(matricola);
             gestisci.popolaUtenti_assegnazione();
+
+            //aggiorno non assegnati nel caso l'utente non fosse assegnato a nessun'attività
+            gestisci.popolaElencoNonAssegnati();
 
             //ridisabilito i campi e reimposto i bottoni
             gestisci.disabilitaComponenti(true, gestisci.getFieldNomeUtente_modifica(),
@@ -1967,7 +1977,7 @@ public class GestisciController {
             utilizzatore.assegnaUtente(utente.getMatricola(),attivita.getId());
             popolaElencoIncarichi();
             gestisci.popolaElencoNonAssegnati();
-
+            homeController.aggiornaTabellaAttivita();
 
         }
     }

@@ -671,14 +671,19 @@ public class Gestisci {
 
     public void glMode(){
         tableProgetti.setEnabled(false);
+        tableSequenze.setEnabled(false);
         buttonCreaProgetto.setEnabled(false);
         fieldNomeProgetto.setEnabled(false);
+        fieldNomeSequenza.setEnabled(false);
+        comboProgetti.setEnabled(false);
         comboAnnoProgetto.setEnabled(false);
         comboMeseProgetto.setEnabled(false);
         comboGiornoProgetto.setEnabled(false);
         labelModificaProgetto.setVisible(false);
         rendiDefinitivoButton.setVisible(false);
         rifiutatoDalRettoratoButton.setVisible(false);
+        buttonCreaSequenza.setEnabled(false);
+        labelModificaSequenza.setVisible(false);
     }
 
     /* getter */

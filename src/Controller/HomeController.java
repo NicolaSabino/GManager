@@ -129,7 +129,7 @@ public class HomeController {
     /**
      * Metodo che aggiorna la tabella delle attività
      */
-    private void aggiornaTabellaAttivita(){
+    public void aggiornaTabellaAttivita(){
         this.tabellaAttivita= new TabellaAttivita();
         utilizzatore.popolaIncarichi();//aggiorno gli incarichi
         tabellaAttivita.setModelTabella(utilizzatore.getIncarichi());
