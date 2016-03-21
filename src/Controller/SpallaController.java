@@ -28,10 +28,10 @@ public class SpallaController {
      * Costruttore della spalla
      *
      * @param p enum del ruolo dell'utilizzatore
-     * @param s
+     * @param s view della spalla
      * @param mat matricola utente
-     * @param r
-     * @param mat_utilizzatore
+     * @param r view del rootFrame
+     * @param mat_utilizzatore matricola utilizzatore
      */
     public SpallaController(Permesso p, Spalla s, String mat,RootFrame r,String mat_utilizzatore) {
 
@@ -84,7 +84,7 @@ public class SpallaController {
     /**
      * listner del bottone home
      */
-    public void homeListner(){
+    private void homeListner(){
         JButton home = spalla.getHomeButton();
         home.addActionListener(new ActionListener() {
             @Override
@@ -98,7 +98,7 @@ public class SpallaController {
     /**
      * listner del bottone impostazioni
      */
-    public void impostazioniListner(){
+    private void impostazioniListner(){
         JButton impostazioni = spalla.getImpostazioniButton();
         impostazioni.addActionListener(new ActionListener() {
             @Override
@@ -154,23 +154,23 @@ public class SpallaController {
 
     //azioni dei bottoni
 
-    protected void avviaRicerca(){
+    private void avviaRicerca(){
         ricercaController.apriPannelloRicerca();
     }
 
-    protected void avviaHome(){
+    private void avviaHome(){
         homeController.apriHome();
     }
 
-    protected void avviaImpostazioni(){
+    private void avviaImpostazioni(){
         impostazioniController.apriImpostazioni();
     }
 
-    protected void avviaGestisci(){
+    private void avviaGestisci(){
         gestisciControler.apriGestisci();
     }
 
-    protected void avviaOrdini(){
+    private void avviaOrdini(){
         ordiniController.apriOrdini();
     }
 

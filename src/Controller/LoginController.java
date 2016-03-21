@@ -19,6 +19,7 @@ public class LoginController {
 
     /**
      * costruttore del controller di login
+     *
      * @param view frame principale
      */
     public LoginController(RootFrame view) {
@@ -39,7 +40,7 @@ public class LoginController {
     /**
      * listener del bottone di login
      */
-    public void loginListener(){
+    private void loginListener(){
         JButton loginButton = loginView.getEntraButton();
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -50,7 +51,7 @@ public class LoginController {
     }
 
     /**
-     * metodo che controlla che la matricola e la password sia corretti
+     * metodo che controlla che la matricola e la password siano corretti
      */
     private void loginAction(){
         loginView.getLoginValue(); //serve per leggere i due textfield

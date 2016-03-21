@@ -23,8 +23,9 @@ public class WhiteList {
 
     /**
      * Costruttore di Acl
-     * @param matricola
-     * @param passwd
+     *
+     * @param matricola String matricola immessa dall'utente
+     * @param passwd Array di cahr della password immessa dall'utente
      */
     public WhiteList(String matricola, char[] passwd){
 
@@ -35,16 +36,13 @@ public class WhiteList {
     }
 
     /**
-     * Metodo che controlla l'effettviva presenza dell'utente all'interno del db
-     * e ne scandisce i permermessi
-     * @return permessi di accesso al programma
+     * Metodo che controlla l'effettiva presenza dell'utente all'interno del db e ne definisce i permermessi
      */
     protected  void controllo(){
 
-
-            //  creo un utente a partire dalla matricola inserita nella view
-            //  se la matricola non è presente ne db creo un utente senza alcun valore
-            Utente u = new Utente(this.getMatricola());
+        //  creo un utente a partire dalla matricola inserita nella view
+        //  se la matricola non è presente ne db creo un utente senza alcun valore
+        Utente u = new Utente(this.getMatricola());
         if(u.getMatricola()==null) {
             this.setPermesso(Permesso.NR);
         }else{
@@ -65,25 +63,22 @@ public class WhiteList {
                     }
 
                     case "TL":{
-                    this.setPermesso(Permesso.TL);
+                        this.setPermesso(Permesso.TL);
                         break;
                     }
 
                     default: this.setPermesso(Permesso.NR);
+                }
             }
         }
-        }
-
-        return;
     }
 
+    //getter e setter
     public Permesso getPermesso() {
         return permesso;
     }
 
-    protected void setPermesso(Permesso permesso) {
-        this.permesso = permesso;
-    }
+    protected void setPermesso(Permesso permesso) { this.permesso = permesso; }
 
     protected String getMatricola() {
         return matricola;

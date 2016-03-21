@@ -54,7 +54,7 @@ public class ImpostazioniController {
     /**
      * Action che abilita la modifica dei campi
      */
-    protected void modificaListener(){
+    private void modificaListener(){
         JButton modifica = impostazioni.getButtonModifica();
         modifica.addActionListener(new ActionListener() {
             @Override
@@ -67,7 +67,7 @@ public class ImpostazioniController {
     /**
      * metodo che abilita la modfica dei campi
      */
-    protected void modificaCampi(){
+    private void modificaCampi(){
         this.impostazioni.disabilitaCampi(false);
     }
 
@@ -75,7 +75,7 @@ public class ImpostazioniController {
      * Action per il salvataggio delle modifiche
      *
      */
-    protected void salvaListener() {
+    private void salvaListener() {
         JButton salva = impostazioni.getButtonSalva();
         salva.addActionListener(new ActionListener() {
             @Override
@@ -93,7 +93,7 @@ public class ImpostazioniController {
     /**
      * action per il logout dell' utilizzatore
      */
-    protected void logoutListener() {
+    private void logoutListener() {
         JButton salva = impostazioni.getButtonLogout();
         salva.addActionListener(new ActionListener() {
             @Override
@@ -103,7 +103,10 @@ public class ImpostazioniController {
         });
     }
 
-    protected void infoListener(){
+    /**
+     * Action per le informazioni generali sul software
+     */
+    private void infoListener(){
         JButton info = impostazioni.getInfoButton();
         info.addActionListener(new ActionListener() {
             @Override
@@ -113,6 +116,9 @@ public class ImpostazioniController {
         });
     }
 
+    /**
+     * Action per chiudere la schermata delle informazioni
+     */
     private void listenerIndietro(){
         JButton indietro=infoSulProgramma.getButtonIndietro();
         indietro.addActionListener(new ActionListener() {
@@ -127,7 +133,7 @@ public class ImpostazioniController {
     /**
      *Metodo che salva le modifiche dei campi nel db
      */
-    protected void salvaCampi(){
+    private void salvaCampi(){
         if(impostazioni.getModifiche().getPwd().equals(new String(impostazioni.getCampoPasswordCheck().getPassword()))) {
             utilizzatore.updateIntoSQL("pwd", impostazioni.getModifiche().getPwd());
             utilizzatore.updateIntoSQL("nome", impostazioni.getModifiche().getNome());

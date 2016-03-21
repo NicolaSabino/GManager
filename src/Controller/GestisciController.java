@@ -14,7 +14,6 @@ import java.util.Map;
 
 /**
  * Controller della schermata gestisci
- *
  */
 public class GestisciController {
     private RootFrame rootFrame;
@@ -1979,7 +1978,7 @@ public class GestisciController {
         ordiniController.popolaOrdini();
         gestisci.popolaOrdini();
 
-    }//TODO continuare commenti
+    }
 
     /**
      * Metodo che assegna un'attività ad un utente (entrambi selezionati nelle tabelle)
@@ -2006,7 +2005,7 @@ public class GestisciController {
         }
     }
 
-    public void popolaElencoIncarichi(){
+    private void popolaElencoIncarichi(){
         //seleziono tutti gli incarichi dal db
         ArrayList<Map> elencoDegliIncarichi=utilizzatore.selezionaIncarchidalDB();
 

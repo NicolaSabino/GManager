@@ -86,7 +86,7 @@ public class HomeController {
      *
      * @param riga
      */
-    protected void approvaFineAttivita(int riga){
+    private void approvaFineAttivita(int riga){
         JTable tabellaAttivitaHome = tabellaAttivita.getTabella();
         Attivita attivita = new Attivita((Integer) tabellaAttivitaHome.getValueAt(riga, 0));
 
@@ -138,6 +138,9 @@ public class HomeController {
         listenerSelezionaAttivita();
     }
 
+    /**
+     * per aprire la home
+     */
     public void apriHome(){
         rootFrame.setMainScrollPane(home.getPannelloPrincipale());
     }
