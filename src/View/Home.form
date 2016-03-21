@@ -75,7 +75,10 @@
       </grid>
       <scrollpane id="1801a" binding="scrollCompiti">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="250"/>
+            <maximum-size width="-1" height="250"/>
+          </grid>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -94,8 +97,8 @@
       <scrollpane id="53800" binding="scrollEventi">
         <constraints>
           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="600" height="-1"/>
-            <maximum-size width="600" height="-1"/>
+            <preferred-size width="600" height="250"/>
+            <maximum-size width="600" height="250"/>
           </grid>
         </constraints>
         <properties/>
