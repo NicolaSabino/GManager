@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>View</OriginalElement>
+  <nodes>
+    <node x="1166.5" y="5188.5">View.StaticMethod</node>
+    <node x="2727.0" y="5180.5">View.Home</node>
+    <node x="5292.5" y="4868.5">View.TabellaAttivita</node>
+    <node x="632.0" y="5192.5">View.Ricerca</node>
+    <node x="4261.5" y="5160.5">View.infoSulProgramma</node>
+    <node x="1944.0" y="5160.5">View.Ordini</node>
+    <node x="422.5" y="4760.5">View.TabellaOrdini</node>
+    <node x="-17.0" y="5168.5">View.Impostazioni</node>
+    <node x="2356.0" y="5196.5">View.Spalla</node>
+    <node x="470.0" y="4892.5">View.CustomTable</node>
+    <node x="3877.0" y="5160.5">View.RootFrame</node>
+    <node x="3622.5" y="5188.5">View.ListaNotifiche</node>
+    <node x="4597.0" y="5160.5">View.NuovoMessaggio</node>
+    <node x="412.0" y="5028.5">View.TabellaUtenti</node>
+    <node x="3170.0" y="5192.5">View.Login</node>
+    <node x="860.5" y="-3.5">View.Gestisci</node>
+    <node x="-33.0" y="4868.5">View.TabellaIncontri</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="View.TabellaIncontri" target="View.CustomTable">
+      <point x="193.0" y="0.0" />
+      <point x="-130.0" y="0.0" />
+    </edge>
+    <edge source="View.Gestisci" target="View.CustomTable">
+      <point x="0.0" y="2403.5" />
+      <point x="3040.0" y="4900.0" />
+      <point x="130.0" y="-20.0" />
+    </edge>
+    <edge source="View.TabellaUtenti" target="View.CustomTable">
+      <point x="0.0" y="-51.5" />
+      <point x="0.0" y="27.5" />
+    </edge>
+    <edge source="View.TabellaOrdini" target="View.CustomTable">
+      <point x="0.0" y="39.5" />
+      <point x="0.0" y="-27.5" />
+    </edge>
+    <edge source="View.TabellaAttivita" target="View.CustomTable">
+      <point x="-187.5" y="0.0" />
+      <point x="130.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.16170763260025872" x="2579.0240000000003" y="3135.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

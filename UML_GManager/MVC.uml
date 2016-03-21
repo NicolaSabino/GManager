@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="117.10431120315965" y="201.37798417905557">Controller</node>
+    <node x="377.5002835170981" y="362.93642809294477">View</node>
+    <node x="0.0" y="731.780032839979">database</node>
+    <node x="44.42616746987292" y="0.0">GManager</node>
+    <node x="131.1043112031598" y="496.55454377043054">Model</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Model" target="Model">
+      <point x="32.0" y="15.5" />
+      <point x="232.1043112031598" y="545.0545437704305" />
+      <point x="240.6043112031598" y="553.5545437704305" />
+      <point x="286.6043112031598" y="553.5545437704305" />
+      <point x="295.1043112031598" y="545.0545437704305" />
+      <point x="295.1043112031598" y="525.8045437704305" />
+      <point x="286.6043112031598" y="517.3045437704305" />
+      <point x="69.0" y="5.25" />
+    </edge>
+    <edge source="Controller" target="Model">
+      <point x="-4.999999999999858" y="0.0" />
+      <point x="-5.0" y="0.0" />
+    </edge>
+    <edge source="View" target="View">
+      <point x="32.0" y="-15.5" />
+      <point x="473.5002835170981" y="347.93642809294477" />
+      <point x="479.5002835170981" y="341.93642809294477" />
+      <point x="520.5002835170981" y="341.93642809294477" />
+      <point x="526.5002835170981" y="347.93642809294477" />
+      <point x="526.5002835170981" y="364.68642809294477" />
+      <point x="520.5002835170981" y="370.68642809294477" />
+      <point x="64.0" y="-7.75" />
+    </edge>
+    <edge source="Controller" target="Controller">
+      <point x="44.0" y="-15.5" />
+      <point x="244.10431120315965" y="186.37798417905557" />
+      <point x="250.10431120315965" y="180.37798417905557" />
+      <point x="298.1043112031597" y="180.37798417905557" />
+      <point x="304.1043112031597" y="186.37798417905557" />
+      <point x="304.1043112031597" y="200.62798417905557" />
+      <point x="298.1043112031597" y="206.62798417905557" />
+      <point x="83.0" y="-10.25" />
+    </edge>
+    <edge source="GManager" target="Controller">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Controller" target="View">
+      <point x="-8.98964340711423" y="0.0" />
+      <point x="-8.989643407114244" y="0.0" />
+    </edge>
+    <edge source="View" target="Model">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Model" target="database">
+      <point x="4.445430114327934" y="2.288700744664169" />
+      <point x="4.445430114327934" y="2.2887007446641405" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="313.0" y="406.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

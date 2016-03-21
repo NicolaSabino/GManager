@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Model.Gruppi</OriginalElement>
+  <nodes>
+    <node x="0.0" y="269.0">Model.Gruppi.GruppoProgetti</node>
+    <node x="0.0" y="0.0">Model.Gruppi.Gruppo</node>
+    <node x="361.0" y="490.0">Model.Gruppi.GruppoAppuntamenti</node>
+    <node x="0.0" y="490.0">Model.Gruppi.GruppoSequenze</node>
+    <node x="376.0" y="269.0">Model.Gruppi.GruppoOrdini</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="1.0" x="346.0" y="321.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

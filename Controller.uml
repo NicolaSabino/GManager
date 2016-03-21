@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Controller</OriginalElement>
+  <nodes>
+    <node x="789.5" y="2624.5">Controller.Permesso</node>
+    <node x="924.5" y="3036.5">Controller.RicercaController</node>
+    <node x="2849.0" y="2032.5">Controller.MessaggiController</node>
+    <node x="1773.5" y="124.5">Controller.GestisciController</node>
+    <node x="491.5" y="2264.5">Controller.MainController</node>
+    <node x="-13.0" y="2688.5">Controller.ImpostazioniController</node>
+    <node x="421.0" y="2540.5">Controller.WhiteList</node>
+    <node x="1404.5" y="964.5">Controller.OrdiniController</node>
+    <node x="2419.5" y="2020.5">Controller.HomeController</node>
+    <node x="939.0" y="2264.5">Controller.SpallaController</node>
+    <node x="457.5" y="2360.5">Controller.LoginController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Controller.SpallaController" target="Controller.OrdiniController">
+      <point x="80.0" y="-135.5" />
+      <point x="1200.0" y="1040.0" />
+      <point x="-155.5" y="0.0" />
+    </edge>
+    <edge source="Controller.OrdiniController" target="Controller.HomeController">
+      <point x="0.0" y="75.5" />
+      <point x="1560.0" y="2080.0" />
+      <point x="-180.5" y="-40.0" />
+    </edge>
+    <edge source="Controller.SpallaController" target="Controller.ImpostazioniController">
+      <point x="-40.0" y="135.5" />
+      <point x="1080.0" y="2960.0" />
+      <point x="160.0" y="2960.0" />
+      <point x="0.0" y="111.5" />
+    </edge>
+    <edge source="Controller.SpallaController" target="Controller.GestisciController">
+      <point x="20.0" y="-135.5" />
+      <point x="1140.0" y="40.0" />
+      <point x="2600.0" y="40.0" />
+      <point x="0.0" y="-915.5" />
+    </edge>
+    <edge source="Controller.SpallaController" target="Controller.Permesso">
+      <point x="-181.0" y="40.0" />
+      <point x="840.0" y="2440.0" />
+      <point x="0.0" y="-15.5" />
+    </edge>
+    <edge source="Controller.LoginController" target="Controller.SpallaController">
+      <point x="102.5" y="0.0" />
+      <point x="-181.0" y="0.0" />
+    </edge>
+    <edge source="Controller.WhiteList" target="Controller.Permesso">
+      <point x="139.0" y="0.0" />
+      <point x="-50.5" y="0.0" />
+    </edge>
+    <edge source="Controller.SpallaController" target="Controller.HomeController">
+      <point x="181.0" y="0.0" />
+      <point x="2560.0" y="2400.0" />
+      <point x="-40.0" y="99.5" />
+    </edge>
+    <edge source="Controller.MainController" target="Controller.LoginController">
+      <point x="0.0" y="15.5" />
+      <point x="0.0" y="-39.5" />
+    </edge>
+    <edge source="Controller.GestisciController" target="Controller.OrdiniController">
+      <point x="-826.5" y="0.0" />
+      <point x="155.5" y="0.0" />
+    </edge>
+    <edge source="Controller.ImpostazioniController" target="Controller.LoginController">
+      <point x="0.0" y="-111.5" />
+      <point x="160.0" y="2400.0" />
+      <point x="-102.5" y="0.0" />
+    </edge>
+    <edge source="Controller.LoginController" target="Controller.WhiteList">
+      <point x="0.0" y="39.5" />
+      <point x="0.0" y="-99.5" />
+    </edge>
+    <edge source="Controller.SpallaController" target="Controller.RicercaController">
+      <point x="0.0" y="135.5" />
+      <point x="0.0" y="-123.5" />
+    </edge>
+    <edge source="Controller.HomeController" target="Controller.MessaggiController">
+      <point x="0.0" y="99.5" />
+      <point x="2600.0" y="2280.0" />
+      <point x="3040.0" y="2280.0" />
+      <point x="0.0" y="87.5" />
+    </edge>
+    <edge source="Controller.GestisciController" target="Controller.HomeController">
+      <point x="0.0" y="915.5" />
+      <point x="0.0" y="-99.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.30000000000000016" x="1007.6666666666652" y="1746.3333333333326" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
