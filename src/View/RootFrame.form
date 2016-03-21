@@ -22,15 +22,7 @@
         <constraints border-constraint="South"/>
         <properties/>
         <border type="none"/>
-        <children>
-          <component id="35830" class="javax.swing.JLabel" binding="link">
-            <constraints border-constraint="Center"/>
-            <properties>
-              <font style="0"/>
-              <text value="More Info @  www.github.com/NicolaSabino/GManager.git"/>
-            </properties>
-          </component>
-        </children>
+        <children/>
       </grid>
       <hspacer id="a067a">
         <constraints border-constraint="East"/>

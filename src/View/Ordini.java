@@ -50,8 +50,8 @@ public class Ordini extends JPanel{
 
         Ordine appoggio= new Ordine();
         appoggio.setMatricola(utilizzatore.getMatricola());             //matricola
-        appoggio.setPrezzo(Float.parseFloat(fieldPrezzo.getText()));           //Prezzo
         appoggio.setQuantita(Integer.parseInt(spinnerQuantità.getValue().toString()));     //Quantità
+        appoggio.setPrezzo((Float.parseFloat(fieldPrezzo.getText())*appoggio.getQuantita())); //Prezzo
         appoggio.setDescrizione(campoDescrizione.getText());            //Descrizione
         appoggio.setAttivita(Integer.parseInt(campoAttivita.getText()));       //Attività
 

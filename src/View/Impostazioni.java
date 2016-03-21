@@ -20,6 +20,7 @@ public class Impostazioni extends JPanel{
     private JPasswordField campoPassword;
     private JTextField campoTelefono;
     private JPasswordField campoPasswordCheck;
+    private JButton infoButton;
 
     public Impostazioni(){
         setVisible(true);
@@ -91,6 +92,10 @@ public class Impostazioni extends JPanel{
 
     public JPasswordField getCampoPasswordCheck() {
         return campoPasswordCheck;
+    }
+
+    public JButton getInfoButton() {
+        return infoButton;
     }
 
     public void setCampoPasswordCheck(String campoPasswordCheck) {

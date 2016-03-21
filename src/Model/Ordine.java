@@ -167,6 +167,15 @@ public class Ordine extends Model {
 
     }
 
+    public void aggiornaVotazione(String voto,String matricola){
+        openConnection();
+        String sql="update approvazioneordine set voto='" + voto + "' where id_ordine='" + this.getId() + "' and matricola='" + matricola + "'";
+        updateQuery(sql);
+        closeConnection();
+
+        popolaVotazione();
+    }
+
 
 
     //Setter and getter

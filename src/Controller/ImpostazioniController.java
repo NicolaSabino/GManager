@@ -3,6 +3,7 @@ package Controller;
 import Model.Utente;
 import View.Impostazioni;
 import View.RootFrame;
+import View.infoSulProgramma;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,9 +17,10 @@ public class ImpostazioniController {
     private RootFrame rootFrame;
     private Impostazioni impostazioni;
     private Utente utilizzatore;
+    private infoSulProgramma infoSulProgramma;
 
     public ImpostazioniController(RootFrame rootFrame, Utente utilizzatore) {
-
+        this.infoSulProgramma = new infoSulProgramma();
         this.rootFrame=rootFrame;
         this.impostazioni= new Impostazioni();
         this.utilizzatore=utilizzatore;
@@ -36,9 +38,11 @@ public class ImpostazioniController {
         this.impostazioni.disabilitaCampi(true);
 
         //imposto i listner
-        this.modificaListner();
-        this.salvaListener();
-        this.logoutListener();
+        modificaListener();
+        salvaListener();
+        logoutListener();
+        infoListener();
+        listenerIndietro();
 
         return;
     }
@@ -50,7 +54,7 @@ public class ImpostazioniController {
     /**
      * Action che abilita la modifica dei campi
      */
-    protected void modificaListner(){
+    protected void modificaListener(){
         JButton modifica = impostazioni.getButtonModifica();
         modifica.addActionListener(new ActionListener() {
             @Override
@@ -95,6 +99,26 @@ public class ImpostazioniController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 LoginController l = new LoginController(rootFrame);
+            }
+        });
+    }
+
+    protected void infoListener(){
+        JButton info = impostazioni.getInfoButton();
+        info.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rootFrame.setMainScrollPane(infoSulProgramma.getPanelloPrincipale());
+            }
+        });
+    }
+
+    private void listenerIndietro(){
+        JButton indietro=infoSulProgramma.getButtonIndietro();
+        indietro.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rootFrame.setMainScrollPane(impostazioni.getPannelloPrincipale());
             }
         });
     }

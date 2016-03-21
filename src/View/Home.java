@@ -16,6 +16,7 @@ public class Home extends JPanel {
     private JScrollPane scrollNotifiche;
 
 
+    
     public Home() {
         setVisible(true);
         progressBarCompl.setVisible(true);
