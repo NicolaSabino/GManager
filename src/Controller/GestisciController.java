@@ -26,7 +26,7 @@ public class GestisciController {
 
 
     /**
-     * Costruttore
+     * Costruttore per la view
      *
      * @param rootFrame
      * @param utente
@@ -91,11 +91,14 @@ public class GestisciController {
 
     }
 
+    /**
+     * apre la schermata di gestione
+     */
     public void apriGestisci(){
         rootFrame.setMainScrollPane(gestisci.getPanelloPrincipale());
     }
 
-    protected void listenerCreaProgetto(){
+    private void listenerCreaProgetto(){
         JButton crea = gestisci.getButtonCreaProgetto();
         crea.addActionListener(new ActionListener() {
             @Override
@@ -105,7 +108,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerCreaSequenza(){
+    private void listenerCreaSequenza(){
         JButton crea = gestisci.getButtonCreaSequenza();
         crea.addActionListener(new ActionListener() {
             @Override
@@ -115,7 +118,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerCreaAttivita(){
+    private void listenerCreaAttivita(){
         JButton crea = gestisci.getButtonCreaAttivita();
         crea.addActionListener(new ActionListener() {
             @Override
@@ -129,7 +132,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerCreaAppuntamento(){
+    private void listenerCreaAppuntamento(){
         JButton crea = gestisci.getButtonCreaAppuntamento();
         crea.addActionListener(new ActionListener() {
             @Override
@@ -139,7 +142,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerCreaUtente(){
+    private void listenerCreaUtente(){
         JButton crea=gestisci.getButtonCreaUtente();
         crea.addActionListener(new ActionListener() {
             @Override
@@ -150,7 +153,7 @@ public class GestisciController {
     }
 
 
-    protected void listenerSelezioneProgetto(){
+    private void listenerSelezioneProgetto(){
         JTable tabellaProgetti = gestisci.getTableProgetti();
         tabellaProgetti.addMouseListener(new MouseAdapter() {
             @Override
@@ -167,7 +170,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerSelezioneSequenza(){
+    private void listenerSelezioneSequenza(){
         JTable tabellaSequenze = gestisci.getTableSequenze();
         tabellaSequenze.addMouseListener(new MouseAdapter() {
             @Override
@@ -183,7 +186,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerSelezioneAttivita(){
+    private void listenerSelezioneAttivita(){
         JTable tabellaAttivita = gestisci.getTableAttivita();
         tabellaAttivita.addMouseListener(new MouseAdapter() {
             @Override
@@ -199,7 +202,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerSelezionaUtente(){
+    private void listenerSelezionaUtente(){
         JTable tabellaUtenti = gestisci.getTableUtenti();
         tabellaUtenti.addMouseListener(new MouseAdapter() {
             @Override
@@ -215,7 +218,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerSelezionaAppuntamento(){
+    private void listenerSelezionaAppuntamento(){
         JTable tabellaAppuntamenti = gestisci.getTableAppuntamenti();
         tabellaAppuntamenti.addMouseListener(new MouseAdapter() {
             @Override
@@ -232,7 +235,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerSelezionaOrdine(){
+    private void listenerSelezionaOrdine(){
         JTable tabellaOrdini = gestisci.getTableOrdini();
         tabellaOrdini.addMouseListener(new MouseAdapter() {
             @Override
@@ -252,7 +255,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerSelezionaUtente_assegnazione(){
+    private void listenerSelezionaUtente_assegnazione(){
         JTable tabella= gestisci.getTableUtenti_assegnazione();
         tabella.addMouseListener(new MouseAdapter() {
             @Override
@@ -262,7 +265,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerSelezionaAttivita_assegnazione(){
+    private void listenerSelezionaAttivita_assegnazione(){
         JTable tablla= gestisci.getTableAttivita_assegnazione();
         tablla.addMouseListener(new MouseAdapter() {
             @Override
@@ -272,7 +275,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerSelezionaIncarico(){
+    private void listenerSelezionaIncarico(){
         JTable table= gestisci.getTableElencoAssegnazioni();
         table.addMouseListener(new MouseAdapter() {
             @Override
@@ -284,7 +287,7 @@ public class GestisciController {
     }
 
 
-    protected void listenerModificaProgetto(){
+    private void listenerModificaProgetto(){
         JButton modifica=gestisci.getButtonModificaProgetto();
         modifica.addActionListener(new ActionListener() {
             @Override
@@ -299,7 +302,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerModificaSequenza(){
+    private void listenerModificaSequenza(){
         JButton modifica=gestisci.getButtonModificaSequenza();
         modifica.addActionListener(new ActionListener() {
             @Override
@@ -314,7 +317,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerModificaAttivita(){
+    private void listenerModificaAttivita(){
         JButton modifica=gestisci.getButtonModificaAttivita();
         modifica.addActionListener(new ActionListener() {
             @Override
@@ -329,7 +332,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerModificaUtente(){
+    private void listenerModificaUtente(){
         JButton modifica = gestisci.getButtonModificaUtente();
         modifica.addActionListener(new ActionListener() {
             @Override
@@ -344,7 +347,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerModificaAppuntamento(){
+    private void listenerModificaAppuntamento(){
         JButton modifica = gestisci.getButtonModificaAppuntamento();
         modifica.addActionListener(new ActionListener() {
             @Override
@@ -362,7 +365,7 @@ public class GestisciController {
 
 
 
-    protected void listenerSalvaModificheProgeto(String nomevecchioprogetto){
+    private void listenerSalvaModificheProgeto(String nomevecchioprogetto){
         JButton salva = gestisci.getButtonSalvaModificheProgetto();
         salva.addActionListener(new ActionListener() {
             @Override
@@ -376,7 +379,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerSalvaModificheSequenza(String nomevecchiasequenza){
+    private void listenerSalvaModificheSequenza(String nomevecchiasequenza){
         JButton salva = gestisci.getButtonSalvaModificheSequenza();
         salva.addActionListener(new ActionListener() {
             @Override
@@ -390,7 +393,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerSalvaModificheAttivita(int id_attivita){
+    private void listenerSalvaModificheAttivita(int id_attivita){
         JButton salva = gestisci.getButtonSalvaModificheAttivita();
         salva.addActionListener(new ActionListener() {
             @Override
@@ -404,7 +407,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerSalvaModificheUtente(String matricola){
+    private void listenerSalvaModificheUtente(String matricola){
         JButton salva = gestisci.getButtonSalvaModificheUtente();
         salva.addActionListener(new ActionListener() {
             @Override
@@ -418,7 +421,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerSalvaModificheAppuntamento(int id_Appuntamento){
+    private void listenerSalvaModificheAppuntamento(int id_Appuntamento){
         JButton salva = gestisci.getButtonSalvaAppuntamento();
         salva.addActionListener(new ActionListener() {
             @Override
@@ -435,7 +438,7 @@ public class GestisciController {
 
 
 
-    protected void listenerEliminaProgetto(){
+    private void listenerEliminaProgetto(){
         JButton elimina=gestisci.getButtonEliminaProgetto();
         elimina.addActionListener(new ActionListener() {
             @Override
@@ -445,7 +448,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerEliminaSequenza(){
+    private void listenerEliminaSequenza(){
         JButton elimina=gestisci.getButtonEliminaSequenza();
         elimina.addActionListener(new ActionListener() {
             @Override
@@ -455,7 +458,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerEliminaAttivita(){
+    private void listenerEliminaAttivita(){
         JButton elimina=gestisci.getButtonEliminaAttivita();
         elimina.addActionListener(new ActionListener() {
             @Override
@@ -465,7 +468,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerEliminaUtente(){
+    private void listenerEliminaUtente(){
         JButton elimina=gestisci.getButtonEliminaUtente();
         elimina.addActionListener(new ActionListener() {
             @Override
@@ -475,7 +478,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerEliminaAppuntamento(){
+    private void listenerEliminaAppuntamento(){
         JButton elimina=gestisci.getButtonEliminaAppuntamento();
         elimina.addActionListener(new ActionListener() {
             @Override
@@ -485,7 +488,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerEliminaOrdine(){
+    private void listenerEliminaOrdine(){
         JButton elimina=gestisci.getEliminaOrdineButton();
         elimina.addActionListener(new ActionListener() {
             @Override
@@ -495,7 +498,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerEliminaIncarico(){
+    private void listenerEliminaIncarico(){
         JButton elimina=gestisci.getEliminaIncaricoButton();
         elimina.addActionListener(new ActionListener() {
             @Override
@@ -512,7 +515,7 @@ public class GestisciController {
 
 
 
-    protected void listenerMostraInvitati(){
+    private void listenerMostraInvitati(){
         JButton mostra=gestisci.getButtonMostraInvitati();
         mostra.addActionListener(new ActionListener() {
             @Override
@@ -522,7 +525,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerNascondiInvitati(){
+    private void listenerNascondiInvitati(){
         JButton nascondi=gestisci.getButtonNascondiInvitati();
         nascondi.addActionListener(new ActionListener() {
             @Override
@@ -532,7 +535,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerApprovaOrdine(){
+    private void listenerApprovaOrdine(){
         JTable tabellaOrdini=gestisci.getTableOrdini();
         JButton approva=gestisci.getButtonApprova();
         approva.addActionListener(new ActionListener() {
@@ -543,7 +546,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerNonApprovareOrdine(){
+    private void listenerNonApprovareOrdine(){
         JTable tabellaOrdini=gestisci.getTableOrdini();
         JButton nonApprova=gestisci.getButtonNonApprova();
         nonApprova.addActionListener(new ActionListener() {
@@ -554,7 +557,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerRendiDefinitivo(){
+    private void listenerRendiDefinitivo(){
         JButton rendiDefinitivo=gestisci.getRendiDefinitivoButton();
         JTable tabellaVoti=gestisci.getTableVoti();
         rendiDefinitivo.addActionListener(new ActionListener() {
@@ -565,7 +568,7 @@ public class GestisciController {
         });
     }
 
-    protected void listenerRifiutatoDalRettorato(){
+    private void listenerRifiutatoDalRettorato(){
         JButton rifiuto =gestisci.getRifiutatoDalRettoratoButton();
         rifiuto.addActionListener(new ActionListener() {
             @Override
@@ -576,7 +579,7 @@ public class GestisciController {
 
     }
 
-    protected void listenerAssegna(){
+    private void listenerAssegna(){
         JButton assegna=gestisci.getAssegnaButton();
         assegna.addActionListener(new ActionListener() {
             @Override
@@ -591,8 +594,7 @@ public class GestisciController {
     }
 
 
-
-    protected void creaProgetto(){
+    private void creaProgetto(){
 
         Progetto p = gestisci.getParametriCreaProgetto();
         GruppoProgetti elenco = new GruppoProgetti();
@@ -608,6 +610,7 @@ public class GestisciController {
         }
 
         if(errore!=0){
+            //progetto già esistente
             JOptionPane.showMessageDialog(new JFrame("errore"),p.getNome() + " é gia presente nel programma!");
         }else{
             p.insertIntoSQL();
@@ -643,7 +646,7 @@ public class GestisciController {
 
     }
 
-    protected void creaSequenza() {
+    private void creaSequenza() {
         Sequenza s = gestisci.getParametriCreaSequenza();
         GruppoSequenze gruppoSequenze = new GruppoSequenze();
         int errore = 0;
@@ -688,7 +691,7 @@ public class GestisciController {
         }
     }
 
-    protected void creaAttivita(){
+    private void creaAttivita(){
         Attivita a = gestisci.getParametriCreaAttivita();
         GruppoSequenze gruppoSequenze = new GruppoSequenze();
         int errore = 0;
@@ -778,7 +781,7 @@ public class GestisciController {
         listenerCreaAttivita();
     }
 
-    protected void creaAppuntamento(){
+    private void creaAppuntamento(){
         Incontro incontro =gestisci.getParametriCreaIncontro();
 
         incontro.insertIntoSQL();
@@ -839,7 +842,7 @@ public class GestisciController {
         listenerCreaAppuntamento();
     }
 
-    protected void creaUtente(){
+    private void creaUtente(){
         Utente utente = gestisci.getParametriCreaUtente();
         Gruppo gruppoUtenti = new Gruppo();
         int errore=0;
@@ -898,7 +901,7 @@ public class GestisciController {
 
 
 
-    protected void abilitaModificaProgetto(){
+    private void abilitaModificaProgetto(){
         //creo il listner del salvataggio
         listenerSalvaModificheProgeto(gestisci.getFieldNomeProgetto_modifica().getText());
 
@@ -911,7 +914,7 @@ public class GestisciController {
                 gestisci.getComboAnnoProgetto_modifica());
     }
 
-    protected void abilitaModificaSequenza(){
+    private void abilitaModificaSequenza(){
 
         //creo il listner del salvataggio
         listenerSalvaModificheSequenza(gestisci.getFieldNomeSequenza_modifica().getText());
@@ -924,7 +927,7 @@ public class GestisciController {
 
     }
 
-    protected void abilitaModificheAttività(){
+    private void abilitaModificheAttività(){
 
         int row=gestisci.getTableAttivita().getSelectedRow();
 
@@ -946,7 +949,7 @@ public class GestisciController {
 
     }
 
-    protected void abilitaModificheUtente(){
+    private void abilitaModificheUtente(){
         JTable tabella = gestisci.getTableUtenti();
 
         //prendo la riga selezionata dall'utente nella tabella
@@ -968,7 +971,7 @@ public class GestisciController {
                 gestisci.getFieldTelefonoUtente_modifica(),gestisci.getComboRuoloUtente_modifica());
     }
 
-    protected void abilitaModificheAppuntamento(){
+    private void abilitaModificheAppuntamento(){
         JTable tabella    = gestisci.getTableAppuntamenti();
         int id            =(Integer) tabella.getValueAt(tabella.getSelectedRow(),0);
         Incontro incontro = new Incontro(id);
@@ -990,7 +993,7 @@ public class GestisciController {
     }
 
 
-    protected void salvaModificheProgetto(String nome){
+    private void salvaModificheProgetto(String nome){
 
         Progetto p = new Progetto(nome);
 
@@ -1063,7 +1066,7 @@ public class GestisciController {
         StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheProgetto());
     }
 
-    protected void salvaModificheSequenza(String nome){
+    private void salvaModificheSequenza(String nome){
 
         Sequenza s = new Sequenza(nome);
 
@@ -1130,7 +1133,7 @@ public class GestisciController {
         StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheSequenza());
     }
 
-    protected void salvaModificheAttivita(int id){
+    private void salvaModificheAttivita(int id){
         Attivita a = new Attivita(id);
         MessaggioBroadcast m = new MessaggioBroadcast();
         m.setMittente("AUTO");
@@ -1256,7 +1259,7 @@ public class GestisciController {
         StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheAttivita());
     }
 
-    protected void salvaModificheUtente(String matricola){
+    private void salvaModificheUtente(String matricola){
 
         Utente u = new Utente(matricola);
         MessaggioBroadcast m = new MessaggioBroadcast();
@@ -1365,7 +1368,7 @@ public class GestisciController {
 
     }
 
-    protected void salvaModificheAppuntamento(int id){
+    private void salvaModificheAppuntamento(int id){
         Incontro incontro = new Incontro(id);
         MessaggioBroadcast m = new MessaggioBroadcast();
         m.setMittente("AUTO");
@@ -1438,7 +1441,7 @@ public class GestisciController {
     }
 
 
-    protected void eliminaProgetto(){
+    private void eliminaProgetto(){
         String nomeProgetto = gestisci.getFieldNomeProgetto_modifica().getText();
         int response=JOptionPane.showConfirmDialog(null,"vuoi veramente eliminare il progetto " + nomeProgetto + "? \n" +
                         "[VERRANNO ELIMINATE TUTTE LE SOTTOSEQUENZE E SOTTOATTIVITÀ COLLEGATE]","Cancellazione di " + nomeProgetto,
@@ -1490,7 +1493,7 @@ public class GestisciController {
 
     }
 
-    protected void eliminaSequenza(){
+    private void eliminaSequenza(){
         String nomeSequenza = gestisci.getFieldNomeSequenza_modifica().getText();
         int response=JOptionPane.showConfirmDialog(null,"vuoi veramente eliminare la sequenza " + nomeSequenza + "? \n" +
                         "[VERRANNO ELIMINATE TUTTE LE SOTTOATTIVITÀ COLLEGATE]","Cancellazione di " + nomeSequenza,
@@ -1534,7 +1537,7 @@ public class GestisciController {
         }
     }
 
-    protected void eliminaAttivita(){
+    private void eliminaAttivita(){
         int id = Integer.parseInt(gestisci.getTableAttivita().getValueAt(gestisci.getTableAttivita().getSelectedRow(),0).toString());
         int response=JOptionPane.showConfirmDialog(null,"vuoi veramente eliminare l attivita "+ id + "?","Cancellazione di " + id,
                 JOptionPane.WARNING_MESSAGE);
@@ -1586,7 +1589,7 @@ public class GestisciController {
         }
     }
 
-    protected void eliminaUtente(){
+    private void eliminaUtente(){
 
         String matricola = gestisci.getFieldMatricolaUtente_modifica().getText();
 
@@ -1651,7 +1654,7 @@ public class GestisciController {
         }
     }
 
-    protected void eliminaAppuntamento(){
+    private void eliminaAppuntamento(){
         int id = Integer.parseInt(gestisci.getTableAppuntamenti().getValueAt(gestisci.getTableAppuntamenti().getSelectedRow()   ,0).toString());
         int response=JOptionPane.showConfirmDialog(null,"vuoi veramente eliminare l appuntamento "+ id + "?","Cancellazione di " + id,
                 JOptionPane.WARNING_MESSAGE);
@@ -1706,7 +1709,7 @@ public class GestisciController {
         }
     }
 
-    protected void eliminaOrdine(){
+    private void eliminaOrdine(){
         int id = Integer.parseInt(gestisci.getTableOrdini().getValueAt(gestisci.getTableOrdini().getSelectedRow()   ,0).toString());
         int response=JOptionPane.showConfirmDialog(null,"vuoi veramente eliminare l ordine "+ id + "?","Cancellazione di " + id,
                 JOptionPane.WARNING_MESSAGE);
@@ -1738,7 +1741,7 @@ public class GestisciController {
         }
     }
 
-    protected void eliminaIncarico()throws Exception{
+    private void eliminaIncarico()throws Exception{
 
         int     riga        = gestisci.getTableElencoAssegnazioni().getSelectedRow();
         String  matricola   = gestisci.getTableElencoAssegnazioni().getValueAt(riga,0).toString();
@@ -1756,13 +1759,13 @@ public class GestisciController {
     }
 
 
-    protected void popolaCampiModificaProgetto(int riga){
+    private void popolaCampiModificaProgetto(int riga){
         JTable tabellaProgetti = gestisci.getTableProgetti();
         gestisci.getFieldNomeProgetto_modifica().setText(tabellaProgetti.getValueAt(riga,0).toString());
         StaticMethod.setData(gestisci.getComboGiornoProgetto_modifica(), gestisci.getComboMeseProgetto_modifica(), gestisci.getComboAnnoProgetto_modifica(),tabellaProgetti.getValueAt(riga,1).toString());
     }
 
-    protected void popolaCampiModificaSequenza(int riga){
+    private void popolaCampiModificaSequenza(int riga){
         JTable tabellaSequenze = gestisci.getTableSequenze();
         gestisci.getFieldNomeSequenza_modifica().setText(tabellaSequenze.getValueAt(riga,0).toString());
 
@@ -1778,7 +1781,7 @@ public class GestisciController {
         }
     }
 
-    protected void popolaCampimodificaAttivita(int riga){
+    private void popolaCampimodificaAttivita(int riga){
         JTable tabellaAttivita = gestisci.getTableAttivita();
 
         gestisci.getFieldDescrizioneAttivita_modifica().setText(tabellaAttivita.getValueAt(riga,1).toString());
@@ -1810,7 +1813,7 @@ public class GestisciController {
         }
     }
 
-    protected void popolaCampimodificaUtente(int riga) {
+    private void popolaCampimodificaUtente(int riga) {
         JTable tabellaUtenti = gestisci.getTableUtenti();
 
         Utente utente = new Utente(tabellaUtenti.getValueAt(riga, 0).toString());
@@ -1831,7 +1834,7 @@ public class GestisciController {
 
     }
 
-    protected void popolaCampiModificaAppuntamento(int riga){
+    private void popolaCampiModificaAppuntamento(int riga){
 
         //fix sull'interfaccia grafica
         gestisci.getButtonModificaAppuntamento().setVisible(true);
@@ -1876,25 +1879,30 @@ public class GestisciController {
 
     }
 
-    protected void mostraInvitati(){
+    private void mostraInvitati(){
         gestisci.getPanelInvitati().setVisible(true);
         gestisci.getButtonMostraInvitati().setVisible(false);
         gestisci.getButtonNascondiInvitati().setVisible(true);
     }
 
-    protected void nascondiInvitati(){
+    private void nascondiInvitati(){
         gestisci.getPanelInvitati().setVisible(false);
         gestisci.getButtonMostraInvitati().setVisible(true);
         gestisci.getButtonNascondiInvitati().setVisible(false);
     }
 
-    protected void aggiornaVotazioneOrdine(int riga,String voto){
+    private void aggiornaVotazioneOrdine(int riga,String voto){
         Ordine ordine = new Ordine((Integer) gestisci.getTableOrdini().getValueAt(riga,0));
         ordine.aggiornaVotazione(voto,utilizzatore.getMatricola());
         gestisci.popolaTabellaApprovazioni(riga);
     }
 
-    protected void rendiOrdineDefinitivo(JTable tabellaVoti){
+    /**
+     * Rende l'ordine definitivo se tutti hanno votato e valuta la maggioranza
+     *
+     * @param tabellaVoti vabella dei voti
+     */
+    private void rendiOrdineDefinitivo(JTable tabellaVoti){
         int approvato=0,nonapprovato=0,inAttesa=0;
 
         for(int i=0;i<tabellaVoti.getModel().getRowCount();i++){
@@ -1942,7 +1950,8 @@ public class GestisciController {
 
     }
 
-    protected void rifiutoRettorato(){
+
+    private void rifiutoRettorato(){
         JTable tabellaOrdini = gestisci.getTableOrdini();
         Ordine o = new Ordine((Integer) tabellaOrdini.getValueAt(tabellaOrdini.getSelectedRow(),0));
         MessaggioBroadcast messaggioBroadcast = new MessaggioBroadcast();
@@ -1959,7 +1968,7 @@ public class GestisciController {
         ordiniController.popolaOrdini();
         gestisci.popolaOrdini();
 
-    }
+    }//TODO continuare commenti
 
     public void assegna() throws Exception{
         JTable tabellaUtente    = gestisci.getTableUtenti_assegnazione();
