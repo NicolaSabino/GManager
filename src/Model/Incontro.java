@@ -27,6 +27,7 @@ public class Incontro extends Model {
 
     /**
      * Costruttore da sql
+     *
      * @param id
      */
     public Incontro (int id){

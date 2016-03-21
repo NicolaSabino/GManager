@@ -24,7 +24,8 @@ public class Fornitore extends Model {
 
     /**
      * Costruttore da sql
-     * @param chiave
+     *
+     * @param chiave nome del fornitore
      */
     public Fornitore(String chiave){
         openConnection();
@@ -107,7 +108,7 @@ public class Fornitore extends Model {
     }
 
 
-
+    //getter e setter
     public String getNome() {
         return Nome;
     }

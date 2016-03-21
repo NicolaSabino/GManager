@@ -28,7 +28,7 @@ public class Progetto extends Model {
     /**
      * Costruttore da sql
      *
-     * @param chiave
+     * @param chiave nnome del progetto
      */
     public Progetto(String chiave){
         this.setNome(chiave);
@@ -41,7 +41,7 @@ public class Progetto extends Model {
     /**
      * Calcola il costo di un progetto
      *
-     * @return
+     * @return costo complessiva di un progetto
      */
     protected double calcola_costo(){
         double sum=0;

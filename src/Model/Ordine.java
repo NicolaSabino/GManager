@@ -92,7 +92,7 @@ public class Ordine extends Model {
     /**
      *Meotodo per predisporre l'approvazione degli ordini sulla tabella "approvazioneordine" del db
      *
-     * @param g
+     * @param g Gruppo (di utenti)
      */
     public void predisponiVotazioni(Gruppo g){
         openConnection();
@@ -167,9 +167,16 @@ public class Ordine extends Model {
 
     }
 
+    /**
+     * Metodo che aggiorna la votazione nel db
+     *
+     * @param voto string approvazione
+     * @param matricola matricola utente votante
+     */
     public void aggiornaVotazione(String voto,String matricola){
         openConnection();
-        String sql="update approvazioneordine set voto='" + voto + "' where id_ordine='" + this.getId() + "' and matricola='" + matricola + "'";
+        String sql="update approvazioneordine set voto='" + voto + "' where id_ordine='" + this.getId()
+                + "' and matricola='" + matricola + "'";
         updateQuery(sql);
         closeConnection();
 

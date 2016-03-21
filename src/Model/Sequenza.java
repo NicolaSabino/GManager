@@ -27,11 +27,10 @@ public class Sequenza extends Model{
     }
 
 
-
     /**
      * Costruttore con sql
      *
-     * @return
+     * @param chiave nome della sequenza
      */
     public Sequenza(String chiave){
 
@@ -89,6 +88,8 @@ public class Sequenza extends Model{
 
     /**
      * Costruttore di sequenza per le ricerche
+     *
+     * @param var [chiave], [valore]
      */
     public Sequenza(String...var){
 
@@ -155,7 +156,7 @@ public class Sequenza extends Model{
     /**
      * Metodo che calcola il costo di una sequenza
      *
-     * @return
+     * @return costo totale sequenza
      */
     protected double calcolaCosto(){
         double sum=0;
@@ -168,12 +169,13 @@ public class Sequenza extends Model{
     /**
      * Metodo che calcola la fine di una sequenza
      *
-     * @return
+     * @return stringa data finale dell'attività
      */
     public String calcolaFine(){
         openConnection();
         String risultato = null;
-        String sql="select datafineprevista as data FROM attività WHERE nomesequenza='" + this.nome + "' order by datafineprevista desc LIMIT 1";
+        String sql="select datafineprevista as data FROM attività WHERE nomesequenza='" + this.nome
+                + "' order by datafineprevista desc LIMIT 1";
         ResultSet ris= selectQuery(sql);
         try {
             if(ris.next()) {
@@ -190,7 +192,7 @@ public class Sequenza extends Model{
     /**
      * Metodo che calcola la percentuale di completamento di una sequenza
      *
-     * @return
+     * @return percentuale di completamento sequenza
      */
     protected double calcolaPercentualeSequenza(){
         openConnection();
@@ -261,7 +263,7 @@ public class Sequenza extends Model{
     /**
      * Elimina la stessa sequneza nel db
      *
-     * @return
+     * @return booleano esito delete
      */
     public  boolean deleteIntoSQL(){
         openConnection();
@@ -278,7 +280,6 @@ public class Sequenza extends Model{
 
 
     //getter and setter
-
 
     public ArrayList<Attivita> getStato() {
         return stato;

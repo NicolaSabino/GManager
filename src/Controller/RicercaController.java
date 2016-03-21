@@ -49,7 +49,7 @@ public class RicercaController {
     /**
      * Listner della combobox principale
      */
-    public void listnerComboBox(){
+    private void listnerComboBox(){
         JComboBox comboBox = ricerca.getComboBoxRicerca();
         comboBox.addItemListener(new ItemListener() {
             @Override
@@ -71,7 +71,7 @@ public class RicercaController {
     /**
      * ItemListner della combobox di progetti/sequenze
      */
-    public void listnerCombo(){
+    private void listnerCombo(){
         JComboBox box = ricerca.getComboProgettiSequenze();
 
         box.addItemListener(new ItemListener() {
@@ -86,7 +86,7 @@ public class RicercaController {
     /**
      * keylistner di ricerca che chiamano il metodo stampa risultato
      */
-    public void listnerCerca(){
+    private void listnerCerca(){
         //JButton cerca =ricerca.getCerca();
         JTextField textField1 = ricerca.getCampo1();
         JTextField textField2 = ricerca.getCampo2();
@@ -113,7 +113,7 @@ public class RicercaController {
     /**
      * metodo che stampa a video sotto forma tabellare il risultato della ricerca
      */
-    protected void stampaRisultato(){
+    private void stampaRisultato(){
         switch (mod){
             case 1 :{
 
@@ -172,7 +172,7 @@ public class RicercaController {
      * metodo che setta la MODALIÀ DI VIEW
      * @param mod
      */
-    public void modalitaView(int mod){
+    private void modalitaView(int mod){
         switch (mod){
             case 1 :{
                 ricerca.CercaUtente();
@@ -203,7 +203,7 @@ public class RicercaController {
      * con dialog per la scelta del path
      *
      */
-    protected void listnerSalvaRicerca() {
+    private void listnerSalvaRicerca() {
         this.tabellaOttenuta = tabellaOttenuta;
         JButton salva = ricerca.getSalvaRicerca();
         salva.addActionListener(new ActionListener() {
@@ -237,7 +237,7 @@ public class RicercaController {
      * @param posizione String del path di destinazione
      * @throws FileNotFoundException
      */
-    protected void salvaCSV(String posizione)throws FileNotFoundException{
+    private void salvaCSV(String posizione)throws FileNotFoundException{
 
         try {
             File file = new File(posizione);
@@ -268,7 +268,7 @@ public class RicercaController {
     }
 
 
-    public void setCampoDiRIcerca(String campoDiRIcerca) {
+    private void setCampoDiRIcerca(String campoDiRIcerca) {
         this.campoDiRIcerca = campoDiRIcerca;
     }
 }

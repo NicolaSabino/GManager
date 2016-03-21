@@ -54,7 +54,7 @@ public class MessaggiController {
     /**
      * Action per la creazione di un nuovo messaggio
      */
-    protected void NuovoMessaggioListener(){
+    private void NuovoMessaggioListener(){
         JButton b = listaNotifiche.getButtonNuovo();
         b.addActionListener(new ActionListener() {
             @Override
@@ -70,7 +70,7 @@ public class MessaggiController {
     /**
      * Metodo per creare un nuovo mmesagio
      */
-    protected void CreaMessaggioListener(){
+    private void CreaMessaggioListener(){
         JButton b = n.getInviaButton();
         b.addActionListener(new ActionListener() {
             @Override

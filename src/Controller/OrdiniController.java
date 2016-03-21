@@ -44,7 +44,7 @@ public class OrdiniController {
     /**
      * Action per creare un nuovo ordine
      */
-    public void listnerNuovoOrdine(){
+    private void listnerNuovoOrdine(){
         JButton nuovo = ordini.getAggiungiOrdineButton();
         nuovo.addActionListener(new ActionListener() {
             @Override
@@ -54,7 +54,7 @@ public class OrdiniController {
         });
     }
 
-    protected void creaNuovoOrdine(){
+    private void creaNuovoOrdine(){
         Ordine o = ordini.getModifiche(utilizzatore);
         if(!o.insertIntoSQL()){
             JOptionPane.showMessageDialog(new JFrame("errore"),"Errore nell'inserimento dell'ordine");

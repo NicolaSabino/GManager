@@ -77,7 +77,7 @@ public class MessaggioBroadcast extends Model{
     /**
      * Per identifiare il messaggio dal db
      *
-     * @return
+     * @return ArrayList di messaggi broadcast
      */
     public ArrayList<String> selezionaNotifiche(){
         openConnection();
@@ -133,9 +133,7 @@ public class MessaggioBroadcast extends Model{
         return tipo;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
+    public void setTipo(String tipo) { this.tipo = tipo;}
 
     public String getMittente() {
         return mittente;
