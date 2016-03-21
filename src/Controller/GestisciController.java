@@ -682,6 +682,8 @@ public class GestisciController {
             gestisci.getFieldNomeSequenza().setText("");
             gestisci.getComboProgetti().setSelectedIndex(0);
 
+
+            //popolo le combobox
             StaticMethod.popolaComboSequenze(gestisci.getComboSequenze());
             StaticMethod.popolaComboSequenze(gestisci.getComboSequenze_modifica());
 
@@ -1104,6 +1106,10 @@ public class GestisciController {
             //aggionro i messaggi
             homeController.getMessaggiController().aggiorna();
 
+            //aggiorno le combo
+            StaticMethod.popolaComboSequenze(gestisci.getComboSequenze());
+            StaticMethod.popolaComboSequenze(gestisci.getComboSequenze_modifica());
+
             //aggiornoIncarichi
             gestisci.popolaAttivita_assegnazione();
 
@@ -1520,8 +1526,9 @@ public class GestisciController {
             gestisci.getLabelModificaSequenza().setVisible(true);
             gestisci.getButtonEliminaSequenza().setEnabled(false);
 
-            //aggiorno il pannello  delle Attività
+            //aggiorno le combo
             StaticMethod.popolaComboSequenze(gestisci.getComboSequenze());
+            StaticMethod.popolaComboSequenze(gestisci.getComboSequenze_modifica());
 
             gestisci.getButtonModificaSequenza().setVisible(true);
             gestisci.getButtonModificaSequenza().setEnabled(false);
@@ -1754,6 +1761,7 @@ public class GestisciController {
 
             utilizzatore.eliminaIncarico(matricola, id);
 
+            homeController.aggiornaTabellaAttivita();
             popolaElencoIncarichi();
         }
     }

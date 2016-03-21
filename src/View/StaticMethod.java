@@ -108,63 +108,6 @@ public class StaticMethod {
 
 
 
-    /**
-     * Metodo che popola una generica combo box con i dati passati in una arrayList di string
-     * (esempio: combo box per tutti i dipendenti o tutti i preventivi)
-     *
-     * @param combo  JComboBox da popolare
-     * @param valori ArrayList di String con le stringhe da inserire
-     */
-    public static void populateGenericCombo(JComboBox combo, List<String> valori) {
-
-        Vector<String> elem = new Vector<>(valori.size() + 1);
-        elem.add(0, "");
-        int i = 1;
-        if (valori.size() != 0){
-            for (String val : valori) {
-                elem.add(i, val);
-                i++;
-            }
-        }
-
-        combo.setModel(new DefaultComboBoxModel<String>(elem));
-        combo.setSelectedIndex(0);
-    }
-
-    /**
-     * Metodo che preleva il contenuto all'interno delle parentesi tonde presente nella string passata
-     *
-     * @param stringa Stringa da splittare
-     * @return subString col valore da prelevare
-     */
-    public static String splitCodice(String stringa) {
-        String result = "";
-
-        int pos1, pos2;
-
-        if (!stringa.equalsIgnoreCase("")) {
-            pos1 = stringa.indexOf('(');
-            pos2 = stringa.indexOf(')');
-
-            result = stringa.substring(pos1 + 1, pos2);
-        }
-
-        return result;
-    }
-
-    /**
-     * Metodo che setta il valore passato come secondo parametro all'interno della comboBox nel caso fosse presente
-     *
-     * @param combo JComboBox contenente i valori da verificare
-     * @param value String da confrontare
-     */
-    public static void setOldGenericCombo(JComboBox combo, String value) {
-        for (int i = 0; i < combo.getItemCount(); i++) {
-            if (value.equalsIgnoreCase(combo.getItemAt(i).toString())) {
-                combo.setSelectedIndex(i);
-            }
-        }
-    }
 
     /**
      * Metodo che setta la data passata come parametro, come elementi selezionati
@@ -223,18 +166,7 @@ public class StaticMethod {
     }
 
 
-    /**
-     * Metodo che setta un singolo elemente nella combo box
-     *
-     * @param combo JComboBox da popolare
-     * @param value String da inserire
-     */
-    public static void setSingleElemGeneric(JComboBox combo, String value) {
-        Vector<String> vector = new Vector<>();
-        vector.add(0, value);
-        combo.setModel(new DefaultComboBoxModel<String>(vector));
-        combo.setSelectedIndex(0);
-    }
+
 
     /**
      * Metodo che imposta un limite massimo di caratteri per un JTextField
@@ -309,26 +241,6 @@ public class StaticMethod {
         });
     }
 
-    /**
-     * Metodo per limitare la lunghezza massima di caratteri immissibili nel campo password
-     *
-     * @param passwordField JPasswordFiel da limitare
-     * @param limit         numero massimo di caratteri
-     */
-    public static void limitPassword(JPasswordField passwordField, int limit) {
-        passwordField.addKeyListener(new KeyAdapter() {
-            private int count = 0;
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-                count = passwordField.getText().length();
-                char c = e.getKeyChar();
-                if (count > limit - 1 && !(c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
-                    e.consume();
-                }
-            }
-        });
-    }
 
     /**
      * Metodo per limitare la lunghezza massima di caratteri immissibili nella textarea
@@ -369,37 +281,6 @@ public class StaticMethod {
         return value;
     }
 
-    /**
-     * Metodo che crea una finestra di dialogo con una combo box
-     *
-     * @param title     titolo della finestra
-     * @param nomeCampo descrizione della combo box
-     * @param valori    valori da inserire nella combo box
-     * @return string selezionata
-     */
-    public static String comboBoxDialog(String title, String nomeCampo, List<String> valori) {
-        String result = "";
-
-        JComboBox<String> comboBox = new JComboBox<>();
-        Vector<String> vector = new Vector<>();
-        vector.add(0, "");
-        vector.addAll(valori);
-
-        comboBox.setModel(new DefaultComboBoxModel<String>(vector));
-        comboBox.setSelectedIndex(0);
-
-        Object[] message = {
-                title,
-                nomeCampo, comboBox
-        };
-
-        int option = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.OK_CANCEL_OPTION);
-        if (option == JOptionPane.OK_OPTION) {
-            result = comboBox.getSelectedItem().toString();
-        }
-
-        return result;
-    }
 
     /**
      * Metodo che rimuove tutti i listener presenti associati precedentemente all JButton passato come parametro
