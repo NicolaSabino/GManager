@@ -70,7 +70,7 @@ public class HomeController {
     /**
      * listener doppio click sulla tabella attività
      */
-    protected void listenerSelezionaAttivita(){
+    private void listenerSelezionaAttivita(){
         this.tabellaAttivita.getTabella().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
