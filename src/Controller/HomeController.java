@@ -48,7 +48,7 @@ public class HomeController {
         //mostro a video gli appuntamenti
         TabellaIncontri t2= new TabellaIncontri();
         t2.setModelTabella(utilizzatore.getAppuntamenti());
-        home.setScrollEventi(t2.getPannelloPrincipale());
+        home.setScrollEventi(t2.getTabella());
 
         //mostro l'elenco dei messaggi-notifiche
         this.messaggiController= new MessaggiController(this.utilizzatore,this.home);
@@ -133,7 +133,7 @@ public class HomeController {
         this.tabellaAttivita= new TabellaAttivita();
         utilizzatore.popolaIncarichi();//aggiorno gli incarichi
         tabellaAttivita.setModelTabella(utilizzatore.getIncarichi());
-        home.setScrollCompiti(tabellaAttivita.getPannelloPrincipale());
+        home.setScrollCompiti(tabellaAttivita.getTabella());
         //aggiungo il listener di selezione
         listenerSelezionaAttivita();
     }

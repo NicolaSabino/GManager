@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class TabellaIncontri {
     private JPanel pannelloPrincipale;
     private JScrollPane scroll;
-    private JLabel incontri;
     private JTable Tabella;
 
     public void setModelTabella(ArrayList<Incontro> elenco) {
@@ -38,5 +37,9 @@ public class TabellaIncontri {
     }
     public JPanel getPannelloPrincipale() {
         return pannelloPrincipale;
+    }
+
+    public JTable getTabella() {
+        return Tabella;
     }
 }

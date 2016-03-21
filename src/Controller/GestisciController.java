@@ -51,7 +51,6 @@ public class GestisciController {
             listenerSelezioneSequenza();
             listenerRendiDefinitivo();
             listenerRifiutatoDalRettorato();
-            listenerEliminaOrdine();
         }
 
         //listener
@@ -82,6 +81,7 @@ public class GestisciController {
         listenerEliminaUtente();
         listenerEliminaAppuntamento();
         listenerEliminaIncarico();
+        listenerEliminaOrdine();
 
         listenerMostraInvitati();
         listenerNascondiInvitati();

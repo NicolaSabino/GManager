@@ -1440,7 +1440,7 @@
                       <component id="585e7" class="javax.swing.JTable" binding="tableOrdini">
                         <constraints/>
                         <properties>
-                          <font size="12"/>
+                          <font/>
                         </properties>
                       </component>
                     </children>
@@ -1541,7 +1541,7 @@
                       <component id="6562a" class="javax.swing.JTable" binding="tableVoti">
                         <constraints/>
                         <properties>
-                          <font size="12"/>
+                          <font/>
                         </properties>
                       </component>
                     </children>

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class ListaNotifiche {
     private JPanel pannelloPrincipale;
 
-    private JLabel lableBroadcast;
     private JScrollPane scrollNotifiche;
     private JButton ButtonNuovo;
 

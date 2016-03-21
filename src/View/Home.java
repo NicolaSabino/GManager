@@ -14,9 +14,9 @@ public class Home extends JPanel {
     private JLabel nomeSequenza;
     private JProgressBar progressBarCompl;
     private JScrollPane scrollNotifiche;
+    private JTabbedPane tabHome;
 
 
-    
     public Home() {
         setVisible(true);
         progressBarCompl.setVisible(true);
