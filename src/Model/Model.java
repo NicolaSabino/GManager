@@ -118,22 +118,22 @@ abstract public class Model {
     /**
      * Metodo per l'aggiornamento di una tupla sul db ad argomenti a lunghezza variabile
      *
-     * @param var
-     * @return
+     * @param var [chiave],[valore]
+     * @return booleano esito query
      */
     abstract public boolean updateIntoSQL(String... var);
 
     /**
      * metodo astratto che permette di inserire dati nel db
      *
-     * @return
+     * @return booleano esito query
      */
     abstract public boolean insertIntoSQL()throws SQLException;
 
     /**
      * metodo astratto che permette di eliminare dati dal db
      *
-     * @return
+     * @return booleano esito query
      */
     abstract public boolean deleteIntoSQL();
 
