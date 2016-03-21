@@ -14,4 +14,11 @@ public class CustomTable extends DefaultTableModel{
     public CustomTable(String[] columnNames, int rowCount) {
         super(columnNames, rowCount);
     }
+
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return false;
+    }
 }
+
+//todo eliminare la possibilità di spostare le colonne della tabella altrimenti genera degli errori con i mouse listner su gestisci
