@@ -1959,7 +1959,9 @@ public class GestisciController {
     }
 
 
-
+    /**
+     * Manda un messagio di broadcast nel caso in cui  un ordine è rifiutato dal rettorato
+     */
     private void rifiutoRettorato(){
         JTable tabellaOrdini = gestisci.getTableOrdini();
         Ordine o = new Ordine((Integer) tabellaOrdini.getValueAt(tabellaOrdini.getSelectedRow(),0));
@@ -1979,14 +1981,19 @@ public class GestisciController {
 
     }//TODO continuare commenti
 
-    public void assegna() throws Exception{
+    /**
+     * Metodo che assegna un'attività ad un utente (entrambi selezionati nelle tabelle)
+     * @throws Exception
+     */
+    private void assegna() throws Exception{
         JTable tabellaUtente    = gestisci.getTableUtenti_assegnazione();
         JTable tabellaAttivita  = gestisci.getTableAttivita_assegnazione();
 
         Utente      utente      = new Utente(tabellaUtente.getValueAt(tabellaUtente.getSelectedRow(),0).toString());
         Attivita    attivita    = new Attivita((Integer) tabellaAttivita.getValueAt(tabellaAttivita.getSelectedRow(),0));
 
-        int response=JOptionPane.showConfirmDialog(null,"Vuoi assegare "+ utente.getNome() + " " + utente.getCognome() + " all'attività " + attivita.getId() + " ?",
+        int response=JOptionPane.showConfirmDialog(null,"Vuoi assegare "+ utente.getNome() + " " + utente.getCognome()
+                + " all'attività " + attivita.getId() + " ?",
                 "Assegnazione dell'utente " + utente.getMatricola(),
                 JOptionPane.WARNING_MESSAGE);
 

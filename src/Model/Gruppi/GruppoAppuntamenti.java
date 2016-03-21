@@ -52,6 +52,7 @@ public class GruppoAppuntamenti extends Model{
         return false;
     }
 
+
     public ArrayList<Incontro> getStato() {
         return stato;
     }

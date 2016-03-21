@@ -116,14 +116,6 @@ abstract public class Model {
     }
 
     /**
-     * permette di aggiornare un campo sul db
-     *
-     * @param campo
-     * @param valore
-     * @return
-     */
-
-    /**
      * Metodo per l'aggiornamento di una tupla sul db ad argomenti a lunghezza variabile
      *
      * @param var
