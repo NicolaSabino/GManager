@@ -38,7 +38,7 @@ public class WhiteList {
     /**
      * Metodo che controlla l'effettiva presenza dell'utente all'interno del db e ne definisce i permermessi
      */
-    protected  void controllo(){
+    private void controllo(){
 
         //  creo un utente a partire dalla matricola inserita nella view
         //  se la matricola non è presente ne db creo un utente senza alcun valore
@@ -81,8 +81,7 @@ public class WhiteList {
     protected void setPermesso(Permesso permesso) { this.permesso = permesso; }
 
     protected String getMatricola() {
-        return matricola;
-    }
+        return matricola; }
 
     protected void setMatricola(String matricola) {
         this.matricola = matricola;
