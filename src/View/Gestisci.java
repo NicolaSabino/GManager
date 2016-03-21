@@ -180,6 +180,19 @@ public class Gestisci {
     private JButton rendiDefinitivoButton;
     private JButton rifiutatoDalRettoratoButton;
     private JButton eliminaOrdineButton;
+    private JPanel panelIncarichi;
+    private JTabbedPane tabIncarichi;
+    private JScrollPane scrollUtenti_assegnazione;
+    private JScrollPane scrollAttivita_assegnazione;
+    private JButton assegnaButton;
+    private JTable tableUtenti_assegnazione;
+    private JTable tableAttivita_assegnazione;
+    private JTable tableElencoAssegnazioni;
+    private JButton eliminaIncaricoButton;
+    private JLabel labelSelezionaUtente;
+    private JLabel labelSelezionaAttività;
+    private JLabel labelIncarichi;
+    private JTable tableNonAssegnati;
     private JComboBox comboGiornoInizioSequenza;
     private JComboBox comboMeseInizioSequenza;
     private JComboBox comboAnnoInizioSequenza;
@@ -195,7 +208,10 @@ public class Gestisci {
         labelModificaAttivita.setText("<html><b>...Seleziona l'attività da modificare...</b></html>");
         labelModificaAppuntamento.setText("<html><b>...Seleziona l'Appuntamento da modificare...</b></html>");
         labelModificaUtente.setText("<html><b>...Seleziona l'utente da modificare...</b></html>");
-        getLabelApprovaOrdini().setText("<html><b>...Seleziona un ordine...</b></html>");
+        labelApprovaOrdini.setText("<html><b>...Seleziona un ordine...</b></html>");
+        labelSelezionaUtente.setText("<html><b>...Seleziona un utente...</b></html>");
+        labelSelezionaAttività.setText("<html><b>...Seleziona un'attività...</b></html>");
+        labelIncarichi.setText("<html><b>...Seleziona un incarico per eliminarlo...</b></html>");
 
 
         //popolo le tabelle
@@ -205,6 +221,9 @@ public class Gestisci {
         popolaAppuntamenti();
         popolaUtenti();
         popolaOrdini();
+        popolaAttivita_assegnazione();
+        popolaUtenti_assegnazione();
+        popolaElencoNonAssegnati();
 
 
         disabilitaComponenti(true,fieldNomeProgetto_modifica, comboGiornoProgetto_modifica, comboMeseProgetto_modifica, comboAnnoProgetto_modifica);
@@ -304,6 +323,12 @@ public class Gestisci {
         }
     }
 
+    public void displayErrorMessage(String errorMessage,String errorTitle){
+        JOptionPane messaggioErrore = new JOptionPane(errorMessage,JOptionPane.ERROR_MESSAGE  );
+        JDialog dialog = messaggioErrore.createDialog(errorTitle);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+    }
 
     public void popolaProgetti(){
         String col[] = {"Nome Progetto" , "Deadline" , "Costo"};
@@ -413,13 +438,6 @@ public class Gestisci {
         tableInvitati.setModel(t);
     }
 
-    public void displayErrorMessage(String errorMessage,String errorTitle){
-        JOptionPane messaggioErrore = new JOptionPane(errorMessage,JOptionPane.ERROR_MESSAGE  );
-        JDialog dialog = messaggioErrore.createDialog(errorTitle);
-        dialog.setAlwaysOnTop(true);
-        dialog.setVisible(true);
-    }
-
     public void popolaAppuntamenti(){
         String col[]={"Id","Tipo","Data","Ora","Luogo","Verbale"};
 
@@ -504,6 +522,72 @@ public class Gestisci {
         }
         tableVoti.setModel(tableModel);
     }
+
+    public void popolaUtenti_assegnazione(){
+        String col[]={"Matricola" , "Nome" , "Cognome"};
+        Gruppo g = new Gruppo();
+        g.createFrom("utenti");
+        CustomTable tableModel= new CustomTable(col,0);
+
+        for (Utente appoggio:g.getElenco()){
+
+            String matricola    = appoggio.getMatricola();
+            String nome         = appoggio.getNome();
+            String cognome      = appoggio.getCognome();
+
+            Object[] objects={matricola,nome,cognome};
+            tableModel.addRow(objects);
+        }
+        tableUtenti_assegnazione.setModel(tableModel);
+    }
+
+    public void popolaAttivita_assegnazione(){
+        String col[]={"id" ,"descrizione","Precedenza" ,"NomeSequenza", "Data inizio" , "Data fine prevista"};
+        CustomTable table = new CustomTable(col,0);
+        GruppoProgetti g = new GruppoProgetti();
+
+        for(Progetto progetto:g.getStato()){
+            for(Sequenza sequenza:progetto.getStato()){
+                for(Attivita attivita:sequenza.getStato()){
+
+                    int id              = attivita.getId();
+                    String descrizione  = attivita.getDescrizione();
+                    int precedenza      = attivita.getPrecedenza();
+                    String nomesequenza = attivita.getNomesequenza();
+                    String inizio       = attivita.getDatainizio();
+                    String fine         = attivita.getDatafineprevista();
+
+                    Object[] data = {id,descrizione,precedenza,nomesequenza,inizio,fine};
+                    table.addRow(data);
+                }
+            }
+        }
+
+        tableAttivita_assegnazione.setModel(table);
+    }
+
+    public void popolaElencoNonAssegnati(){
+
+        String col[]={"Matricola" , "Nome" , "Cognome" , "indirizzo e-mail" , "telefono"};
+        CustomTable t = new CustomTable(col,0);
+        Gruppo g = new Gruppo();
+        g.createFrom("non assegnati");
+
+        for(Utente appoggio:g.getElenco()){
+            String matricola = appoggio.getMatricola();
+            String nome = appoggio.getNome();
+            String cognome = appoggio.getCognome();
+            String mail = appoggio.getMail();
+            String telefono = appoggio.getTelefono();
+
+            Object[] data = {matricola, nome, cognome, mail, telefono};
+            t.addRow(data);
+        }
+        tableNonAssegnati.setModel(t);
+
+    }
+
+
 
     public void listnerSelezioneIncontro1(){
         invitaTuttiRadioButton.addActionListener(new ActionListener() {
@@ -1256,5 +1340,53 @@ public class Gestisci {
 
     public JButton getEliminaOrdineButton() {
         return eliminaOrdineButton;
+    }
+
+    public JPanel getPanelIncarichi() {
+        return panelIncarichi;
+    }
+
+    public JTabbedPane getTabIncarichi() {
+        return tabIncarichi;
+    }
+
+    public JScrollPane getScrollUtenti_assegnazione() {
+        return scrollUtenti_assegnazione;
+    }
+
+    public JScrollPane getScrollAttivita_assegnazione() {
+        return scrollAttivita_assegnazione;
+    }
+
+    public JButton getAssegnaButton() {
+        return assegnaButton;
+    }
+
+    public JTable getTableUtenti_assegnazione() {
+        return tableUtenti_assegnazione;
+    }
+
+    public JTable getTableAttivita_assegnazione() {
+        return tableAttivita_assegnazione;
+    }
+
+    public JTable getTableElencoAssegnazioni() {
+        return tableElencoAssegnazioni;
+    }
+
+    public JButton getEliminaIncaricoButton() {
+        return eliminaIncaricoButton;
+    }
+
+    public JLabel getLabelSelezionaUtente() {
+        return labelSelezionaUtente;
+    }
+
+    public JLabel getLabelSelezionaAttività() {
+        return labelSelezionaAttività;
+    }
+
+    public JLabel getLabelIncarichi() {
+        return labelIncarichi;
     }
 }

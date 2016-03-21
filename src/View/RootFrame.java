@@ -12,7 +12,6 @@ public class RootFrame extends JFrame{
     private JPanel leftPanell;
     private JScrollPane mainScrollPane; // Scroll SX
     private JScrollPane sideScrollPane; // Scroll DX
-    private JLabel link;
 
     /**
      * Costruttore del frame principale

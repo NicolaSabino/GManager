@@ -49,6 +49,9 @@ public class Gruppo extends Model{
         }else if(var[0].equalsIgnoreCase("direttivo")){
             sql="select a.matricola,a.nome,a.cognome,a.telefono,a.mail,z.ruolo from datianagrafici a join datilavorativi z " +
                     "on a.matricola=z.matricola where z.ruolo='GL' or z.ruolo='TL'";
+        }else if(var[0].equalsIgnoreCase("non assegnati")){
+            sql="select a.matricola,a.nome,a.cognome,a.telefono,a.mail from datianagrafici a  left join incarichi i " +
+                    "on i.matricola=a.matricola where i.id is null";
         }else{
             sql="";
             controllo=false;
@@ -63,7 +66,12 @@ public class Gruppo extends Model{
                     appoggio.setCognome(query.getString("cognome"));
                     appoggio.setTelefono(query.getString("telefono"));
                     appoggio.setMail(query.getString("mail"));
+
+                //da "non assegnati non ottengo il ruolo"
+                if(!var[0].equalsIgnoreCase("non assegnati")) {
                     appoggio.setRuolo(query.getString("ruolo"));
+                }
+
                 elenco.add(elenco.size(),appoggio);
                 controllo=true;
             }

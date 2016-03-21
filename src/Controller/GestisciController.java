@@ -8,7 +8,9 @@ import View.*;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by nicola on 02/03/16.
@@ -28,6 +30,8 @@ public class GestisciController {
         this.utilizzatore=utente;
         this.homeController=home;
         this.statoListener=true; //da qui in poi i listener di selezione sulle tabelle sono abilitati
+
+        popolaElencoIncarichi();
 
         //verranno disabilitati quando si entra in modalità modifica
 
@@ -55,6 +59,8 @@ public class GestisciController {
         listenerSelezionaAppuntamento();
         listenerSelezionaUtente();
         listenerSelezionaOrdine();
+        listenerSelezionaAttivita_assegnazione();
+        listenerSelezionaUtente_assegnazione();
 
         listenerModificaProgetto();
         listenerModificaSequenza();
@@ -67,9 +73,13 @@ public class GestisciController {
         listenerEliminaAttivita();
         listenerEliminaUtente();
         listenerEliminaAppuntamento();
+        listenerEliminaIncarico();
 
         listenerMostraInvitati();
         listenerNascondiInvitati();
+
+        listenerAssegna();
+        listenerSelezionaIncarico();
 
     }
 
@@ -232,6 +242,37 @@ public class GestisciController {
                 }
             }
         });
+    }
+
+    protected void listenerSelezionaUtente_assegnazione(){
+        JTable tabella= gestisci.getTableUtenti_assegnazione();
+        tabella.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                gestisci.getLabelSelezionaUtente().setVisible(false);
+            }
+        });
+    }
+
+    protected void listenerSelezionaAttivita_assegnazione(){
+        JTable tablla= gestisci.getTableAttivita_assegnazione();
+        tablla.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                gestisci.getLabelSelezionaAttività().setVisible(false);
+            }
+        });
+    }
+
+    protected void listenerSelezionaIncarico(){
+        JTable table= gestisci.getTableElencoAssegnazioni();
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                gestisci.getLabelIncarichi().setVisible(false);
+            }
+        });
+
     }
 
 
@@ -422,8 +463,6 @@ public class GestisciController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 eliminaUtente();
-                //TODO
-                statoListener= false;
             }
         });
     }
@@ -444,6 +483,21 @@ public class GestisciController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 eliminaOrdine();
+            }
+        });
+    }
+
+    protected void listenerEliminaIncarico(){
+        JButton elimina=gestisci.getEliminaIncaricoButton();
+        elimina.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    eliminaIncarico();
+                }catch (Exception ex){
+                    gestisci.displayErrorMessage("Seleziona un elemento","Errore di eliminazione");
+                }
+
             }
         });
     }
@@ -512,6 +566,20 @@ public class GestisciController {
             }
         });
 
+    }
+
+    protected void listenerAssegna(){
+        JButton assegna=gestisci.getAssegnaButton();
+        assegna.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    assegna();
+                }catch (Exception ex){
+                    gestisci.displayErrorMessage("Devi selezionare una coppia utente attività","Errore");
+                }
+            }
+        });
     }
 
 
@@ -694,6 +762,9 @@ public class GestisciController {
 
         }
 
+        //aggiorno Incarichi
+        gestisci.popolaAttivita_assegnazione();
+
         //rimuovo e ricreo l'acction listener
         StaticMethod.removeAllActionListener(gestisci.getButtonCreaAttivita());
         listenerCreaAttivita();
@@ -772,8 +843,10 @@ public class GestisciController {
             }
         }
         if(errore!=0){
-            gestisci.displayErrorMessage("Errore, crezione utente\n" + "codice errore:" +errore, "errore!");
-        }else utente.insertIntoSQL();
+            gestisci.displayErrorMessage("Esiste già un utente con  la matricola" + utente.getMatricola() , "Errore creazione utente");
+        }else{
+            utente.insertIntoSQL();
+        }
 
 
         //inserisco un nuovo messaggio
@@ -802,6 +875,9 @@ public class GestisciController {
         gestisci.getComboRuoloUtente().setSelectedIndex(0);
         gestisci.getFieldTelefonoUtente().setText("");
         gestisci.getFieldMailUtente().setText("");
+
+        //aggiorno incarichi
+        gestisci.popolaUtenti_assegnazione();
 
         //rimuovo e ricreo l'action listener
         StaticMethod.removeAllActionListener(gestisci.getButtonCreaUtente());
@@ -868,11 +944,10 @@ public class GestisciController {
         //passo l'utente e quindi tutti campi di modifica
 
         listenerSalvaModificheUtente(matricolaUtenteSelezionato);
-        listenerEliminaUtente();
 
         gestisci.getButtonSalvaModificheUtente().setVisible(true);
         gestisci.getButtonModificaUtente().setVisible(false);
-        //TODO
+
         //gestisci.getButtonEliminaUtente().setVisible(true);
         gestisci.getButtonEliminaUtente().setEnabled(true);
 
@@ -995,6 +1070,8 @@ public class GestisciController {
                     "ha riassegnato la sequenza " + s.getNome() + " al progetto " + nuovoNomeProgetto);
             messaggio.insertIntoSQL();
 
+
+
             //aggionro i messaggi
             homeController.getMessaggiController().aggiorna();
         }
@@ -1012,6 +1089,9 @@ public class GestisciController {
 
             //aggionro i messaggi
             homeController.getMessaggiController().aggiorna();
+
+            //aggiornoIncarichi
+            gestisci.popolaAttivita_assegnazione();
 
             //aggiorno tutte le sotto sequenze
             for(Attivita appoggio:s.getStato()){
@@ -1158,6 +1238,9 @@ public class GestisciController {
                 gestisci.getComboMeseFineAttivita_modifica(),gestisci.getComboAnnoFineAttivita_modifica(),gestisci.getComboAnnoInizioAttivita_modifica(),
                 gestisci.getComboSequenze_modifica());
 
+        // aggiorno incarichi
+        gestisci.popolaAttivita_assegnazione();
+
         //infine rimuovo il listner di salvamodifiche
         StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheAttivita());
     }
@@ -1226,7 +1309,7 @@ public class GestisciController {
                         "ha declassato " + u.getMatricola() + " da " + u.getRuolo() + " a " + nuovoRuolo);
             }else
                 m.setMessaggio(utilizzatore.getNome() +" " + utilizzatore.getCognome() + " " +
-                        "ha modificato l'utente " + u.getMatricola());
+                        "ha modificato  l utente " + u.getMatricola());
             m.insertIntoSQL();
             u.updateIntoSQL("ruolo", nuovoRuolo);
 
@@ -1237,14 +1320,12 @@ public class GestisciController {
         //aggiorno i messaggi nella home
         homeController.getMessaggiController().aggiorna();
 
-        //aggiorno i messaggi nella home
-        homeController.getMessaggiController().aggiorna();
 
+        //ripopolo l'elenco degli utenti
         gestisci.popolaUtenti();
 
 
         //reimposto l'interfaccia grafica
-        //TODO problema
 
         gestisci.getButtonSalvaModificheUtente().setVisible(false);
 
@@ -1258,9 +1339,15 @@ public class GestisciController {
                 ,gestisci.getFieldTelefonoUtente_modifica(),gestisci.getComboRuoloUtente_modifica()
                 ,gestisci.getFieldMailUtente_modifica());
 
+        //aggiorno incarichi
+        gestisci.popolaUtenti_assegnazione();
 
         //infine rimuovo il listner di salvamodifiche
         StaticMethod.removeAllActionListener(gestisci.getButtonSalvaModificheUtente());
+
+        //riabilito la modifica della tabella
+        gestisci.getTableUtenti().setRowSelectionAllowed(true);
+        statoListener=true;
 
     }
 
@@ -1476,6 +1563,9 @@ public class GestisciController {
                     gestisci.getComboMeseFineAttivita_modifica(),gestisci.getComboAnnoFineAttivita_modifica(),gestisci.getComboAnnoInizioAttivita_modifica(),
                     gestisci.getComboSequenze_modifica());
 
+            //aggiorno Incarichi
+            gestisci.popolaAttivita_assegnazione();
+
             //riabilito la selezione
             gestisci.getTableAttivita().setRowSelectionAllowed(true);
             statoListener=true;
@@ -1518,8 +1608,28 @@ public class GestisciController {
             gestisci.getButtonEliminaUtente().setEnabled(false);
             gestisci.getButtonEliminaUtente().setVisible(false);
 
+            //aggiorno Incarichi ed elimino tutti gli incarichi associati all'utente da eliminare
+            utilizzatore.eliminaIncarico(matricola);
+            gestisci.popolaUtenti_assegnazione();
+
+            //ridisabilito i campi e reimposto i bottoni
+            gestisci.disabilitaComponenti(true, gestisci.getFieldNomeUtente_modifica(),
+                    gestisci.getFieldCognomeUtente_modifica(), gestisci.getFieldMailUtente_modifica(),
+                    gestisci.getFieldTelefonoUtente_modifica(),gestisci.getComboRuoloUtente_modifica());
+
+            gestisci.getButtonModificaUtente().setVisible(true);
+            gestisci.getButtonModificaUtente().setEnabled(false);
+            gestisci.getButtonSalvaModificheUtente().setVisible(false);
+            gestisci.getButtonEliminaUtente().setVisible(true);
+            gestisci.getButtonEliminaUtente().setEnabled(false);
+            gestisci.getLabelModificaUtente().setVisible(true);
+
             StaticMethod.removeAllActionListener(gestisci.getButtonEliminaUtente());
             listenerEliminaUtente();
+
+            //rendo dinuovo disponibile la selezione
+            gestisci.getTableUtenti().setRowSelectionAllowed(true);
+            statoListener=true;
         }
     }
 
@@ -1610,6 +1720,23 @@ public class GestisciController {
         }
     }
 
+    protected void eliminaIncarico()throws Exception{
+
+        int     riga        = gestisci.getTableElencoAssegnazioni().getSelectedRow();
+        String  matricola   = gestisci.getTableElencoAssegnazioni().getValueAt(riga,0).toString();
+        int     id          = (Integer) gestisci.getTableElencoAssegnazioni().getValueAt(riga,3);
+
+        int response=JOptionPane.showConfirmDialog(null,"vuoi veramente eliminare la coppia "+ matricola + " - " + id + "?","Cancellazione dell'incarico",
+                JOptionPane.WARNING_MESSAGE);
+
+        if (response == JOptionPane.YES_OPTION) {
+
+            utilizzatore.eliminaIncarico(matricola, id);
+
+            popolaElencoIncarichi();
+        }
+    }
+
 
     protected void popolaCampiModificaProgetto(int riga){
         JTable tabellaProgetti = gestisci.getTableProgetti();
@@ -1676,7 +1803,7 @@ public class GestisciController {
         gestisci.getFieldMailUtente_modifica().setText(utente.getMail());
         gestisci.getFieldTelefonoUtente_modifica().setText(utente.getTelefono());
 
-        //caso per caso l'indice della c0mbobox in base ruolo utente da visualizzare
+        //caso per caso l'indice della combobox in base ruolo utente da visualizzare
         int i=0;
         if(utente.getRuolo().equals("US")) i=0;
         else if(utente.getRuolo().equals("GL"))i=1;
@@ -1785,6 +1912,10 @@ public class GestisciController {
             gestisci.displayErrorMessage("Non tutti hanno espresso il proprio voto!","Errore");
         }
 
+        //aggiorno le tabelle delle attività
+        gestisci.popolaAttivita();
+        gestisci.popolaAttivita_assegnazione();
+
         //ricarico le tabella degli ordini
         gestisci.popolaOrdini();
         ordiniController.popolaOrdini();
@@ -1810,6 +1941,42 @@ public class GestisciController {
         ordiniController.popolaOrdini();
         gestisci.popolaOrdini();
 
+    }
+
+    public void assegna() throws Exception{
+        JTable tabellaUtente    = gestisci.getTableUtenti_assegnazione();
+        JTable tabellaAttivita  = gestisci.getTableAttivita_assegnazione();
+
+        Utente      utente      = new Utente(tabellaUtente.getValueAt(tabellaUtente.getSelectedRow(),0).toString());
+        Attivita    attivita    = new Attivita((Integer) tabellaAttivita.getValueAt(tabellaAttivita.getSelectedRow(),0));
+
+        int response=JOptionPane.showConfirmDialog(null,"Vuoi assegare "+ utente.getNome() + " " + utente.getCognome() + " all'attività " + attivita.getId() + " ?",
+                "Assegnazione dell'utente " + utente.getMatricola(),
+                JOptionPane.WARNING_MESSAGE);
+
+        if (response == JOptionPane.YES_OPTION) {
+            utilizzatore.assegnaUtente(utente.getMatricola(),attivita.getId());
+            popolaElencoIncarichi();
+            gestisci.popolaElencoNonAssegnati();
+
+
+        }
+    }
+
+    public void popolaElencoIncarichi(){
+        //seleziono tutti gli incarichi dal db
+        ArrayList<Map> elencoDegliIncarichi=utilizzatore.selezionaIncarchidalDB();
+
+        String col[] = {"Matricola","Nome","Cognome","Id","Descrizione","Data inizio","Data fine prevista"};
+        CustomTable table = new CustomTable(col,0);
+        for(Map appoggio:elencoDegliIncarichi){
+
+            Object[] objects={appoggio.get("matricola"),appoggio.get("nome"),appoggio.get("cognome"),
+                    appoggio.get("id"),appoggio.get("descrizione"),appoggio.get("datafine"),appoggio.get("datainizio"),appoggio.get("datafineprevista")};
+
+            table.addRow(objects);
+        }
+        gestisci.getTableElencoAssegnazioni().setModel(table);
     }
 
     public Gestisci getGestisci() {
