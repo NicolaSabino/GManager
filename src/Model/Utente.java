@@ -128,7 +128,7 @@ public class Utente extends Model {
         }
 
         if(controllo){
-            String sql2="update datilavorativi set ruolo='" + this.getRuolo() +"'";
+            String sql2="update datilavorativi set ruolo='" + this.getRuolo() +"' where matricola='" + getMatricola() +"'";
             if (updateQuery(sql2)){
                 controllo=true;
             }
@@ -144,11 +144,13 @@ public class Utente extends Model {
      * @return
      */
     public boolean deleteIntoSQL(){
+        openConnection();
         boolean controllo=false;
         String sql ="delete from datianagrafici where matricola='" + this.getMatricola() + "'";
         if(updateQuery(sql)){
             controllo=true;
         }
+        closeConnection();
         return controllo;
     }
 
@@ -240,6 +242,61 @@ public class Utente extends Model {
             controllo= true;
         }
         return controllo;
+    }
+
+    public void assegnaUtente(String matricola,int id){
+        openConnection();
+        String sql = "Insert into incarichi values('" + matricola + "','" + id +"')";
+        updateQuery(sql);
+        closeConnection();
+    }
+
+    public ArrayList selezionaIncarchidalDB(){
+        openConnection();
+        ArrayList elenco = new ArrayList();
+        String sql="select * from incarichi i join datianagrafici l join attività a on i.matricola=l.matricola and a.id=i.id ";
+        ResultSet query=selectQuery(sql);
+
+        try {
+            while(query.next()){
+                String matricola        = query.getString("matricola");
+                String nome             = query.getString("nome");
+                String cognome          = query.getString("cognome");
+                int id                  = query.getInt("id");
+                String descrizione      = query.getString("descrizione");
+                String datainizio         = query.getString("datainizio");
+                String datafineprevista = query.getString("datafineprevista");
+
+                Map map= new HashMap<>();
+                map.put("matricola",matricola);
+                map.put("nome",nome);
+                map.put("cognome",cognome);
+                map.put("id",id);
+                map.put("descrizione",descrizione);
+                map.put("datainizio",datainizio);
+                map.put("datafineprevista",datafineprevista);
+                elenco.add(elenco.size(),map);
+            }
+        }catch (SQLException se){
+            se.printStackTrace();
+        }
+        closeConnection();
+
+        return elenco;
+    }
+
+    public void eliminaIncarico(String matricola,int id_attivita){
+        openConnection();
+        String sql="delete from incarichi where matricola='" + matricola + "' and id='" + id_attivita + "'";
+        updateQuery(sql);
+        closeConnection();
+    }
+
+    public void eliminaIncarico(String matricola){
+        openConnection();
+        String sql="delete from incarichi where matricola='" + matricola + "'";
+        updateQuery(sql);
+        closeConnection();
     }
 
 

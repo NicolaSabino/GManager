@@ -25,6 +25,7 @@ public class OrdiniController {
     private Utente utilizzatore;
     private Gestisci gestisci;
     private HomeController homeController;
+    //private TabellaOrdini tabellaOrdini;
 
     public OrdiniController(RootFrame rootFrame, Utente utilizzatore,HomeController homeController) {
 
@@ -33,11 +34,7 @@ public class OrdiniController {
         this.utilizzatore = utilizzatore;
         this.homeController=homeController;
 
-        //genero la lista degli ordini da visualizzare
-        GruppoOrdini o = new GruppoOrdini();
-        TabellaOrdini t = new TabellaOrdini(utilizzatore.getMatricola());
-        t.setModelTabella(o.getStato());
-        ordini.setScrollOrdini(t.getPannelloPrincipale());
+        popolaOrdini();
 
         listnerNuovoOrdine();
         return;
@@ -95,5 +92,14 @@ public class OrdiniController {
 
     public void setGestisci(Gestisci gestisci){
         this.gestisci=gestisci;
+    }
+
+
+    public void popolaOrdini(){
+        //aggiorno la tabella
+        GruppoOrdini a = new GruppoOrdini();
+        TabellaOrdini t = new TabellaOrdini(utilizzatore.getMatricola());
+        t.setModelTabella(a.getStato());
+        ordini.setScrollOrdini(t.getPannelloPrincipale());
     }
 }
