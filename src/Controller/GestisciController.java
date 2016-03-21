@@ -952,7 +952,6 @@ public class GestisciController {
         //passo l'utente e quindi tutti campi di modifica
 
         listenerSalvaModificheUtente(matricolaUtenteSelezionato);
-        //TODO listenerEliminaUtente();
 
         gestisci.getButtonSalvaModificheUtente().setVisible(true);
         gestisci.getButtonModificaUtente().setVisible(false);
