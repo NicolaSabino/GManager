@@ -1439,7 +1439,9 @@
                     <children>
                       <component id="585e7" class="javax.swing.JTable" binding="tableOrdini">
                         <constraints/>
-                        <properties/>
+                        <properties>
+                          <font size="12"/>
+                        </properties>
                       </component>
                     </children>
                   </scrollpane>
@@ -1538,7 +1540,9 @@
                     <children>
                       <component id="6562a" class="javax.swing.JTable" binding="tableVoti">
                         <constraints/>
-                        <properties/>
+                        <properties>
+                          <font size="12"/>
+                        </properties>
                       </component>
                     </children>
                   </scrollpane>
