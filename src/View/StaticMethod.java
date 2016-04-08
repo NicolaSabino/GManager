@@ -92,7 +92,7 @@ public class StaticMethod {
         populateData1(giorno,mese,anno);
         Integer i;
         Vector<Integer> anni = new Vector<>();
-        Integer annoCorrente = Calendar.getInstance().get(Calendar.YEAR);
+        Integer annoCorrente = (Calendar.getInstance().get(Calendar.YEAR)) -1 ;
         int j = 0;
         for (i = interval; i >= 0; i--){
             anni.add(j, annoCorrente + i);

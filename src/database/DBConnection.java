@@ -6,11 +6,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-/**
- * Created by alessandro on 26/12/14.
- *
- * Classe che gestisce la connessione col database
- */
 public class    DBConnection {
     // Costanti per la connessione al DB
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";

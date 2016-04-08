@@ -1,9 +1,12 @@
 package Controller;
 
+import GanttChart.Gantt;
+import GanttChart.SlidingGantt;
 import Model.Attivita;
 import Model.Progetto;
 import Model.Sequenza;
 import View.*;
+import org.jfree.ui.RefineryUtilities;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -38,6 +41,7 @@ public class RicercaController {
         listnerCombo();
         listnerCerca();
         listnerSalvaRicerca();
+        listenerGantt();
         return;
     }
 
@@ -79,6 +83,7 @@ public class RicercaController {
             public void itemStateChanged(ItemEvent e) {
                 setCampoDiRIcerca(e.getItem().toString());
                 stampaRisultato();
+                ricerca.getGanttButton().setEnabled(true);
             }
         });
     }
@@ -107,6 +112,32 @@ public class RicercaController {
             }
         });
 
+    }
+
+    /**
+     * keylistener che richiama un frame contenente il grafico del gantt
+     */
+    private void listenerGantt(){
+        JButton button = ricerca.getGanttButton();
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                /*
+                SlidingGantt gantt = new SlidingGantt(" gantt ",ricerca.getComboProgettiSequenze().getSelectedItem().toString());
+                gantt.pack();
+                RefineryUtilities.centerFrameOnScreen(gantt);
+                gantt.setVisible(true);
+                */
+
+
+                Gantt demo = new Gantt("Gantt",ricerca.getComboProgettiSequenze().getSelectedItem().toString());
+                demo.pack();
+                RefineryUtilities.centerFrameOnScreen(demo);
+                demo.setVisible(true);
+                
+            }
+        });
     }
 
 

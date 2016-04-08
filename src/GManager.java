@@ -1,6 +1,8 @@
+import GanttChart.Gantt;
 import Model.*;
 import View.*;
 import Controller.*;
+import org.jfree.ui.RefineryUtilities;
 
 import javax.swing.*;
 import java.util.List;
@@ -29,7 +31,15 @@ public class GManager {
 
 
         //creo il controller
+
         MainController controller_G = new MainController();
+
+        /*
+        final Gantt demo = new Gantt("Gantt Chart Demo 1");
+        demo.pack();
+        //RefineryUtilities.centerFrameOnScreen(demo);
+        demo.setVisible(true);
+        */
     }
 
 }

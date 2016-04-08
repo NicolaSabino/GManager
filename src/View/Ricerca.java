@@ -30,6 +30,7 @@ public class Ricerca extends JPanel {
     private JScrollPane ScrollRIcerca;
     private JButton salvaRicerca;
     private JComboBox comboProgettiSequenze;
+    private JButton ganttButton;
     private JCheckBox chechkstato;
     private JFileChooser fileChooser;
 
@@ -71,6 +72,7 @@ public class Ricerca extends JPanel {
         campo2.setVisible(true);
         campo1.setVisible(true);
         campo1.setText("");
+        ganttButton.setVisible(false);
         comboProgettiSequenze.setVisible(false);
 
     }
@@ -87,6 +89,8 @@ public class Ricerca extends JPanel {
         campo2.setVisible(false);
         comboProgettiSequenze.setVisible(false);
         comboProgettiSequenze.setVisible(false);
+        //disabilito i grafici
+        ganttButton.setVisible(false);
     }
 
     /**
@@ -100,6 +104,8 @@ public class Ricerca extends JPanel {
         campo1.setVisible(false);
         campo2.setVisible(false);
 
+        //disabilito i grafici
+        ganttButton.setVisible(false);
 
         comboProgettiSequenze.setVisible(true);
 
@@ -116,6 +122,10 @@ public class Ricerca extends JPanel {
         //nascondo campo 1 e 2
         campo1.setVisible(false);
         campo2.setVisible(false);
+
+        //visualizzo il bottone per igrafici ma lo disabilito
+        ganttButton.setVisible(true);
+        ganttButton.setEnabled(false);
 
         //setto la combo
         comboProgettiSequenze.setVisible(true);
@@ -177,5 +187,9 @@ public class Ricerca extends JPanel {
 
     public JCheckBox getChechkstato() {
         return chechkstato;
+    }
+
+    public JButton getGanttButton() {
+        return ganttButton;
     }
 }

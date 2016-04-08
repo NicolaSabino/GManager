@@ -1,11 +1,17 @@
 package Model;
 
-import java.sql.Date;
+import org.jfree.data.gantt.Task;
+import org.jfree.data.time.SimpleTimePeriod;
+import sun.util.calendar.LocalGregorianCalendar;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+
 
 /**
  * Classe che rappresenta la struttura dati delle attività
@@ -150,6 +156,64 @@ public class Attivita extends Model {
         return Id == attivita.Id;
 
     }
+
+    /**
+     * metodo per la conversione  della durata di una attività
+     * @return
+     */
+    public Task getTask(){
+
+        // considero solo DATA FINE PREVISTA
+
+        /*
+         *   PRELEVARE LE INFORMAZIONI DALLA DATA SOTTO FORMA DI STRINGA
+         *
+         *   aa = data.substring(0, 4);
+         *   month = data.substring(5, 7);
+         *   gg = data.substring(8, 10);
+         */
+
+        int giorno_inizio   = Integer.parseInt(Datainizio.substring(8,10));
+        int giorno_fine     = Integer.parseInt(Datafineprevista.substring(8,10));
+
+        int mese_inizio     = Integer.parseInt(Datainizio.substring(5,7));
+        int mese_fine       = Integer.parseInt(Datafineprevista.substring(5,7));
+
+        int anno_inizio     = Integer.parseInt(Datainizio.substring(0,4));
+        int anno_fine       = Integer.parseInt(Datafineprevista.substring(0,4));
+
+
+        Date inizio = date(giorno_inizio,mese_inizio-1 ,anno_inizio);
+        Date fine   = date(giorno_fine,mese_fine - 1, anno_fine);
+
+        Task t = new Task(Descrizione,  new SimpleTimePeriod(inizio,fine));
+
+        return t;
+
+        // return new Task(Descrizione,  new SimpleTimePeriod(date(1, Calendar.APRIL, 2001),date(5, Calendar.APRIL, 2001)));
+
+    }
+
+    /**
+     * Utility method for creating <code>Date</code> objects.
+     *
+     * @param day  the date.
+     * @param month  the month.
+     * @param year  the year.
+     *
+     * @return a date.
+     */
+    private static Date date(final int day, final int month, final int year) {
+
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        final Date result = calendar.getTime();
+        return result;
+
+    }
+
+
+
     //getter and setter
 
 
