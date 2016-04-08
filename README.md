@@ -20,6 +20,8 @@ nicola.sabino94@gmail.com
 jacopoiezzi@gmail.com
 russo_edoardo@yahoo.it
 
+Consulta la wiki per ulteriori informazioni https://github.com/NicolaSabino/GManager/wiki
+
 
 
 
