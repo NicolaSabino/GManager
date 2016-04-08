@@ -8,7 +8,7 @@
   Il **target** di questo progetto è quello di realizzare un software **maneggevole , performante , 
   intuitivo ed     efficente** capace di agevolare l'adempimento delle attività svolte da un utente facente parte del Team corse.</dd>
   
-  Info sul team:
+Info sul team:
 ![logo] (http://www.polimarcheracingteam.com/images/logopolimarchesito-01.png)
 
 http://www.polimarcheracingteam.com
