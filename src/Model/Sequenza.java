@@ -46,6 +46,7 @@ public class Sequenza extends Model{
             if(query2.next()){
                 this.setNome(chiave);
                 this.setNomeprogetto(query2.getString("nomeprogetto"));
+                this.setFine(query2.getString("fine"));
             }
         }catch (SQLException se){
             se.printStackTrace();
@@ -81,7 +82,9 @@ public class Sequenza extends Model{
 
 
         this.setCosto(this.calcolaCosto());
-        this.setFine(this.calcolaFine());
+        if(this.getFine()==null){
+            this.setFine(this.calcolaFine());
+        }
         this.setPercentComplSeq(this.calcolaPercentualeSequenza());
 
     }
@@ -232,9 +235,10 @@ public class Sequenza extends Model{
         boolean controllo=false;
         openConnection();
 
-        String sql="insert into sequenza(nome,nomeprogetto) values('"
+        String sql="insert into sequenza(nome,nomeprogetto,fine) values('"
                 + this.getNome() + "','"
-                + this.getNomeprogetto() + "')";
+                + this.getNomeprogetto() + "',"
+                + "CURRENT_DATE" + ")";
 
         if(updateQuery(sql)){
             controllo=true;

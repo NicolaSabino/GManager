@@ -740,6 +740,11 @@ public class GestisciController {
 
             }
 
+            //aggionro la fine della sequenza che contiente la mia atività
+            Sequenza sequenza = new Sequenza(a.getNomesequenza());
+            String nuovaFine = (sequenza.calcolaFine());//si calcola automaticamente la propria fine
+            sequenza.updateIntoSQL("fine",nuovaFine);
+
 
 
             //inserisco un nuovo messaggio
@@ -1235,6 +1240,13 @@ public class GestisciController {
 
         }
 
+        //aggionro la fine della sequenza che contiente la mia atività
+        Sequenza sequenza = new Sequenza(a.getNomesequenza());
+        String nuovaFine = (sequenza.calcolaFine());//si calcola automaticamente la propria fine
+        sequenza.updateIntoSQL("fine",nuovaFine);
+
+
+
         gestisci.popolaProgetti();
         gestisci.popolaSequenze();
         gestisci.popolaAttivita();
@@ -1518,7 +1530,7 @@ public class GestisciController {
             homeController.getMessaggiController().aggiorna();
 
             gestisci.popolaSequenze();
-            //gestisci.popolaAttivita();
+            gestisci.popolaAttivita();
 
             gestisci.getFieldNomeSequenza_modifica().setText("");
             gestisci.getComboProgetti_modifica().setSelectedIndex(0);
@@ -1561,7 +1573,13 @@ public class GestisciController {
             //aggiorno i messaggi
             homeController.getMessaggiController().aggiorna();
 
+            //aggionro la fine della sequenza che contiente la mia atività
+            Sequenza sequenza = new Sequenza(a.getNomesequenza());
+            String nuovaFine = (sequenza.calcolaFine());//si calcola automaticamente la propria fine
+            sequenza.updateIntoSQL("fine",nuovaFine);
+
             gestisci.popolaAttivita();
+            gestisci.popolaSequenze();
 
 
             gestisci.getFieldDescrizioneAttivita_modifica().setText("");
