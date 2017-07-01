@@ -27,4 +27,5 @@ Consulta la wiki per ulteriori informazioni https://github.com/NicolaSabino/GMan
 
 
 
->Questo progetto è sotto licenza **GPL** sei libero di consultarlo,modificarlo e ridistribuirlo
+> Mit Licenze
+
